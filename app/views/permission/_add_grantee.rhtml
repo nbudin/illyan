@@ -1,0 +1,38 @@
+<ul style="list-style-type: none; padding-left: 0;">
+<% for grantee in @grantees do -%>
+  <li>
+    <% if grantee.kind_of? Role -%>
+      <table>
+        <tr>
+          <td>
+            <%= image_tag "group.png", :plugin => "ae_users", :style => "float: left;" %>
+            <div class="grantee_id" style="display: none;"><%= grantee.class.name %>:<%= grantee.id %></div>
+          </td>
+          <td>
+            <b><%=h grantee.name %></b><br/>
+            <i><%=pluralize(grantee.people.count, "person")%></i>
+          </td>
+        </tr>
+      </table>
+    <% elsif grantee.kind_of? Person -%>
+      <table>
+        <tr>
+          <td>
+            <%= image_tag "user.png", :plugin => "ae_users", :style => "float: left;" %>
+            <div class="grantee_id" style="display: none;"><%= grantee.class.name %>:<%= grantee.id %></div>
+          </td>
+          <td>
+            <b><%=h grantee.name %></b><br/>
+            <i>
+              <% if grantee.account.nil? -%>
+                No email address
+              <% else -%>
+                <%=h grantee.account.primary_email_address %>
+              <% end -%>
+          </td>
+        </tr>
+      </table>
+    <% end -%>
+  </li>
+<% end -%>
+</ul>

@@ -1,0 +1,181 @@
+class AccountController < ApplicationController
+  before_filter :check_logged_in, :only => [:edit_profile, :edit_email_addresses, :change_password]
+  before_filter :check_signup_allowed, :only => [:signup, :signup_success]
+  
+  def activate
+    if logged_in?
+      redirect_to :controller => :main, :action => :index
+      return
+    end
+
+    @account = Account.find params[:account]
+
+    if not @account.nil? and @account.activation_key == params[:activation_key]
+      @account.active = true
+      @account.activation_key = nil
+      @account.save
+    else
+      redirect_to :action => :activation_error
+    end
+  end
+  
+  def edit_profile
+    @person = logged_in_person
+    if not AeUsers.profile_class.nil?
+      @app_profile = AeUsers.profile_class.find_by_person_id(@person.id)
+    end
+    
+    if request.post?
+      @person.update_attributes params[:person]
+      if @app_profile
+        @app_profile.update_attributes params[:app_profile]
+      end
+    end
+  end
+  
+  def edit_email_addresses
+    account = Account.find(session[:account])
+    errs = []
+    
+    if params[:new_address] and params[:new_address].length > 0
+      existing_ea = EmailAddress.find_by_address params[:new_address]
+      if existing_ea
+        errs.push "A different account is already associated with the email address you tried to add."
+      else
+        newea = EmailAddress.create :account => account, :address => params[:new_address]
+        if params[:primary] == 'new'
+          newea.primary = true
+          newea.save
+        end
+      end
+    end
+    
+    if params[:primary] and params[:primary] != 'new'
+      id = params[:primary].to_i
+      if id != 0
+        addr = EmailAddress.find id
+        if addr.account != account
+          errs.push "The email address you've selected as primary belongs to a different account."
+        else
+          addr.primary = true
+          addr.save
+        end
+      else
+        errs.push "The email address you've selected as primary doesn't exist."
+      end
+    end
+    
+    if params[:delete]
+      params[:delete].each do |id|
+        addr = EmailAddress.find id
+        if addr.account != account
+          errs.push "The email address you've selected as primary belongs to a different account."
+        elsif addr.primary
+          errs.push "You can't delete the primary email address for your account."
+        else
+          addr.destroy
+        end
+      end
+    end
+    
+    if errs.length > 0
+      flash[:error_messages] = errs
+    end
+    
+    redirect_to :action => :edit_profile
+  end
+  
+  def change_password
+    password = params[:password]
+    if password[:password1].nil? or password[:password2].nil?
+      redirect_to :action => :edit_profile
+    elsif password[:password1] != password[:password2]
+      flash[:error_messages] = ["The passwords you entered don't match.  Please try again."]
+      redirect_to :action => :edit_profile
+    else
+      session[:account].password = password[:password1]
+      session[:account].save
+    end
+  end
+  
+  def activation_error
+  end
+  
+  def signup_success
+  end
+  
+  def signup
+    @account = Account.new(:password => params[:password1])
+    @addr = EmailAddress.new :address => params[:email], :account => @account, :primary => true
+
+    @person = Person.new :account => @account
+    @person.attributes = params[:person]
+    
+    if not AeUsers.profile_class.nil?
+      @app_profile = AeUsers.profile_class.send(:new, :person => @person)
+      @app_profile.attributes = params[:app_profile]
+    end
+        
+    if request.post?
+      error_fields = []
+      error_messages = []
+    
+      if Account.find_by_email_address(params[:email])
+        error_messages.push "An account at that email address already exists!"
+      end
+    
+      if params[:password1] != params[:password2]
+        error_fields += ["password1", "password2"]
+        error_messages.push "Passwords do not match."
+      elsif params[:password1].length == 0
+        error_fields += ["password1", "password2"]
+        error_messages.push "You must enter a password."
+      end
+    
+      ["firstname", "lastname", "email", "gender"].each do |field|
+        if (not params[field] or params[field].length == 0) and (not params[:person][field] or params[:person][field].length == 0)
+          error_fields.push field
+          error_messages.push "You must enter a value for #{field}."
+        end
+      end
+      
+      if error_fields.size > 0 or error_messages.size > 0
+        flash[:error_fields] = error_fields
+        flash[:error_messages] = error_messages
+      else
+        @account.save
+        @addr.save
+        @person.save
+        if @app_profile
+          @app_profile.save
+        end
+    
+        begin
+          @account.generate_activation
+        rescue
+          @account.activation_key = nil
+          @account.active = true
+          @account.save
+          redirect_to :action => :signup_noactivation
+          return
+        end
+      
+        redirect_to :action => :signup_success
+      end
+    end
+  end
+  
+  def check_logged_in
+    if not logged_in?
+      flash[:error_messages] = ["You're not logged in.  To view the page you were trying to view, you must log in."]
+      redirect_to :controller => :main, :action => :index
+    end
+  end
+  
+  def check_signup_allowed
+    if not AeUsers.signup_allowed?
+      flash[:error_messages] = ["Account signup is not allowed on this site."]
+      redirect_to :controller => :main, :action => :index
+    end
+  end
+end

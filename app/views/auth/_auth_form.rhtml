@@ -1,0 +1,47 @@
+<% ae_form_for('login', @login, :url => {:action => 'login', :controller => 'auth'},
+        :html => {:id => 'auth_form'} ) do |f| -%>
+    <% if not session[:account] %>
+      <table style="width: 100%;">
+        <tr>
+          <td>
+            <%= f.text_field "email", :label => "Email" %>
+            <label for="password">Password:</label>
+            <%= password_field "login", "password", :style => "width: 42.5%; display: inline" %>
+            <%= submit_tag "Log in", :style => "margin-left: 2.5%; width: 20%; display: inline" %>
+            <br/>
+            <ul class="inline">
+              <li>
+                <%= f.check_box "remember" %> Remember me
+              </li>
+            </ul>
+          </td>
+          <td>
+            <% if AeUsers.signup_allowed? -%>
+              <p style="margin-top: 0; margin-bottom: 0.3em">
+                <%= link_to "Sign up", :controller => 'account', :action => 'signup' %>
+              </p>
+            <% end -%>
+            <p style="margin-top: 0">
+              <%= link_to "Forgot your password?", :controller => 'auth', :action => 'forgot_form' %>
+            </p>
+          </td>
+        </tr>
+      </table>
+    <% else %>
+      <div style="text-align: right; margin-right: 1em;">
+        <p>You are currently logged in as <%= logged_in_person.name %>.</p>
+        <p>
+          <% if logged_in_person.administrator? -%>
+            <%= image_tag "admin.png", :plugin => "ae_users" %>
+            <%= link_to "Administration", :controller => 'permission', :action => 'admin' %>
+            <span style="margin-right: 1em;">&nbsp;</span>
+          <% end -%>
+          <%= image_tag "user.png", :plugin => "ae_users" %>
+          <%= link_to "Edit profile", :controller => 'account', :action => 'edit_profile' %>
+          <span style="margin-right: 1em;">&nbsp;</span>
+          <%= image_tag "logout.png", :plugin => "ae_users" %>
+          <%= link_to "Log out", :controller => :auth, :action => :logout %>
+        </p>
+      </div>
+    <% end %>
+<% end -%>

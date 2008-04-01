@@ -1,0 +1,10 @@
+<% if @perm.grantee.kind_of? Role -%>
+  <%= image_tag "group.png", :plugin => "ae_users" %>
+<% elsif @perm.grantee.kind_of? Person -%>
+  <%= image_tag "user.png", :plugin => "ae_users" %>
+<% end -%>
+<%= h(@perm.grantee.name) %>
+            <%= link_to_remote "Remove",
+                { :url => { :controller => "permission", :action => "revoke", :id => @perm.id },
+                :success => "$('grant_#{@perm.id}').remove();" },
+                { :class => "permission_action" } %>
