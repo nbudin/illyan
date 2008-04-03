@@ -26,7 +26,15 @@ class AuthController < ApplicationController
             cookies['email'] = @login.email
           end
         end
-        redirect_to @login.return_to
+        if @login.return_to
+          redirect_to @login.return_to
+        elsif session[:return_to]
+          rt = session[:return_to]
+          session.delete(:return_to)
+          redirect_to rt
+        else
+          redirect_to '/'
+        end
       elsif using_open_id?
         @openid_url = params[:openid_url]
       end
@@ -97,7 +105,7 @@ class AuthController < ApplicationController
         end
         
         session[:person] = @person
-        redirect_to params[:return_to]
+        redirect_to session[:return_to]
       end
     end
   end
@@ -171,6 +179,11 @@ class AuthController < ApplicationController
   end
   
   def attempt_open_id_login(return_to)
+    if return_to
+      session[:return_to] = return_to
+    else
+      return_to = session[:return_to]
+    end
     optional_fields = Person.sreg_map.keys
     if AeUsers.profile_class and AeUsers.profile_class.respond_to?('sreg_map')
       optional_fields += AeUsers.profile_class.sreg_map.keys

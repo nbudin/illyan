@@ -1,5 +1,4 @@
 class Permission < ActiveRecord::Base
-  establish_connection :users
   belongs_to :role
   belongs_to :person
   belongs_to :permissioned, :polymorphic => true
