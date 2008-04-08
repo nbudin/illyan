@@ -216,12 +216,99 @@ module AeUsers
       def logged_in_person
         return logged_in?
       end
+      
+      def attempt_login(login)
+        @account = Account.find_by_email_address(login.email)
+        if not @account.nil? and not @account.active
+          redirect_to :controller => 'auth', :action => :needs_activation, :account => @account, :email => login.email, :return_to => login.return_to
+          return false
+        elsif not @account.nil? and @account.check_password login.password
+          if (not AeUsers.profile_class.nil? and not @account.person.nil? and 
+            AeUsers.profile_class.find_by_person_id(@account.person.id).nil?)
+
+            session[:provisional_person] = @account.person.id
+            redirect_to :controller => 'auth', :action => :needs_profile, :return_to => login.return_to
+            return false
+          else
+            session[:person] = @account.person.id
+            return true
+          end
+        else
+          flash[:error_messages] = ['Invalid email address or password.']
+          return false
+        end
+      end
+      
+      def attempt_open_id_login(return_to)
+        if return_to
+          session[:return_to] = return_to
+        else
+          return_to = session[:return_to]
+        end
+        optional_fields = Person.sreg_map.keys
+        if AeUsers.profile_class and AeUsers.profile_class.respond_to?('sreg_map')
+          optional_fields += AeUsers.profile_class.sreg_map.keys
+        end
+        authenticate_with_open_id(params[:openid_url], :optional => optional_fields) do |result, identity_url, registration|
+          if result.successful?
+            id = OpenIdIdentity.find_by_identity_url(identity_url)
+            if not id.nil?
+              @person = id.person
+            end
+            if id.nil? or @person.nil?
+              if AeUsers.signup_allowed?
+                session[:identity_url] = identity_url
+                redirect_to :controller => 'auth', :action => :needs_person, :return_to => return_to, :registration => registration
+                return false
+              else
+                flash[:error_messages] = ["Sorry, you are not registered with this site."]
+                return false
+              end
+            else
+              if (not AeUsers.profile_class.nil? and AeUsers.profile_class.find_by_person_id(@person.id).nil?)
+                session[:provisional_person] = @person.id
+                redirect_to :controller => 'auth', :action => :needs_profile, :return_to => return_to
+                return false
+              else
+                session[:person] = @person.id
+                return true
+              end
+            end
+          else
+            flash[:error_messages] = result.message
+            return false
+          end
+        end
+        return session[:person]
+      end
+      
+      def attempt_login_from_params
+        return_to = request.request_uri
+        if params[:ae_email] and params[:ae_password]
+          login = Login.new(:email => params[:ae_email], :password => params[:ae_password], :return_to => return_to)
+          attempt_login(login)
+        elsif params[:openid_url]
+          attempt_open_id_login(return_to)
+        elsif params[:ae_ticket]
+        end
+      end
+      
+      def do_permission_check(obj, perm_name, fail_msg)
+        attempt_login_from_params
+        p = logged_in_person
+        if not (p and p.permitted?(obj, perm_name))
+          access_denied fail_msg
+        end
+      end
 
       module ClassMethods
         def require_login(conditions = {})
           before_filter conditions do |controller|
             if not controller.logged_in?
-              controller.access_denied "Sorry, but you need to be logged in to view that page."
+              controller.attempt_login_from_params
+              if not controller.logged_in?
+                controller.access_denied "Sorry, but you need to be logged in to view that page."
+              end
             end
           end
         end
@@ -238,13 +325,7 @@ module AeUsers
             end
             cn ||= controller.class.name.gsub(/Controller$/, "").singularize
             full_perm_name = "#{perm_name}_#{cn.tableize}"
-            p = controller.logged_in_person
-            if p
-              logger.debug("Checking #{perm_name} permission on #{cn.pluralize} for user #{p.name}")
-            end
-            if not (p and p.permitted?(p, full_perm_name))
-              controller.access_denied "Sorry, but you are not permitted to #{perm_name} #{cn.downcase.pluralize}."
-            end
+            controller.do_permission_check(nil, full_perm_name, "Sorry, but you are not permitted to #{perm_name} #{cn.downcase.pluralize}.")
           end
         end
 
@@ -257,13 +338,7 @@ module AeUsers
             cn ||= controller.class.name.gsub(/Controller$/, "").singularize
             o = eval(cn).find(controller.params[id_param])
             if not o.nil?
-              p = controller.logged_in_person
-              if p
-                logger.debug("Checking #{perm_name} permission on #{o.class.name} #{o.id} for user #{p.name}")
-              end
-              if not (p and o.permitted?(p, perm_name))
-                controller.access_denied "Sorry, but you are not permitted to #{perm_name} this #{cn.downcase}."
-              end
+              controller.do_permission_check(o, perm_name, "Sorry, but you are not permitted to #{perm_name} this #{cn.downcase}.")
             end
           end
         end
