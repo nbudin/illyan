@@ -72,16 +72,6 @@ class Person < ActiveRecord::Base
   end
   
   def permitted?(obj, perm_name)
-    if obj.kind_of? ActiveRecord::Base
-      if not obj.id.nil?
-        objrep = "#{obj.class.name} #{obj.id}"
-      else
-        objrep = "Unsaved #{obj.class.name}"
-      end
-    else
-      objrep = obj.to_s
-    end
-    logger.info "Checking #{name}'s permissions to #{perm_name} on #{objrep}"
     result = false
     all_permissions.each do |permission|
       po = permission.permissioned
@@ -94,12 +84,10 @@ class Person < ActiveRecord::Base
       
       permmatch = (permission.permission == perm_name)
       
-      logger.debug "Permission #{permission.id}: objmatch #{objmatch}, permmatch #{permmatch}"
       result = ((po.nil? or objmatch) and
         (permission.permission.nil? or permmatch))
       
       if result
-        logger.debug "Permission match!"
         break
       end
     end
