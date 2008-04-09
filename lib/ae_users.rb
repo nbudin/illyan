@@ -282,6 +282,18 @@ module AeUsers
         return session[:person]
       end
       
+      def attempt_ticket_login(secret)
+        t = AuthTicket.find_ticket(secret)
+        if t.nil?
+          flash[:error_messages] = ["Ticket not found"]
+          return false
+        else
+          session[:person] = t.person
+          t.destroy
+          return session[:person]
+        end
+      end
+      
       def attempt_login_from_params
         return_to = request.request_uri
         if params[:ae_email] and params[:ae_password]
@@ -290,6 +302,7 @@ module AeUsers
         elsif params[:openid_url]
           attempt_open_id_login(return_to)
         elsif params[:ae_ticket]
+          attempt_ticket_login(params[:ae_ticket])
         end
       end
       
