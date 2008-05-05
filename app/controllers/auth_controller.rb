@@ -30,7 +30,7 @@ class AuthController < ApplicationController
           redirect_to @login.return_to
         elsif session[:return_to]
           rt = session[:return_to]
-          session.delete(:return_to)
+          session[:return_to] = nil
           redirect_to rt
         else
           redirect_to '/'
