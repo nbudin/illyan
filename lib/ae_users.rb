@@ -245,11 +245,15 @@ module AeUsers
         else
           return_to = session[:return_to]
         end
+        
+        openid_url = params[:openid_url]
+        params.delete(:openid_url)
+        
         optional_fields = Person.sreg_map.keys
         if AeUsers.profile_class and AeUsers.profile_class.respond_to?('sreg_map')
           optional_fields += AeUsers.profile_class.sreg_map.keys
         end
-        authenticate_with_open_id(params[:openid_url], :optional => optional_fields) do |result, identity_url, registration|
+        authenticate_with_open_id(openid_url, :optional => optional_fields) do |result, identity_url, registration|
           if result.successful?
             id = OpenIdIdentity.find_by_identity_url(identity_url)
             if not id.nil?
