@@ -56,7 +56,15 @@ class AuthController < ApplicationController
         nil
       end
         
-      params[:registration].each_pair do |key, value|
+      keys = ['email'] + person_map.keys
+      if profile_map
+        keys += profile_map.keys
+      end
+      for key in keys
+        value = params[:registration][key]
+        if value.nil?
+          next
+        end
         if key == 'email'
           params[:email] = value
         elsif person_map.has_key?(key.to_s)
