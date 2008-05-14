@@ -262,7 +262,8 @@ module AeUsers
             if id.nil? or @person.nil?
               if AeUsers.signup_allowed?
                 session[:identity_url] = identity_url
-                redirect_to :controller => 'auth', :action => :needs_person, :return_to => return_to, :registration => registration
+                session[:registration] = registration
+                redirect_to :controller => 'auth', :action => :needs_person, :return_to => return_to
                 return false
               else
                 flash[:error_messages] = ["Sorry, you are not registered with this site."]
