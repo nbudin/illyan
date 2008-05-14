@@ -48,6 +48,27 @@ class AuthController < ApplicationController
       @app_profile = AeUsers.profile_class.send(:new, :person => @person)
     end
     
+    if params[:registration]
+      person_map = HashWithIndifferentAccess.new(Person.sreg_map)
+      profile_map = if AeUsers.profile_class and AeUsers.profile_class.respond_to("sreg_map")
+        HashWithIndifferentAccess.new(AeUsers.profile_class.sreg_map)
+      else
+        nil
+      end
+        
+      params[:registration].each_pair do |key, value|
+        if key == 'email'
+          params[:email] = value
+        elsif person_map.has_key?(key.to_s)
+          mapper = person_map[key]
+          attrs = mapper.call(value)
+          @person.attributes = attrs
+        elsif (profile_map and profile_map.has_key?(key))
+          mapper = profile_map[key]
+          @app_profile.attributes = mapper.call(value)
+        end
+      end
+    end
     if params[:person]
       @person.attributes = params[:person]
     end
@@ -85,36 +106,6 @@ class AuthController < ApplicationController
         
         session[:person] = @person
         redirect_to session[:return_to]
-      end
-    else
-      if params[:registration]
-        person_map = HashWithIndifferentAccess.new(Person.sreg_map)
-        profile_map = if AeUsers.profile_class and AeUsers.profile_class.respond_to("sreg_map")
-          HashWithIndifferentAccess.new(AeUsers.profile_class.sreg_map)
-        else
-          nil
-        end
-
-        keys = ['email'] + person_map.keys
-        if profile_map
-          keys += profile_map.keys
-        end
-        for key in keys
-          value = params[:registration][key]
-          if value.nil?
-            next
-          end
-          if key == 'email'
-            params[:email] = value
-          elsif person_map.has_key?(key.to_s)
-            mapper = person_map[key]
-            attrs = mapper.call(value)
-            @person.attributes = attrs
-          elsif (profile_map and profile_map.has_key?(key))
-            mapper = profile_map[key]
-            @app_profile.attributes = mapper.call(value)
-          end
-        end
       end
     end
   end
