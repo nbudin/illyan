@@ -91,7 +91,7 @@ class Person < ActiveRecord::Base
         break
       end
     end
-    logger.info "Permission check result: #{result}"
+    logger.debug "Permission check result: #{result}"
     return result
   end
   
