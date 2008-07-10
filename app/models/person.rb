@@ -5,6 +5,7 @@ class Person < ActiveRecord::Base
   has_and_belongs_to_many :roles
   has_many :permissions, :dependent => :destroy
   has_many :email_addresses, :dependent => :destroy
+  has_many :permission_caches, :dependent => :destroy
 
   def self.sreg_map  
     {:fullname => Proc.new do |fullname|
@@ -72,6 +73,18 @@ class Person < ActiveRecord::Base
   end
   
   def permitted?(obj, perm_name)
+    cache = if obj and obj.kind_of? ActiveRecord::Base
+      permission_caches.find(:first, :conditions => ["permissioned_id = ? and permissioned_type = ? and permission_name = ?", obj.id, obj.class.name, perm_name])
+    else
+      permission_caches.find(:first, :conditions => ["permissioned_id is null and permissioned_type is null and permission_name = ?", perm_name])
+    end
+    if cache.nil?
+      cache = update_permission_cache(obj, perm_name)
+    end
+    return cache.result
+  end
+  
+  def update_permission_cache(obj, perm_name)
     result = false
     all_permissions.each do |permission|
       po = permission.permissioned
@@ -92,7 +105,11 @@ class Person < ActiveRecord::Base
       end
     end
     logger.debug "Permission check result: #{result}"
-    return result
+    po = nil
+    if obj and obj.kind_of? ActiveRecord::Base
+      po = obj
+    end
+    return PermissionCache.create(:person => self, :permissioned => po, :permission_name => perm_name, :result => result)
   end
   
   def administrator_classes

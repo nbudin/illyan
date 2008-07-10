@@ -21,6 +21,9 @@ alter table people drop column account_id;
 
 create table open_id_identities (id int not null auto_increment primary key, person_id int, identity_url varchar(4000));
 
-You'll also want to run this command in each of your application databases:
+You'll also want to run these commands in each of your application databases:
 
 create table auth_tickets (id int not null auto_increment primary key, secret varchar(40) unique, person_id int, created_at datetime, updated_at datetime, expires_at datetime);
+create table permission_caches (id int not null auto_increment primary key, person_id int, permissioned_id int, permissioned_type varchar(255), permission_name varchar(255), result tinyint(1));
+create index index_permission_caches_on_person_id on permission_caches (person_id);
+create unique index index_permission_caches_on_everything on permission_caches (person_id, permissioned_id, permissioned_type, permission_name);
