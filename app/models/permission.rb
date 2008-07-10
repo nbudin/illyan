@@ -30,10 +30,16 @@ class Permission < ActiveRecord::Base
   end
   
   def caches
-    PermissionCache.find(:all, :conditions => cache_conds)
+    if AeUsers.cache_permissions?
+      PermissionCache.find(:all, :conditions => cache_conds)
+    else
+      []
+    end
   end
   
   def destroy_caches
-    PermissionCache.destroy_all(cache_conds)
+    if AeUsers.cache_permissions?
+      PermissionCache.destroy_all(cache_conds)
+    end
   end
 end

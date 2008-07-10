@@ -37,6 +37,17 @@ module AeUsers
       return eval(name)
     end
   end
+  
+  @@cache_permissions = true
+  begin
+    PermissionCache.count
+  rescue
+    @@cache_permissions = false
+  end
+  
+  def self.cache_permissions?
+    @@cache_permissions
+  end
 
   # yeah, the following 2 functions are Incredibly Evil(tm).  I couldn't find any other way
   # to pass around an ActiveRecord class without having it be potentially overwritten on
@@ -132,12 +143,16 @@ module AeUsers
           grantees.each do |grantee|
             if grantee.kind_of? Role
               permissions.each do |perm|
-                PermissionCache.destroy_all(["permissioned_type = ? and permissioned_id = ? and permission_name = ?", self.class.name, self.id, perm])
+                if AeUsers.cache_permissions?
+                  PermissionCache.destroy_all(["permissioned_type = ? and permissioned_id = ? and permission_name = ?", self.class.name, self.id, perm])
+                end
                 Permission.create :role => grantee, :permission => perm, :permissioned => self
               end
             elsif grantee.kind_of? Person
               permissions.each do |perm|
-                PermissionCache.destroy_all(["person_id = ? and permissioned_type = ? and permissioned_id = ? and permission_name = ?", grantee.id, self.class.name, self.id, perm])
+                if AeUsers.cache_permissions?
+                  PermissionCache.destroy_all(["person_id = ? and permissioned_type = ? and permissioned_id = ? and permission_name = ?", grantee.id, self.class.name, self.id, perm])
+                end
                 Permission.create :person => grantee, :permission => perm, :permissioned => self
               end
             end
@@ -160,10 +175,14 @@ module AeUsers
           grantees.each do |grantee|
             permissions.each do |perm|
               existing = if grantee.kind_of? Role
-                PermissionCache.destroy_all(["permissioned_type = ? and permissioned_id = ? and permission_name = ?", self.class.name, self.id, perm])
+                if AeUsers.cache_permissions?
+                  PermissionCache.destroy_all(["permissioned_type = ? and permissioned_id = ? and permission_name = ?", self.class.name, self.id, perm])
+                end
                 Permission.find_by_role_and_permission_type(grantee, perm)
               elsif grantee.kind_of? Person
-                PermissionCache.destroy_all(["person_id = ? and permissioned_type = ? and permissioned_id = ? and permission_name = ?", grantee.id, self.class.name, self.id, perm])
+                if AeUsers.cache_permissions?
+                  PermissionCache.destroy_all(["person_id = ? and permissioned_type = ? and permissioned_id = ? and permission_name = ?", grantee.id, self.class.name, self.id, perm])
+                end
                 Permission.find_by_person_and_permission_type(person, perm)
               end
 
