@@ -131,6 +131,8 @@ class AuthController < ApplicationController
   end
   
   def forgot
+    ActionMailer::Base.default_url_options[:host] = request.host
+    
     @account = Account.find_by_email_address(params[:email])
     if not @account.nil?
       @account.generate_password
@@ -141,6 +143,8 @@ class AuthController < ApplicationController
   end
   
   def resend_activation
+    ActionMailer::Base.default_url_options[:host] = request.host
+    
     @account = Account.find params[:account]
     if not @account.nil?
       @account.generate_activation params[:email]
