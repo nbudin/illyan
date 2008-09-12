@@ -6,7 +6,7 @@ belongs to you.
 
 To do that, simply go to:
 
-<%= url_for :only_path => false, :controller => "account", :action => "activate", :account => @account.id, :activation_key => @account.activation_key%>
+<%= url_for :only_path => false, :controller => "account", :action => "activate", :account => @account.id, :activation_key => @account.activation_key, :escape => false%>
 
 Thanks again for signing up!
 
