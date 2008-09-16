@@ -7,7 +7,7 @@ class AuthNotifier < ActionMailer::Base
     end
     
     @recipients = address
-    @from = "accounts@#{default_url_options[:host]}"
+    @from = "noreply@#{default_url_options[:host]}"
     @subject = "Your account on #{default_url_options[:host]}"
     
     @body["name"] = account.person.name || "New User"
@@ -23,7 +23,7 @@ class AuthNotifier < ActionMailer::Base
     end
     
     @recipients = address
-    @from = "accounts@#{default_url_options[:host]}"
+    @from = "noreply@#{default_url_options[:host]}"
     @subject = "Your password has been reset on #{default_url_options[:host]}"
     
     @body["name"] = account.person.name
