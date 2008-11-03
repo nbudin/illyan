@@ -12,7 +12,7 @@ class AuthNotifier < ActionMailer::Base
     
     @body["name"] = account.person.name || "New User"
     @body["account"] = account
-    @body["server_name"] = smtp_settings[:domain]
+    @body["server_name"] = default_url_options[:host]
   end
   
   def generated_password(account, password, address=nil)
@@ -28,7 +28,7 @@ class AuthNotifier < ActionMailer::Base
     
     @body["name"] = account.person.name
     @body["account"] = account
-    @body["server_name"] = smtp_settings[:domain]
+    @body["server_name"] = default_url_options[:host]
     @body["password"] = password
   end
 end
