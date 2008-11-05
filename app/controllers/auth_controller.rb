@@ -115,7 +115,7 @@ class AuthController < ApplicationController
     
     if not AeUsers.signup_allowed?
       flash[:error_messages] = ['Your account is not valid for this site.']
-      redirect_to :controller => 'main', :action => 'index'
+      redirect_to "/"
     else
       if not AeUsers.profile_class.nil?
         @app_profile = AeUsers.profile_class.send(:new, :person => @person)
@@ -150,7 +150,7 @@ class AuthController < ApplicationController
       @account.generate_activation params[:email]
     else
       flash[:error_messages] = ["No account found with ID '#{params[:account]}'!"]
-      redirect_to :controller => :main, :action => :index
+      redirect_to "/"
     end
   end
   

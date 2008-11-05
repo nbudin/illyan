@@ -6,7 +6,7 @@ class AccountController < ApplicationController
   
   def activate
     if logged_in?
-      redirect_to :controller => :main, :action => :index
+      redirect_to "/"
       return
     end
 
