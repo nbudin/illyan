@@ -231,6 +231,8 @@ module AeUsers
           rescue ActiveRecord::RecordNotFound
             return nil
           end
+        elsif attempt_login_from_params
+          return logged_in?
         else
           return nil
         end
