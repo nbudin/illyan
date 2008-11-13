@@ -325,12 +325,12 @@ module AeUsers
       
       def attempt_login_from_params
         return_to = request.request_uri
-        if params[:ae_email] and params[:ae_password]
+        if not params[:ae_email].blank? and not params[:ae_password].blank?
           login = Login.new(:email => params[:ae_email], :password => params[:ae_password], :return_to => return_to)
           attempt_login(login)
-        elsif params[:openid_url]
+        elsif not params[:openid_url].blank?
           attempt_open_id_login(return_to)
-        elsif params[:ae_ticket]
+        elsif not params[:ae_ticket].blank?
           attempt_ticket_login(params[:ae_ticket])
         end
       end
