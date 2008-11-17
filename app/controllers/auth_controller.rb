@@ -109,6 +109,12 @@ class AuthController < ApplicationController
       end
     end
   end
+
+  def auth_form  
+    respond_to do |format|
+      format.js { render :layout => false }
+    end
+  end
   
   def needs_profile
     @person = Account.find session[:provisional_person]
