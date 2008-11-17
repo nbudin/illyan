@@ -48,6 +48,15 @@ module AeUsers
   def self.cache_permissions?
     @@cache_permissions
   end
+  
+  @@js_framework = "prototype"
+  def self.js_framework
+    @@js_framework
+  end
+  
+  def self.js_framework=(framework)
+    @@js_framework = framework
+  end
 
   # yeah, the following 2 functions are Incredibly Evil(tm).  I couldn't find any other way
   # to pass around an ActiveRecord class without having it be potentially overwritten on
