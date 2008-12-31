@@ -17,7 +17,7 @@
               <%= submit_tag "Log in", :style => "margin-left: 2.5%; width: 20%; display: inline" %>
             </span>
             <span class="login_type_openid" style="display: none;">
-              <%= text_field_tag "openid_url", @openid_url, :style => "background: #FFFFFF url('#{image_path "openid.gif", :plugin => 'ae_users'}') no-repeat scroll 0pt 50%; padding-left: 18px; width: 60%;" %>
+              <%= text_field_tag "openid_url", @openid_url, :style => "background: #FFFFFF url('#{image_path "openid.gif"}') no-repeat scroll 0pt 50%; padding-left: 18px; width: 60%;" %>
               <%= submit_tag "Log in with OpenID" %>
             </span>
             <%= f.hidden_field "return_to" %>
