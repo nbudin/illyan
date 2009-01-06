@@ -116,15 +116,27 @@ class AuthController < ApplicationController
     end
   end
   
+  def auth_form  
+    respond_to do |format|
+      format.js { render :layout => false }
+    end
+  end
+  
   def needs_profile
-    @person = Account.find session[:provisional_person]
+    @person = Person.find session[:provisional_person]
+    if @person.nil?
+      flash[:error_messages] = ["Couldn't find a person record with that ID.  
+        Something may have gone wrong internally.  Please try again, and if the problem persists, please contact
+        the site administrator."]
+      redirect_to :back
+    end
     
     if not AeUsers.signup_allowed?
       flash[:error_messages] = ['Your account is not valid for this site.']
       redirect_to "/"
     else
       if not AeUsers.profile_class.nil?
-        @app_profile = AeUsers.profile_class.send(:new, :person => @person)
+        @app_profile = AeUsers.profile_class.send(:new, :person_id => session[:provisional_person])
         @app_profile.attributes = params[:app_profile]
         
         if request.post?
@@ -148,14 +160,14 @@ class AuthController < ApplicationController
     end
   end
   
-  def resend_activation
+  def resend_validation
     ActionMailer::Base.default_url_options[:host] = request.host
     
-    @account = Account.find params[:account]
-    if not @account.nil?
-      @account.generate_activation params[:email]
+    @email_address = Account.find params[:email]
+    if not @email_address.nil?
+      @email_address.generate_validation
     else
-      flash[:error_messages] = ["No account found with ID '#{params[:account]}'!"]
+      flash[:error_messages] = ["Email address #{params[:email]} not found!"]
       redirect_to "/"
     end
   end
