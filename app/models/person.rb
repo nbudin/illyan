@@ -120,7 +120,7 @@ class Person < ActiveRecord::Base
     if obj and obj.kind_of? ActiveRecord::Base
       po = obj
     end
-    return PermissionCache.create(:person => self, :permissioned => po, :permission_name => perm_name, :result => result)
+    return PermissionCache.create(:person_id => self.id, :permissioned => po, :permission_name => perm_name, :result => result)
   end
   
   def administrator_classes
