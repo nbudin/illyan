@@ -479,26 +479,52 @@ module AeUsers
       options = {
         :people => true,
         :roles => false,
-        :callback => ""
+        :callback => nil
       }.update(options)
       
-      render :inline => <<-ENDRHTML
-<%= text_field_tag "#{domid}", "", { :style => "width: 15em; display: inline; float: none;" } %>
+      rhtml = text_field_tag("#{domid}_shim", "", { :style => "width: 15em; display: inline; float: none;" })
+      rhtml += hidden_field_tag("#{domid}", "")
+      auto_complete_url = url_for(:controller => "permission", :action => "auto_complete_for_permission_grantee",
+                                  :people => options[:people], :roles => options[:roles], :escape => false)
+      
+      if AeUsers.js_framework == "prototype"
+        rhtml += <<-ENDRHTML
 <div id="#{domid}_auto_complete" class="auto_complete"></div>
-<%= auto_complete_field('#{domid}', :select => "grantee_id", :param_name => "permission[grantee]",
+<%= auto_complete_field('#{domid}_shim', :select => "grantee_id", :param_name => "q",
     :after_update_element => "function (el, selected) { 
         kid = el.value.split(':');
         klass = kid[0];
         id = kid[1];
         cb = function(klass, id) {
+          $('#{domid}').value = el.value;
           #{options[:callback]}
         };
         cb(klass, id);
-        $('#{domid}').value = '';
+        <% end -%>
       }",
-    :url => { :controller => "permission", :action => "auto_complete_for_permission_grantee",
-      :people => #{options[:people]}, :roles => #{options[:roles]}, :escape => false}) %>
-      ENDRHTML
+    :url => "#{auto_complete_url}") %>
+ENDRHTML
+      elsif AeUsers.js_framework == "jquery"
+        rhtml += <<-ENDRHTML
+<script type="text/javascript">
+$(function() {
+  jq_domid = "\##{domid.gsub(/(\W)/, '\\\\\\\\\1')}";
+  $(jq_domid + "_shim").autocomplete('#{auto_complete_url}',
+      {
+        formatItem: function(data, i, n, value) {
+          return value;
+        },
+      }).bind('result', function(e, data) {
+        $(jq_domid).val(data[1]);
+        #{options[:callback]}
+      }
+   );
+});
+</script>
+ENDRHTML
+      end
+      
+      render :inline => rhtml
     end
   end
 end

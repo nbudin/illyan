@@ -28,8 +28,8 @@ class PermissionController < ApplicationController
   end
   
   def auto_complete_for_permission_grantee
-    if params[:permission] and params[:permission][:grantee]
-      query = params[:permission][:grantee].strip.downcase
+    if params[:q]
+      query = params[:q].strip.downcase
       liketerm = "%#{query}%"
       terms = query.split
       

@@ -1,3 +1,4 @@
+<% if AeUsers.js_framework == "prototype" -%>
 <ul style="list-style-type: none; padding-left: 0;">
 <% for grantee in @grantees do -%>
   <li>
@@ -36,3 +37,11 @@
   </li>
 <% end -%>
 </ul>
+
+<% elsif AeUsers.js_framework == "jquery" -%>
+
+<% for grantee in @grantees do -%>
+<%=grantee.name %><% if grantee.kind_of? Role %> (<%= pluralize(grantee.people.count, "person") %>)<% end %>|<%=grantee.class.name %>:<%= grantee.id %>
+<% end -%>
+
+<% end -%>
