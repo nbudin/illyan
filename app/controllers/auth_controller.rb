@@ -50,7 +50,7 @@ class AuthController < ApplicationController
     
     if params[:registration]
       person_map = HashWithIndifferentAccess.new(Person.sreg_map)
-      profile_map = if AeUsers.profile_class and AeUsers.profile_class.respond_to("sreg_map")
+      profile_map = if AeUsers.profile_class and AeUsers.profile_class.respond_to?("sreg_map")
         HashWithIndifferentAccess.new(AeUsers.profile_class.sreg_map)
       else
         nil
