@@ -110,12 +110,19 @@ class AccountController < ApplicationController
     if using_open_id?
       authenticate_with_open_id(params[:openid_url]) do |result, identity_url|
         if result.successful?
-          id = logged_in_person.open_id_identities.find_by_identity_url(identity_url)
+          id = OpenIdIdentity.find_by_identity_url(identity_url)
           if id.nil?
             id = OpenIdIdentity.new :person => logged_in_person, :identity_url => identity_url
-            if not id.save
-              flash[:error_messages] = id.errors.collect { |e| e[0].humanize + " " + e[1] }
+          else
+            if id.person.nil?
+              id.person = logged_in_person
+            elsif id.person != logged_in_person
+              flash[:error_messages] = ["That OpenID belongs to a different person (#{id.person.name})."]
+              return
             end
+          end
+          if not id.save
+            flash[:error_messages] = id.errors.collect { |e| e[0].humanize + " " + e[1] }
           end
         else
           flash[:error_messages] = [result.message]
