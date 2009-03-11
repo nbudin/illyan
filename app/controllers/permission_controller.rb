@@ -1,4 +1,5 @@
 class PermissionController < ApplicationController
+  unloadable
   require_login
   
   def admin

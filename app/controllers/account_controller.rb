@@ -1,4 +1,5 @@
 class AccountController < ApplicationController
+  unloadable
   require_login :only => [:edit_profile, :edit_email_addresses, :change_password, :add_openid, :delete_openid]
   before_filter :check_signup_allowed, :only => [:signup, :signup_success]
   

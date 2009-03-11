@@ -1,4 +1,5 @@
 class AuthController < ApplicationController
+  unloadable
   filter_parameter_logging :password
   
   def login
