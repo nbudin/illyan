@@ -500,7 +500,6 @@ module AeUsers
           #{options[:callback]}
         };
         cb(klass, id);
-        <% end -%>
       }",
     :url => "#{auto_complete_url}") %>
 ENDRHTML
