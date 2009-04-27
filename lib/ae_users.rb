@@ -88,7 +88,7 @@ module AeUsers
           has_many :permissions, :as => :permissioned, :dependent => :destroy
 
           cattr_accessor :permission_names
-          self.permission_names = options[:permission_names] || []
+          self.permission_names = options[:permission_names] || [:show, :edit, :destroy]
           self.permission_names = self.permission_names.collect do |perm|
             perm.to_s
           end
@@ -365,18 +365,27 @@ module AeUsers
         end
 
         def require_class_permission(perm_name, conditions = {})
+          delegated = false
           if conditions[:class_name]
             cn = conditions[:class_name]
+            delegated = true
           elsif conditions[:class_param]
             cpn = conditions[:class_param]
           end
           before_filter conditions do |controller|
             if cn.nil? and cpn
               cn = controller.params[cpn]
+              delegated = true
             end
-            cn ||= controller.class.name.gsub(/Controller$/, "").singularize
+            controller_cn = controller.class.name.gsub(/Controller$/, "").singularize
+            cn ||= controller_cn
             full_perm_name = "#{perm_name}_#{cn.tableize}"
-            controller.do_permission_check(nil, full_perm_name, "Sorry, but you are not permitted to #{perm_name} #{cn.downcase.pluralize}.")
+            if delegated
+              msg = "Sorry, but you are not permitted to #{perm_name} #{controller_cn.tableize.humanize.downcase} in this #{cn.tableize.humanize.singularize.downcase}."
+            else
+              msg = "Sorry, but you are not permitted to #{perm_name} #{cn.tableize.humanize.downcase}."
+            end
+            controller.do_permission_check(nil, full_perm_name, msg)
           end
         end
 
@@ -389,7 +398,7 @@ module AeUsers
             cn ||= controller.class.name.gsub(/Controller$/, "").singularize
             o = eval(cn).find(controller.params[id_param])
             if not o.nil?
-              controller.do_permission_check(o, perm_name, "Sorry, but you are not permitted to #{perm_name} this #{cn.downcase}.")
+              controller.do_permission_check(o, perm_name, "Sorry, but you are not permitted to #{perm_name} this #{cn.tableize.singularize.humanize.downcase}.")
             end
           end
         end
@@ -409,7 +418,7 @@ module AeUsers
 
         def rest_view_permissions(options = {})
           options = {
-            :restrict_list => false,
+            :restrict_list => options[:class_name],
           }.update(options)
           restrict_list = options[:restrict_list]
           options.delete(:restrict_list)
