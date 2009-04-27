@@ -418,12 +418,14 @@ module AeUsers
 
         def rest_view_permissions(options = {})
           options = {
-            :restrict_list => options[:class_name],
+            :restrict_list => false,
           }.update(options)
           restrict_list = options[:restrict_list]
           options.delete(:restrict_list)
           if restrict_list
             require_class_permission("list", { :only => [:index] }.update(options))
+          elsif options[:class_name]
+            require_class_permission("show", { :only => [:index] }.update(options))
           end
           require_permission("show", { :only => [:show] }.update(options))
         end
