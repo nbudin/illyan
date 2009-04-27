@@ -66,6 +66,7 @@ class PermissionController < ApplicationController
   end
   
   before_filter :check_grant_perms, :only => [:grant]
+  layout nil, :only => [:grant]
   def grant
     perm_params = {}
     if params[:klass] == 'Person'

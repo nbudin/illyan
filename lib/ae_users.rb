@@ -492,13 +492,13 @@ module AeUsers
       }.update(options)
       
       rhtml = text_field_tag("#{domid}_shim", "", { :style => "width: 15em; display: inline; float: none;" })
-      rhtml += hidden_field_tag("#{domid}", "")
+      rhtml << hidden_field_tag("#{domid}", "")
       auto_complete_url = url_for(:controller => "permission", :action => "auto_complete_for_permission_grantee",
                                   :people => options[:people], :roles => options[:roles], :escape => false)
       
       if AeUsers.js_framework == "prototype"
-        rhtml += <<-ENDRHTML
-<div id="#{domid}_auto_complete" class="auto_complete"></div>
+        rhtml << <<-ENDRHTML
+<div id="#{domid}_shim_auto_complete" class="auto_complete"></div>
 <%= auto_complete_field('#{domid}_shim', :select => "grantee_id", :param_name => "q",
     :after_update_element => "function (el, selected) { 
         kid = el.value.split(':');
@@ -506,6 +506,7 @@ module AeUsers
         id = kid[1];
         cb = function(klass, id) {
           $('#{domid}').value = el.value;
+          $('#{domid}_shim').value = '';
           #{options[:callback]}
         };
         cb(klass, id);
@@ -513,7 +514,7 @@ module AeUsers
     :url => "#{auto_complete_url}") %>
 ENDRHTML
       elsif AeUsers.js_framework == "jquery"
-        rhtml += <<-ENDRHTML
+        rhtml << <<-ENDRHTML
 <script type="text/javascript">
 $(function() {
   jq_domid = "\##{domid.gsub(/(\W)/, '\\\\\\\\\1')}";
