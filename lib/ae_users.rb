@@ -425,7 +425,7 @@ module AeUsers
           if restrict_list
             require_class_permission("list", { :only => [:index] }.update(options))
           elsif options[:class_name]
-            require_class_permission("show", { :only => [:index] }.update(options))
+            require_permission("show", { :only => [:index], :id_param => "#{options[:class_name].tableize}_id" }.update(options))
           end
           require_permission("show", { :only => [:show] }.update(options))
         end
