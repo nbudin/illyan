@@ -486,15 +486,20 @@ module AeUsers
       AeUsers.profile_class.find_by_person_id(person.id)
     end
     
-    def user_picker(domid, options = {})
+    def user_picker(field_name, options = {})
       options = {
         :people => true,
         :roles => false,
-        :callback => nil
+        :callback => nil,
+        :default => nil,
+        :clear_after => true
       }.update(options)
       
-      rhtml = text_field_tag("#{domid}_shim", "", { :style => "width: 15em; display: inline; float: none;" })
-      rhtml << hidden_field_tag("#{domid}", "")
+      domid = field_name.gsub(/\W/, "_").gsub(/__+/, "_").sub(/_$/, "").sub(/^_/, "")
+      
+      default = options[:default]
+      rhtml = text_field_tag("#{field_name}_shim", default ? default.name : "", { :style => "width: 15em; display: inline; float: none;" })
+      rhtml << hidden_field_tag(field_name, default ? default.id : "")
       auto_complete_url = url_for(:controller => "permission", :action => "auto_complete_for_permission_grantee",
                                   :people => options[:people], :roles => options[:roles], :escape => false)
       
@@ -508,7 +513,7 @@ module AeUsers
         id = kid[1];
         cb = function(klass, id) {
           $('#{domid}').value = el.value;
-          $('#{domid}_shim').value = '';
+          #{options[:clear_after] ? "$('#{domid}_shim').value = '';" : "$('#{domid}_shim').value = selected.getAttribute('granteeName');"}
           #{options[:callback]}
         };
         cb(klass, id);
