@@ -289,24 +289,25 @@ module AeUsers
       end
       
       def logged_in?
+        if @logged_in_person
+          return @logged_in_person
+        end
         if session[:person]
           begin
-            return Person.find(session[:person])
+            @logged_in_person = Person.find(session[:person])
           rescue ActiveRecord::RecordNotFound
-            return nil
           end
         elsif session[:account]
           begin
             acct = Account.find(session[:account])
             session[:person] = acct.person.id
-            return acct.person
+            @logged_in_person = acct.person
           rescue ActiveRecord::RecordNotFound
-            return nil
           end
         elsif attempt_login_from_params
           return logged_in?
         else
-          return nil
+          return @logged_in_person
         end
       end
     
