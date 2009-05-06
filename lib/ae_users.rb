@@ -38,17 +38,6 @@ module AeUsers
     end
   end
   
-  @@cache_permissions = true
-  begin
-    PermissionCache.count
-  rescue
-    @@cache_permissions = false
-  end
-  
-  def self.cache_permissions?
-    @@cache_permissions
-  end
-  
   @@js_framework = "prototype"
   def self.js_framework
     @@js_framework
@@ -75,6 +64,76 @@ module AeUsers
 
   def self.map_openid(map)
     map.open_id_complete 'auth', :controller => "auth", :action => "login", :requirements => { :method => :get }
+  end
+
+  class PermissionCache
+    def initialize
+      @cache = {}
+    end
+
+    def permitted?(person, permissioned, permission)
+      RAILS_DEFAULT_LOGGER.debug "Permission cache looking up result for #{person}, #{permissioned}, #{permission}"
+      pcache = person_cache(person)
+      key = pcache_key(permissioned, permission)
+      unless pcache.has_key?(key)
+        RAILS_DEFAULT_LOGGER.debug "Cache miss!  Loading uncached permission."
+        pcache[key] = person.uncached_permitted?(permissioned, permission)
+      end
+      RAILS_DEFAULT_LOGGER.debug "Result is #{pcache[key]}"
+      return pcache[key]
+    end
+
+    def invalidate(person, permissioned, permission)
+      RAILS_DEFAULT_LOGGER.debug "Permission cache invalidating result for #{person}, #{permissioned}, #{permission}"
+      pcache = person_cache(person)
+      pcache.delete(pcache_key(permissioned, permission))
+    end
+
+    def invalidate_all(options={})
+      if options[:person]
+        RAILS_DEFAULT_LOGGER.debug "Permission cache invalidating all results for #{options[:person]}"
+        @cache.delete(options[:person])
+      elsif options[:permission] and options[:permissioned]
+        RAILS_DEFAULT_LOGGER.debug "Permission cache invalidating all results for #{options[:permissioned]}, #{options[:permission]}"
+        @cache.each_value do |pcache|
+          pcache.delete(pcache_key(options[:permissioned], options[:permission]))
+        end
+      else
+        RAILS_DEFAULT_LOGGER.debug "Permission cache invalidating all results!"
+        @cache = {}
+      end
+    end
+
+    private
+    def person_cache(person)
+      unless @cache.has_key?(person)
+        RAILS_DEFAULT_LOGGER.debug "Permission cache creating new pcache for #{person}"
+        @cache[person] = {}
+      end
+      @cache[person]
+    end
+
+    def pcache_key(permissioned, permission)
+      if permissioned
+        return "#{permissioned.id}_#{permission}"
+      else
+        return "nil_#{permission}"
+      end
+    end
+  end
+  
+  @@cache_permissions = true
+  @@permission_cache = AeUsers::PermissionCache.new
+  def self.cache_permissions=(value)
+    @@cache_permissions = value
+  end
+  
+  def self.cache_permissions?
+    @@cache_permissions
+  end
+
+  def self.permission_cache
+    @@permission_cache
   end
   
   module Acts
@@ -153,14 +212,16 @@ module AeUsers
             if grantee.kind_of? Role
               permissions.each do |perm|
                 if AeUsers.cache_permissions?
-                  PermissionCache.destroy_all(["permissioned_type = ? and permissioned_id = ? and permission_name = ?", self.class.name, self.id, perm])
+                  grantee.members.each do |person|
+                    AeUsers.permission_cache.invalidate(person, self, perm)
+                  end
                 end
                 Permission.create :role => grantee, :permission => perm, :permissioned => self
               end
             elsif grantee.kind_of? Person
               permissions.each do |perm|
                 if AeUsers.cache_permissions?
-                  PermissionCache.destroy_all(["person_id = ? and permissioned_type = ? and permissioned_id = ? and permission_name = ?", grantee.id, self.class.name, self.id, perm])
+                  AeUsers.permission_cache.invalidate(grantee, self, perm)
                 end
                 Permission.create :person => grantee, :permission => perm, :permissioned => self
               end
@@ -185,12 +246,14 @@ module AeUsers
             permissions.each do |perm|
               existing = if grantee.kind_of? Role
                 if AeUsers.cache_permissions?
-                  PermissionCache.destroy_all(["permissioned_type = ? and permissioned_id = ? and permission_name = ?", self.class.name, self.id, perm])
+                  grantee.members.each do |person|
+                    AeUsers.permission_cache.invalidate(person, self, perm)
+                  end
                 end
                 Permission.find_by_role_and_permission_type(grantee, perm)
               elsif grantee.kind_of? Person
                 if AeUsers.cache_permissions?
-                  PermissionCache.destroy_all(["person_id = ? and permissioned_type = ? and permissioned_id = ? and permission_name = ?", grantee.id, self.class.name, self.id, perm])
+                  AeUsers.permission_cache.invalidate(pesron, self, perm)
                 end
                 Permission.find_by_person_and_permission_type(person, perm)
               end

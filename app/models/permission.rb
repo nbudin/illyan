@@ -28,18 +28,30 @@ class Permission < ActiveRecord::Base
     end
     return [cond_sql] + cond_objs
   end
-  
-  def caches
+
+  def destroy_caches_for_person(p)
     if AeUsers.cache_permissions?
-      PermissionCache.find(:all, :conditions => cache_conds)
-    else
-      []
+      if permissioned and permission
+        AeUsers.permission_cache.invalidate(p, permissioned, permission)
+      else
+        AeUsers.permission_cache.invalidate_all(:person => p)
+      end
     end
   end
   
   def destroy_caches
     if AeUsers.cache_permissions?
-      PermissionCache.destroy_all(cache_conds)
+      if person
+        destroy_caches_for_person(person)
+      elsif role
+        role.members.each do |person|
+          AeUsers.permission_cache.invalidate(person, permissioned, permission)
+        end
+      elsif permissioned and permission
+        AeUsers.permission_cache.invalidate_all(:permissioned => permissioned, :permission => permission)
+      else
+        AeUsers.permission_cache.invalidate_all
+      end
     end
   end
 end

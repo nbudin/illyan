@@ -104,7 +104,9 @@ class PermissionController < ApplicationController
     
     @role.people.push @person
     @role.save
-    PermissionCache.destroy_all(:person_id => @person.id)
+    if AeUsers.cache_permissions?
+      AeUsers.permission_cache.invalidate_all(@person)
+    end
     
     render :partial => "role_member", :locals => {:person => @person}
   end
@@ -112,14 +114,18 @@ class PermissionController < ApplicationController
   def remove_role_member   
     @role.people.delete(@role.people.find(params[:id]))
     @role.save
-    PermissionCache.destroy_all(:person_id => @person.id)
+    if AeUsers.cache_permissions?
+      AeUsers.permission_cache.invalidate_all(@person)
+    end
     
     render :nothing => true
   end
   
   def delete_role
-    @role.people.each do |person|
-      PermissionCache.destroy_all(:person_id => @person.id)
+    if AeUsers.cache_permissions?
+      @role.people.each do |person|
+        AeUsers.permission_cache.invalidate_all(person)
+      end
     end
     @role.destroy
     render :nothing => true
