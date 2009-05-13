@@ -177,7 +177,7 @@ module AeUsers
         end
         
         def permitted_people(permission)
-          grants = permissions.find_all_by_permission(permission)
+          grants = permissions.select { |perm| perm.permission == permission }
           people = []
           grants.collect {|grant| grant.grantee}.each do |grantee|
             if grantee.kind_of? Person
