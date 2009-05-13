@@ -128,7 +128,8 @@ class Person < ActiveRecord::Base
   end
   
   def app_profile
-    AeUsers.profile_class.find_by_person_id(id)
+    @app_profile ||= AeUsers.profile_class.find_by_person_id(id)
+    @app_profile
   end
   
   def profile
