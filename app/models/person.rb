@@ -3,7 +3,7 @@ class Person < ActiveRecord::Base
   has_one :account
   has_many :open_id_identities
   has_and_belongs_to_many :roles
-  has_many :permissions, :dependent => :destroy
+  has_many :permissions, :dependent => :destroy, :include => :permissioned
   has_many :email_addresses, :dependent => :destroy
 
   def self.sreg_map  
@@ -64,9 +64,9 @@ class Person < ActiveRecord::Base
   end
 
   def all_permissions
-    allperms = permissions.find(:all)
+    allperms = permissions
     roles.each do |role|
-      allperms += role.permissions.find(:all)
+      allperms += role.permissions
     end
     return allperms
   end

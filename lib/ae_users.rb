@@ -144,7 +144,7 @@ module AeUsers
 
       module ClassMethods
         def acts_as_permissioned(options = {})
-          has_many :permissions, :as => :permissioned, :dependent => :destroy
+          has_many :permissions, :as => :permissioned, :dependent => :destroy, :include => [:person, :role, :permissioned]
 
           cattr_accessor :permission_names
           self.permission_names = options[:permission_names] || [:show, :edit, :destroy]
