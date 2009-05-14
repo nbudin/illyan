@@ -18,10 +18,12 @@ div.auto_complete {
   <% permission_names(item).each do |perm| -%>
     <li><b><%=h(perm.to_s.humanize)%></b>:
     <% grants = permission_grants(item, perm) -%>
-    <% if all_permitted?(item, perm) -%>
-      everybody
-    <% elsif grants.length == 0 -%>
-      <span id="<%= perm %>_nobody">nobody</span>
+    <% if grants.length == 0 -%>
+      <% if all_permitted?(item, perm) -%>
+        everybody
+      <% elsif grants.length == 0 -%>
+        <span id="<%= perm %>_nobody">nobody</span>
+      <% end -%>
     <% else -%>
       <% grants.each_index do |i| -%>
         <% grant = grants[i] -%>
