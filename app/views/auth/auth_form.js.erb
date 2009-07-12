@@ -1,39 +1,43 @@
 <% if AeUsers.js_framework == "jquery" -%>
-function chooseLoginType(loginType) {
-    $('select.login_type').each(function(e) { this.value = loginType; });
-    if (loginType == 'account') {
-        $('span.login_type_openid').hide();
-        $('span.login_type_account').show();
-    }
-    if (loginType == 'openid') {
-        $('span.login_type_account').hide();
-        $('span.login_type_openid').show();
-    }
+function chooseHavePassword() {
+    val = $('#auth_form input[name="login[have_password]"]:checked').val();
+	$password = $('#auth_form input[name="login[password]"]');
+	$password.val("");
+	
+	if (val == "true") {
+	    $password.attr('disabled', '');
+		$password.focus();
+	} else {
+	    $password.attr('disabled', 'disabled');
+	}
 }
 
 $(document).ready(function () {
-    <% if @openid_url or params[:openid_url] -%>
-      $('#login_type').val('openid');
+    <% if (params[:login] and params[:login][:password]) -%>
+      $('#auth_form input[name="login[have_password]"][value="false"]').attr('checked', 'checked');
     <% end -%>
-    chooseLoginType($('#login_type').val());
+	chooseHavePassword();
 });
 <% else -%>
-function chooseLoginType(loginType) {
-    $$('select.login_type').each(function(e) { e.value = loginType; });
-    if (loginType == 'account') {
-        $$('span.login_type_openid').each(function(e) { e.hide() });
-        $$('span.login_type_account').each(function(e) { e.show() });
-    }
-    if (loginType == 'openid') {
-        $$('span.login_type_account').each(function(e) { e.hide() });
-        $$('span.login_type_openid').each(function(e) { e.show() });
-    }
+function chooseHavePassword() {
+	val = $('login_have_password_true').checked;
+	password = $('login_password');
+	password.value = "";
+	
+	if (val) {
+		password.disabled = false;
+		password.focus();
+	} else {
+		password.disabled = true;
+	}
 }
 
 Event.observe(window, 'load', function () {
-    <% if @openid_url or params[:openid_url] -%>
-      $('login_type').value = 'openid';
+    <% if (params[:login] and params[:login][:password]) -%>
+      $('login_have_password_true').checked = true;
     <% end -%>
-    chooseLoginType($F('login_type'));
+    chooseHavePassword();
+	$('login_have_password_true').observe('change', chooseHavePassword);
+	$('login_have_password_false').observe('change', chooseHavePassword);
 });
 <% end -%>

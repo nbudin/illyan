@@ -281,11 +281,11 @@ module AeUsers
         msg ||= "Sorry, you don't have access to view that page."
         if logged_in?
           body = "If you feel you've been denied access in error, please contact the administrator of this web site."
+          render options.update({:inline => "<h1>#{msg}</h1>\n\n<div id=\"login\"><p><b>#{body}</b></p></div>"})
         else
-          body = "Try logging into an account."
-        end
-        @login = Login.new(:email => cookies['email'])
-        render options.update({:inline => "<h1>#{msg}</h1>\n\n<div id=\"login\"><p><b>#{body}</b></p><%= render :partial => 'auth/auth_form' %></div>"})
+          flash[:error_messages] = msg
+          redirect_to :controller => 'auth', :action => 'login'
+        end        
       end
       
       def logged_in?

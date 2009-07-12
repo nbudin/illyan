@@ -13,20 +13,18 @@ class AuthController < ApplicationController
         @login.return_to = request.env["HTTP_REFERER"]
       end
     end
+    if request.post?
+      unless using_open_id? or @login.password or @login.have_password
+        redirect_to :controller => "account", :action => "signup", :email => @login.email
+      end
+    end
     if using_open_id? or (request.post? and not logged_in?)
       result = if using_open_id?
         attempt_open_id_login(@login.return_to)
-      else
+      elsif @login.password
         attempt_login(@login)
       end
       if result
-        if @login.remember and @login.remember != 0
-          if using_open_id?
-            cookies['openid_url'] = params[:openid_url]
-          else
-            cookies['email'] = @login.email
-          end
-        end
         if @login.return_to
           redirect_to @login.return_to
         elsif session[:return_to]
@@ -175,6 +173,6 @@ class AuthController < ApplicationController
   
   def logout
     reset_session
-    redirect_to request.env["HTTP_REFERER"]
+    redirect_to "/"
   end
 end
