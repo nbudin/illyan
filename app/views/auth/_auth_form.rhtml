@@ -1,20 +1,7 @@
-<style type="text/css">
-  #auth_form {
-    margin-left: 0.5em;
-    width: 300px;
-  }
-  #auth_form input {
-    width: 100%;
-  }
-  #auth_form label.block {
-    margin-left: -0.5em;
-    font-weight: bold;
-    display: block;
-  }
-</style>
+<%= auth_stylesheet %>
 
 <% form_for('login', @login, :url => {:action => 'login', :controller => 'auth'},
-        :html => {:id => 'auth_form'} ) do |f| -%>
+        :html => {:class => 'auth_form'} ) do |f| -%>
     <% if not logged_in? %>
       <script type="text/javascript" src="<%=url_for :controller => 'auth', :action => "auth_form", 
         :format => "js", :openid_url => params[:openid_url] %>"></script>
@@ -31,7 +18,7 @@
           <%= f.radio_button "have_password", "false" %> <label for="login_have_password_false">No, I am a new user.</label>
           <br/>
           <%= f.radio_button "have_password", "true" %> <label for="login_have_password_true">Yes, my password is:</label>
-          <div style="margin-left: 1em; margin-top: 0; padding-top: 0;">
+          <div style="margin-left: 2em; margin-top: 0; padding-top: 0;">
             <%= password_field "login", "password" %>
           </div>
       </p>
@@ -39,8 +26,6 @@
       <p style="text-align: center;">
         <%= submit_tag "Log in", :style => "width: 20%; display: inline" %>
       </p>
-      
-	  <%= link_to "I forgot my password", :controller => "auth", :action => "forgot_form" %>
  	  
     <% else %>
       <div style="text-align: right; margin-right: 1em;">

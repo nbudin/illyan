@@ -1,41 +1,32 @@
 class AuthController < ApplicationController
   unloadable
   filter_parameter_logging :password
+  before_filter :construct_login, :only => [:login, :openid_login, :forgot_form]
   
-  def login
-    @login = Login.new(params[:login])
-    @login.email ||= cookies['email']
-    params[:openid_url] ||= cookies['openid_url']
-    if @login.return_to.nil? or @login.return_to == ""
-      if params[:return_to]
-        @login.return_to = params[:return_to]
-      else
-        @login.return_to = request.env["HTTP_REFERER"]
+  def index
+    respond_to do |format|
+      format.css { render :layout => false }
+    end
+  end
+  
+  def openid_login
+    params[:openid_url] ||= cookies['openid_url']    
+    if using_open_id?
+      if attempt_open_id_login(@login.return_to)
+        successful_login_redirect
       end
     end
+  end
+  
+  def login
     if request.post?
-      unless using_open_id? or @login.password or @login.have_password
+      unless @login.password or @login.have_password
         redirect_to :controller => "account", :action => "signup", :email => @login.email
       end
     end
-    if using_open_id? or (request.post? and not logged_in?)
-      result = if using_open_id?
-        attempt_open_id_login(@login.return_to)
-      elsif @login.password
-        attempt_login(@login)
-      end
-      if result
-        if @login.return_to
-          redirect_to @login.return_to
-        elsif session[:return_to]
-          rt = session[:return_to]
-          session[:return_to] = nil
-          redirect_to rt
-        else
-          redirect_to '/'
-        end
-      elsif using_open_id?
-        @openid_url = params[:openid_url]
+    if request.post? and not logged_in?
+      if attempt_login(@login)
+        successful_login_redirect
       end
     end
   end
@@ -115,12 +106,6 @@ class AuthController < ApplicationController
     end
   end
   
-  def auth_form  
-    respond_to do |format|
-      format.js { render :layout => false }
-    end
-  end
-  
   def needs_profile
     @person = Person.find session[:provisional_person]
     if @person.nil?
@@ -132,7 +117,7 @@ class AuthController < ApplicationController
     
     if not AeUsers.signup_allowed?
       flash[:error_messages] = ['Your account is not valid for this site.']
-      redirect_to "/"
+      redirect_to url_for("/")
     else
       if not AeUsers.profile_class.nil?
         @app_profile = AeUsers.profile_class.send(:new, :person_id => session[:provisional_person])
@@ -167,12 +152,48 @@ class AuthController < ApplicationController
       @email_address.generate_validation
     else
       flash[:error_messages] = ["Email address #{params[:email]} not found!"]
-      redirect_to "/"
+      redirect_to url_for("/")
     end
   end
   
   def logout
     reset_session
-    redirect_to "/"
+    redirect_to url_for("/")
+  end
+  
+  private
+  
+  def construct_login
+    @login = Login.new(params[:login])
+    @login.email ||= cookies['email']
+    if @login.return_to.nil? or @login.return_to == ""
+      if params[:return_to]
+        @login.return_to = params[:return_to]
+      else
+        @login.return_to = request.env["HTTP_REFERER"]
+      end
+    end
+
+    # prevent infinite redirect loops
+    if URI(@login.return_to).path == URI(request.url).path
+      @login.return_to = url_for("/")
+    end
+    
+    # if they're already logged in, don't let them view this page
+    if logged_in?
+      successful_login_redirect
+    end
+  end
+  
+  def successful_login_redirect
+    if @login.return_to
+      redirect_to @login.return_to
+    elsif session[:return_to]
+      rt = session[:return_to]
+      session[:return_to] = nil
+      redirect_to rt
+    else
+      redirect_to url_for('/')
+    end
   end
 end
