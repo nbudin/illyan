@@ -175,8 +175,11 @@ class AuthController < ApplicationController
     end
 
     # prevent infinite redirect loops
-    if URI(@login.return_to).path == URI(request.url).path
-      @login.return_to = url_for("/")
+    begin
+      if URI(@login.return_to).path == URI(request.url).path
+        @login.return_to = url_for("/")
+      end
+    rescue
     end
     
     # if they're already logged in, don't let them view this page
