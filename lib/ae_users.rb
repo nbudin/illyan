@@ -281,7 +281,12 @@ module AeUsers
         msg ||= "Sorry, you don't have access to view that page."
         if logged_in?
           body = "If you feel you've been denied access in error, please contact the administrator of this web site."
-          render options.update({:inline => "<h1>#{msg}</h1>\n\n<div id=\"login\"><p><b>#{body}</b></p></div>"})
+          respond_to do |format|
+            format.html { render options.update({:inline => "<h1>#{msg}</h1>\n\n<div id=\"login\"><p><b>#{body}</b></p></div>"}) }
+            format.xml  { render :xml => { :error => msg }.to_xml, :status => :forbidden }
+            format.js   { render :json => msg, :status => :forbidden }
+            format.json { render :json => msg, :status => :forbidden }
+          end
         else
           flash[:error_messages] = msg
           redirect_to :controller => 'auth', :action => 'login'
