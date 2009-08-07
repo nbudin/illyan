@@ -145,6 +145,10 @@ class PermissionController < ApplicationController
     @perm = Permission.find(params[:id])
     @permissioned = @perm.permissioned
     check_metaperms
+    if @person == @perm.grantee and @perm.permission == "change_permissions"
+      access_denied "Sorry, you can't revoke your own right to change permissions.  (You'd probably regret it anyway!)" +
+                    " If you're trying to transfer ownership to someone else, just give them all the permissions, and have them revoke yours."
+    end
   end
   
   def check_metaperms

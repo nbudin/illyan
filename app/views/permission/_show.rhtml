@@ -38,11 +38,12 @@ div.auto_complete {
           <% else -%>
             Unknown entity
           <% end -%>
-          <% if logged_in? and logged_in_person.permitted?(item, "change_permissions") -%>
+          <% if logged_in? and logged_in_person.permitted?(item, "change_permissions") and not (grant.grantee == logged_in_person) -%>
             <%= link_to_remote "Remove",
-                { :url => { :controller => "permission", :action => "revoke", :id => grant.id },
+                { :url => { :controller => "permission", :action => "revoke", :id => grant.id, :format => "js" },
                 :success => "$('grant_#{grant.id}').remove();",
-                :confirm => "Are you sure you want to revoke that permission?" },
+                :confirm => "Are you sure you want to revoke that permission?",
+				:failure => "alert(request.responseText)" },
                 { :class => "permission_action" } %>
           <% end -%>
 
