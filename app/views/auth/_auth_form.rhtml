@@ -13,7 +13,8 @@
           <%= text_field "login", "email" %>
       </p>
       
-      <p>
+	  <% if AeUsers.signup_allowed? -%>
+      	<p>
           <label class="block">Do you have a password?</label>
           <%= f.radio_button "have_password", "false" %> <label for="login_have_password_false">No, I am a new user.</label>
           <br/>
@@ -21,7 +22,13 @@
           <div style="margin-left: 2em; margin-top: 0; padding-top: 0;">
             <%= password_field "login", "password" %>
           </div>
-      </p>
+      	</p>
+	  <% else -%>
+	    <p>
+     	  <label for="password" class="block">Password</label>
+          <%= password_field "login", "password" %>
+        </p>
+	  <% end -%>
       
       <p style="text-align: center;">
         <%= submit_tag "Log in", :style => "width: 20%; display: inline" %>

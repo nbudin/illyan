@@ -11,20 +11,24 @@ class Account < ActiveRecord::Base
     end
   end
   
-  def password=(password)
-    if not password.nil?
-      write_attribute("password", Account.hash_password(password))
+  def password=(p)
+    if not p.nil?
+      write_attribute("password", Account.hash_password(p))
     else
       write_attribute("password", nil)
     end
   end
   
-  def self.hash_password(password)
-    return Digest::MD5.hexdigest(password)
+  def self.hash_password(p)
+    if p.nil?
+      return nil
+    else
+      return Digest::MD5.hexdigest(p)
+    end
   end
   
-  def check_password(password)
-    return self.password == Account.hash_password(password)
+  def check_password(p)
+    return self.password == Account.hash_password(p)
   end
   
   def generate_password(address = nil, length = 6)

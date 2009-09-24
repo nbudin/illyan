@@ -1,7 +1,7 @@
 <% if AeUsers.js_framework == "jquery" -%>
 function chooseHavePassword() {
-    val = $('#auth_form input[name="login[have_password]"]:checked').val();
-	$password = $('#auth_form input[name="login[password]"]');
+    val = $('.auth_form input[name="login[have_password]"]:checked').val();
+	$password = $('.auth_form input[name="login[password]"]');
 	$password.val("");
 	
 	if (val == "true") {
@@ -14,9 +14,10 @@ function chooseHavePassword() {
 
 $(document).ready(function () {
     <% if (params[:login] and params[:login][:password]) -%>
-      $('#auth_form input[name="login[have_password]"][value="false"]').attr('checked', 'checked');
+      $('.auth_form input[name="login[have_password]"][value="false"]').attr('checked', 'checked');
     <% end -%>
 	chooseHavePassword();
+	$('.auth_form input[name="login[have_password]"]').bind('change', chooseHavePassword);
 });
 <% else -%>
 function chooseHavePassword() {
