@@ -420,6 +420,67 @@ module AeUsers
           access_denied fail_msg
         end
       end
+      
+      def create_account_and_person()
+        @account = Account.new(:password => params[:password1])
+        @person = Person.new(params[:person])
+        @addr = EmailAddress.new :address => params[:email], :person => @person, :primary => true
+        @person.account = @account
+        
+        if not AeUsers.profile_class.nil?
+          @app_profile = AeUsers.profile_class.send(:new, :person => @person)
+          @app_profile.attributes = params[:app_profile]
+        end
+            
+        if request.post?
+          error_fields = []
+          error_messages = []
+        
+          if Person.find_by_email_address(params[:email])
+            error_fields.push "email"
+            error_messages.push "An account at that email address already exists!"
+          end
+        
+          if params[:password1] != params[:password2]
+            error_fields += ["password1", "password2"]
+            error_messages.push "Passwords do not match."
+          elsif params[:password1].length == 0
+            error_fields += ["password1", "password2"]
+            error_messages.push "You must enter a password."
+          end
+        
+          ["firstname", "lastname", "email", "gender"].each do |field|
+            if (not params[field] or params[field].length == 0) and (not params[:person][field] or params[:person][field].length == 0)
+              error_fields.push field
+              error_messages.push "You must enter a value for #{field}."
+            end
+          end
+          
+          if error_fields.size > 0 or error_messages.size > 0
+            flash[:error_fields] = error_fields
+            flash[:error_messages] = error_messages
+          else
+            @account.save
+            @addr.save
+            @person.save
+            if @app_profile
+              @app_profile.save
+            end
+        
+            begin
+              ActionMailer::Base.default_url_options[:host] = request.host
+              @account.generate_activation
+            rescue
+              @account.activation_key = nil
+              @account.active = true
+              @account.save
+              return :no_activation
+            end
+          
+            return :success
+          end
+        end
+      end
 
       module ClassMethods
         def require_login(conditions = {})
