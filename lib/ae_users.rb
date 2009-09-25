@@ -460,20 +460,25 @@ module AeUsers
             flash[:error_fields] = error_fields
             flash[:error_messages] = error_messages
           else
-            @account.save
-            @addr.save
-            @person.save
-            if @app_profile
-              @app_profile.save
+            account.save
+            addr.save
+            person.save
+            if app_profile
+              app_profile.save
             end
+            
+            @account = account
+            @addr = addr
+            @person = person
+            @app_profile = app_profile
         
             begin
               ActionMailer::Base.default_url_options[:host] = request.host
-              @account.generate_activation
+              account.generate_activation
             rescue
-              @account.activation_key = nil
-              @account.active = true
-              @account.save
+              account.activation_key = nil
+              account.active = true
+              account.save
               return :no_activation
             end
           
