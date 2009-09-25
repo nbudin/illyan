@@ -422,14 +422,14 @@ module AeUsers
       end
       
       def create_account_and_person()
-        @account = Account.new(:password => params[:password1])
-        @person = Person.new(params[:person])
-        @addr = EmailAddress.new :address => params[:email], :person => @person, :primary => true
-        @person.account = @account
+        account = Account.new(:password => params[:password1])
+        person = Person.new(params[:person])
+        addr = EmailAddress.new :address => params[:email], :person => person, :primary => true
+        person.account = account
         
         if not AeUsers.profile_class.nil?
-          @app_profile = AeUsers.profile_class.send(:new, :person => @person)
-          @app_profile.attributes = params[:app_profile]
+          app_profile = AeUsers.profile_class.send(:new, :person => person)
+          app_profile.attributes = params[:app_profile]
         end
             
         if request.post?

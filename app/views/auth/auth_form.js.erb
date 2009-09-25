@@ -12,12 +12,17 @@ function chooseHavePassword() {
 	}
 }
 
+function emailKeyPressListener(event) {
+	alert(event.keycode);
+}
+
 $(document).ready(function () {
     <% if (params[:login] and params[:login][:password]) -%>
       $('.auth_form input[name="login[have_password]"][value="false"]').attr('checked', 'checked');
     <% end -%>
 	chooseHavePassword();
 	$('.auth_form input[name="login[have_password]"]').bind('change', chooseHavePassword);
+	$('.auth_form input[name="login[email]"]').bind('keydown', emailKeyPressListener);
 });
 <% else -%>
 function chooseHavePassword() {
@@ -33,6 +38,14 @@ function chooseHavePassword() {
 	}
 }
 
+function emailKeyPressListener(event) {
+	if (event.keyCode == 9) {
+		$('login_have_password_true').checked = true;
+		chooseHavePassword();
+		Event.stop(event);
+	}
+}
+
 Event.observe(window, 'load', function () {
     <% if (params[:login] and params[:login][:password]) -%>
       $('login_have_password_true').checked = true;
@@ -40,5 +53,6 @@ Event.observe(window, 'load', function () {
     chooseHavePassword();
 	$('login_have_password_true').observe('change', chooseHavePassword);
 	$('login_have_password_false').observe('change', chooseHavePassword);
+	$('login_email').observe('keypress', emailKeyPressListener);
 });
 <% end -%>

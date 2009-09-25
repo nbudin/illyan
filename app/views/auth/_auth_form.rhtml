@@ -10,7 +10,7 @@
 	  
 	  <p>
      	  <label for="email" class="block">Email address</label>
-          <%= text_field "login", "email" %>
+          <%= text_field "login", "email", :tabindex => 1%>
       </p>
       
 	  <% if AeUsers.signup_allowed? -%>
@@ -26,7 +26,7 @@
 	  <% else -%>
 	    <p>
      	  <label for="password" class="block">Password</label>
-          <%= password_field "login", "password" %>
+          <%= password_field "login", "password", :tabindex => 2 %>
         </p>
 	  <% end -%>
       
