@@ -14,7 +14,7 @@ function chooseHavePassword() {
 
 function emailKeyPressListener(event) {
 	if (event.keyCode == 9) {
-		$('login_have_password_true').attr({'checked': 'true'});
+		$('#login_have_password_true').attr({'checked': 'true'});
 		chooseHavePassword();
 		event.stopPropagation();
 	}
