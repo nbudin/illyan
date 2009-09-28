@@ -17,6 +17,7 @@ function emailKeyPressListener(event) {
 		$('#login_have_password_true').attr({'checked': 'true'});
 		chooseHavePassword();
 		event.stopPropagation();
+		event.preventDefault();
 	}
 }
 
