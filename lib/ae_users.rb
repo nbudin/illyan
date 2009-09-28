@@ -664,15 +664,15 @@ ENDRHTML
       elsif AeUsers.js_framework == "jquery"
         rhtml << <<-ENDRHTML
 <script type="text/javascript">
-$(function() {
+jQuery(function() {
   jq_domid = "\##{domid.gsub(/(\W)/, '\\\\\\\\\1')}";
-  $(jq_domid + "_shim").autocomplete('#{auto_complete_url}',
+  jQuery(jq_domid + "_shim").autocomplete('#{auto_complete_url}',
       {
         formatItem: function(data, i, n, value) {
           return value;
         },
       }).bind('result', function(e, data) {
-        $(jq_domid).val(data[1]);
+        jQuery(jq_domid).val(data[1]);
         #{options[:callback]}
       }
    );
@@ -746,14 +746,14 @@ ENDRHTML
     def user_picker_js_for_jquery(options = {})
         <<-ENDRHTML
 <script type="text/javascript">
-$(function() {
-  $('\##{options['id']}_shim').autocomplete('#{options['auto_complete_url']}',
+jQuery(function() {
+  jQuery('\##{options['id']}_shim').autocomplete('#{options['auto_complete_url']}',
       {
         formatItem: function(data, i, n, value) {
           return value;
         },
       }).bind('result', function(e, data) {
-        $(jq_domid).val(data[1]);
+        jQuery(jq_domid).val(data[1]);
         #{options['callback']}
       }
    );
