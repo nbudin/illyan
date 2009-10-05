@@ -2,6 +2,15 @@
 require 'active_record'
 
 module AeUsers
+  @@environment = :users
+  def environment
+    @@environment
+  end
+
+  def environment=(new_environment)
+    @@environment = new_environment.to_sym
+  end
+
   begin
     @@db_name = Rails::Configuration.new.database_configuration["users"]["database"]
     def self.db_name
@@ -137,6 +146,18 @@ module AeUsers
   end
   
   module Acts
+    module SharedModel
+      def self.included(base)
+        base.extend ClassMethods
+      end
+
+      module ClassMethods
+        def acts_as_ae_users_shared_model
+          establish_connection(AeUsers.environment)
+        end
+      end
+    end
+
     module Permissioned
       def self.included(base)
         base.extend ClassMethods

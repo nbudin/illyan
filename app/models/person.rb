@@ -1,5 +1,5 @@
 class Person < ActiveRecord::Base
-  establish_connection :users
+  acts_as_ae_users_shared_model
   has_one :account
   has_many :open_id_identities
   has_and_belongs_to_many :roles
