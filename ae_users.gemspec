@@ -18,6 +18,7 @@ Gem::Specification.new do |s|
     "README",
      "Rakefile",
      "VERSION",
+     "ae_users.gemspec",
      "app/controllers/account_controller.rb",
      "app/controllers/auth_controller.rb",
      "app/controllers/permission_controller.rb",

@@ -30,6 +30,7 @@ begin
     gemspec.homepage = "http://github.com/nbudin/ae_users"
     gemspec.authors = ["Nat Budin"]
   end
+  Jeweler::GemcutterTasks.new
 rescue LoadError
   puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
 end
