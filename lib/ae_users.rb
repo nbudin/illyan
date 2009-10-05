@@ -3,11 +3,11 @@ require 'active_record'
 
 module AeUsers
   @@environment = :users
-  def environment
+  def self.environment
     @@environment
   end
 
-  def environment=(new_environment)
+  def self.environment=(new_environment)
     @@environment = new_environment.to_sym
   end
 
