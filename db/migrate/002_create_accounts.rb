@@ -1,6 +1,6 @@
 class CreateAccounts < ActiveRecord::Migration
   def self.up
-    ActiveRecord::Base.establish_connection :users
+    ActiveRecord::Base.establish_connection AeUsers.environment
     create_table :accounts do |t|
       t.column :password, :string, :null => false
       t.column :active, :boolean
@@ -11,7 +11,7 @@ class CreateAccounts < ActiveRecord::Migration
   end
 
   def self.down
-    ActiveRecord::Base.establish_connection :users
+    ActiveRecord::Base.establish_connection AeUsers.environment
     drop_table :accounts
   end
 end

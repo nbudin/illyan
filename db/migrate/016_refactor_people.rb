@@ -1,6 +1,6 @@
 class RefactorPeople < ActiveRecord::Migration
   def self.up
-    ActiveRecord::Base.establish_connection :users
+    ActiveRecord::Base.establish_connection AeUsers.environment
     create_table :procon_profiles do |t|
       t.column :person_id, :integer, :null => false
       t.column :nickname, :string
@@ -20,7 +20,7 @@ class RefactorPeople < ActiveRecord::Migration
   end
 
   def self.down
-    ActiveRecord::Base.establish_connection :users
+    ActiveRecord::Base.establish_connection AeUsers.environment
     add_column "people", "nickname", :string
     add_column "people", "phone", :string
     add_column "people", "best_call_time", :string

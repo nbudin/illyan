@@ -1,6 +1,6 @@
 class CreatePermissions < ActiveRecord::Migration
   def self.up
-    ActiveRecord::Base.establish_connection :users
+    ActiveRecord::Base.establish_connection AeUsers.environment
     create_table :permissions do |t|
       t.column :role_id, :integer, :null => false
       t.column :permission, :string
@@ -10,7 +10,7 @@ class CreatePermissions < ActiveRecord::Migration
   end
 
   def self.down
-    ActiveRecord::Base.establish_connection :users
+    ActiveRecord::Base.establish_connection AeUsers.environment
     drop_table :permissions
   end
 end

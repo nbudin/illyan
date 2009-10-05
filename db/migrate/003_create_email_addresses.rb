@@ -1,6 +1,6 @@
 class CreateEmailAddresses < ActiveRecord::Migration
   def self.up
-    ActiveRecord::Base.establish_connection :users
+    ActiveRecord::Base.establish_connection AeUsers.environment
     create_table :email_addresses do |t|
       t.column :address, :string, :null => false
       t.column :primary, :boolean
@@ -11,7 +11,7 @@ class CreateEmailAddresses < ActiveRecord::Migration
   end
 
   def self.down
-    ActiveRecord::Base.establish_connection :users
+    ActiveRecord::Base.establish_connection AeUsers.environment
     drop_table :email_addresses
   end
 end

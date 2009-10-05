@@ -1,6 +1,6 @@
 class CreateRoles < ActiveRecord::Migration
   def self.up
-    ActiveRecord::Base.establish_connection :users
+    ActiveRecord::Base.establish_connection AeUsers.environment
     create_table :roles do |t|
       t.column :name, :string, :null => false
     end
@@ -11,7 +11,7 @@ class CreateRoles < ActiveRecord::Migration
   end
 
   def self.down
-    ActiveRecord::Base.establish_connection :users
+    ActiveRecord::Base.establish_connection AeUsers.environment
     drop_table :roles
     drop_table :people_roles
   end

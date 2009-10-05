@@ -1,6 +1,6 @@
 class CreatePeople < ActiveRecord::Migration
   def self.up
-    ActiveRecord::Base.establish_connection :users
+    ActiveRecord::Base.establish_connection AeUsers.environment
     create_table :people do |t|
       t.column :firstname, :string
       t.column :lastname, :string
@@ -18,7 +18,7 @@ class CreatePeople < ActiveRecord::Migration
   end
 
   def self.down
-    ActiveRecord::Base.establish_connection :users
+    ActiveRecord::Base.establish_connection AeUsers.environment
     drop_table :people
   end
 end
