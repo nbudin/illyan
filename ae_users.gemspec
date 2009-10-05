@@ -91,6 +91,7 @@ Gem::Specification.new do |s|
      "init.rb",
      "install.rb",
      "lib/ae_users.rb",
+     "rails/init.rb",
      "tasks/ae_users_tasks.rake",
      "test/ae_users_test.rb",
      "uninstall.rb"
