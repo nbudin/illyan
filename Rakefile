@@ -20,3 +20,16 @@ Rake::RDocTask.new(:rdoc) do |rdoc|
   rdoc.rdoc_files.include('README')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
+
+begin
+  require 'jeweler'
+  Jeweler::Tasks.new do |gemspec|
+    gemspec.name = "ae_users"
+    gemspec.summary = "An authentication and authorization system for Rails"
+    gemspec.email = "natbudin@gmail.com"
+    gemspec.homepage = "http://github.com/nbudin/ae_users"
+    gemspec.authors = ["Nat Budin"]
+  end
+rescue LoadError
+  puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
+end
