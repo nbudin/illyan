@@ -1,14 +1,19 @@
 # Include hook code here
 
 require 'ae_users'
+require 'action_controller'
 
 ActiveRecord::Base.send(:include, AeUsers::Acts::Permissioned)
 ActiveRecord::Base.send(:include, AeUsers::Acts::SharedModel)
 ActionController::Base.send(:include, AeUsers::ControllerExtensions::RequirePermission)
-ActionView::Base.send(:include, AeUsers::HelperFunctions)
-ActionView::Base.send(:include, AeUsers::FormHelperFunctions)
-ActionView::Helpers::FormBuilder.send(:include, AeUsers::FormBuilderFunctions)
+ActionView::Helpers::FormBuilder.send(:include, AeUsers::FormBuilderExtensions)
 ActionView::Helpers::InstanceTag.send(:include, AeUsers::InstanceTagExtensions)
+
+module ActionController
+  class Base
+    helper :ae_users
+  end
+end
 
 infl = begin
   Inflector
