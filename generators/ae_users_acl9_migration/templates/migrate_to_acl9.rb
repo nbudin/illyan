@@ -1,4 +1,4 @@
-class AeUsersLocalToAcl9 < ActiveRecord::Migration
+class AeUsersAcl9Migration< ActiveRecord::Migration
   def self.up
     create_table :roles do |t|
       t.string "name"
