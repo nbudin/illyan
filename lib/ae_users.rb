@@ -1,6 +1,5 @@
 # AeUsers
 require 'active_record'
-require 'ae_users/permission_cache'
 require 'ae_users/acts'
 require 'ae_users/controller_extensions'
 require 'ae_users/form_builder_extensions'
@@ -80,17 +79,17 @@ module AeUsers
     map.open_id_complete 'auth', :controller => "auth", :action => "login", :requirements => { :method => :get }
   end
   
-  @@cache_permissions = true
-  @@permission_cache = AeUsers::PermissionCache.new
   def self.cache_permissions=(value)
-    @@cache_permissions = value
+    RAILS_DEFAULT_LOGGER.warn("#{caller.first}: AeUsers#cache_permissions= is deprecated")
   end
   
   def self.cache_permissions?
-    @@cache_permissions
+    RAILS_DEFAULT_LOGGER.warn("#{caller.first}: AeUsers#cache_permissions? is deprecated")
+    false
   end
 
   def self.permission_cache
-    @@permission_cache
+    RAILS_DEFAULT_LOGGER.warn("#{caller.first}: AeUsers#permission_cache is deprecated")
+    nil
   end
 end

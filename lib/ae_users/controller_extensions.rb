@@ -144,14 +144,6 @@ module AeUsers
         end
       end
       
-      def do_permission_check(obj, perm_name, fail_msg)
-        attempt_login_from_params
-        p = logged_in_person
-        if not (p and p.permitted?(obj, perm_name))
-          access_denied fail_msg
-        end
-      end
-      
       def create_account_and_person()
         account = Account.new(:password => params[:password1])
         person = Person.new(params[:person])
@@ -220,53 +212,58 @@ module AeUsers
 
       module ClassMethods
         def require_login(conditions = {})
-          before_filter conditions do |controller|
-            if not controller.logged_in?
-              controller.attempt_login_from_params
-              if not controller.logged_in?
-                controller.access_denied "Sorry, but you need to be logged in to view that page."
-              end
+          code = <<-EOC
+            before_filter :attempt_login_from_params
+            
+            access_control #{conditions.inspect} do
+              allow logged_in
             end
-          end
+          EOC
+          
+          logger.warn "#{caller.first}: require_login is deprecated; use the following code instead:\n#{code}"
+          class_eval code
         end
 
         def require_class_permission(perm_name, conditions = {})
-          delegated = false
           if conditions[:class_name]
-            cn = conditions[:class_name]
-            delegated = true
+            cn = conditions.delete :class_name
           elsif conditions[:class_param]
-            cpn = conditions[:class_param]
+            cpn = conditions.delete :class_param
           end
-          before_filter conditions do |controller|
-            if cn.nil? and cpn
-              cn = controller.params[cpn]
-              delegated = true
+          
+          controller_cn = self.class.name.gsub(/Controller$/, "").singularize
+          cn ||= controller_cn
+          
+          full_perm_name = "#{perm_name}_#{cn.tableize}"
+          
+          code = <<-EOC
+            access_control #{conditions.inspect} do
+              allow :superadmin
+              allow #{full_perm_name.to_sym.inspect}
             end
-            controller_cn = controller.class.name.gsub(/Controller$/, "").singularize
-            cn ||= controller_cn
-            full_perm_name = "#{perm_name}_#{cn.tableize}"
-            if delegated
-              msg = "Sorry, but you are not permitted to #{perm_name} #{controller_cn.tableize.humanize.downcase} in this #{cn.tableize.humanize.singularize.downcase}."
-            else
-              msg = "Sorry, but you are not permitted to #{perm_name} #{cn.tableize.humanize.downcase}."
-            end
-            controller.do_permission_check(nil, full_perm_name, msg)
-          end
+          EOC
+          
+          logger.warn "#{caller.first}: require_class_permission is deprecated; use the following code instead:\n#{code}"
+          class_eval code
         end
 
         def require_permission(perm_name, conditions = {})
           if conditions[:class_name]
-            cn = conditions[:class_name]
+            cn = conditions.delete :class_name
           end
-          id_param = conditions[:id_param] || :id
-          before_filter conditions do |controller|
-            cn ||= controller.class.name.gsub(/Controller$/, "").singularize
-            o = eval(cn).find(controller.params[id_param])
-            if not o.nil?
-              controller.do_permission_check(o, perm_name, "Sorry, but you are not permitted to #{perm_name} this #{cn.tableize.singularize.humanize.downcase}.")
+
+          id_param = conditions.delete(:id_param) || :id
+          cn ||= controller.class.name.gsub(/Controller$/, "").singularize
+          
+          code = <<-EOC
+            access_control #{conditions.inspect} do
+              allow :superadmin
+              allow #{perm_name.to_sym.inspect}, :for => #{cn.tableize.singularize.to_sym.inspect}
             end
-          end
+          EOC
+          
+          logger.warn "#{caller.first}: require_permission is deprecated; use the following code instead:\n#{code}"
+          class_eval code
         end
 
         def rest_edit_permissions(options = {})

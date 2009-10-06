@@ -7,6 +7,26 @@ class Person < ActiveRecord::Base
   has_many :permissions, :dependent => :destroy, :include => :permissioned
   has_many :email_addresses, :dependent => :destroy
   has_and_belongs_to_many :groups
+  
+  # Add groups support to acl9's stock methods
+  alias_method_chain :has_role?, :groups
+  def has_role?(role_name, object=nil)
+    has_role_without_groups?(role_name, object) or groups.any?(group.has_role?(role_name, object))
+  end
+  
+  alias_method_chain :has_roles_for?, :groups
+  def has_roles_for?(object)
+    has_roles_for_without_groups?(object) or groups.any?(group.has_roles_for?(object))
+  end
+  
+  alias_method_chain :roles_for, :groups
+  def roles_for(object)
+    roles = roles_for_without_groups(object)
+    groups.each do |group|
+      roles += group.roles_for(object)
+    end
+    return roles
+  end
 
   def self.sreg_map  
     {:fullname => Proc.new do |fullname|
@@ -64,54 +84,20 @@ class Person < ActiveRecord::Base
       ea.save
     end
   end
-
-  def all_permissions
-    allperms = permissions
-    roles.each do |role|
-      allperms += role.permissions
-    end
-    return allperms
-  end
   
   def permitted?(obj, perm_name)
-    if AeUsers.cache_permissions?
-      if obj and obj.kind_of? ActiveRecord::Base
-        return AeUsers.permission_cache.permitted?(self, obj, perm_name)
-      else
-        return AeUsers.permission_cache.permitted?(self, nil, perm_name)
-      end
-    else
-      return uncached_permitted?(obj, perm_name)
-    end
+    logger.warn "#{caller.first}: Person#permitted? is deprecated; use Person#has_role? instead"
+    return has_role?(perm_name, obj)
   end
   
   def uncached_permitted?(obj, perm_name)
-    result = false
-    all_permissions.each do |permission|
-      po = permission.permissioned
-      
-      if po.kind_of? ActiveRecord::Base
-        objmatch = (po.class.name == obj.class.name and po.id == obj.id)
-      else
-        objmatch = (po == obj)
-      end
-      
-      permmatch = (permission.permission == perm_name)
-      
-      result = ((po.nil? or objmatch) and
-        (permission.permission.nil? or permmatch))
-      
-      if result
-        break
-      end
-    end
-    logger.debug "Permission check result: #{result}"
-    return result
+    logger.warn "#{caller.first}: Person#uncached_permitted? is deprecated; use Person#has_role? instead"
+    return has_role?(perm_name, obj)
   end
   
   def administrator_classes
     AeUsers.permissioned_classes.select do |c|
-      permitted?(c, "change_permissions_#{c.name.tableize}")
+      has_role?("change_permissions_#{c.name.tableize}")
     end
   end
   
@@ -131,7 +117,6 @@ class Person < ActiveRecord::Base
   
   def app_profile
     @app_profile ||= AeUsers.profile_class.find_by_person_id(id)
-    @app_profile
   end
   
   def profile
@@ -140,12 +125,6 @@ class Person < ActiveRecord::Base
   
   def name
     return "#{firstname} #{lastname}"
-#    n = firstname
-#    if nickname and nickname.length > 0
-#      n += " \"#{nickname}\""
-#    end
-#    n += " #{lastname}"
-#    return n
   end
   
   if not AeUsers.profile_class.nil?

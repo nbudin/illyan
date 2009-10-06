@@ -5,7 +5,8 @@ require 'action_controller'
 require 'acl9'
 
 Acl9::config.merge!({
-  :default_subject_class_name => "Person"
+  :default_subject_class_name => "Person",
+  :default_subject_method => :logged_in_person
 })
 
 ActiveRecord::Base.send(:include, AeUsers::Acts::Permissioned)
