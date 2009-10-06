@@ -7,6 +7,8 @@ module AeUsers
 
       module ClassMethods
         def acts_as_permissioned(options = {})
+          acts_as_authorization_object
+          
           has_many :permissions, :as => :permissioned, :dependent => :destroy, :include => [:person, :role, :permissioned]
 
           cattr_accessor :permission_names

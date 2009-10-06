@@ -1,10 +1,12 @@
 class Person < ActiveRecord::Base
   acts_as_ae_users_shared_model
+  acts_as_authorization_subject
+  
   has_one :account
   has_many :open_id_identities
-  has_and_belongs_to_many :roles
   has_many :permissions, :dependent => :destroy, :include => :permissioned
   has_many :email_addresses, :dependent => :destroy
+  has_and_belongs_to_many :groups
 
   def self.sreg_map  
     {:fullname => Proc.new do |fullname|

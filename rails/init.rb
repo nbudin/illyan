@@ -2,6 +2,11 @@
 
 require 'ae_users'
 require 'action_controller'
+require 'acl9'
+
+Acl9::config.merge!({
+  :default_subject_class_name => "Person"
+})
 
 ActiveRecord::Base.send(:include, AeUsers::Acts::Permissioned)
 ActiveRecord::Base.send(:include, AeUsers::Acts::SharedModel)
