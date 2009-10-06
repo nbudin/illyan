@@ -14,12 +14,6 @@ ActionController::Base.send(:include, AeUsers::ControllerExtensions::RequirePerm
 ActionView::Helpers::FormBuilder.send(:include, AeUsers::FormBuilderExtensions)
 ActionView::Helpers::InstanceTag.send(:include, AeUsers::InstanceTagExtensions)
 
-infl = begin
-  Inflector
-rescue
-  ActiveSupport::Inflector
-end
-
-infl.inflections do |inflect|
+ActiveSupport::Inflector.inflections do |inflect|
   inflect.irregular "PermissionCache", "PermissionCaches"
 end
