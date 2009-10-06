@@ -1,0 +1,6 @@
+Description:
+    Creates a migration that changes over your old ae_users 0.6 local tables to
+    the new, acl9-style local tables.
+
+Example:
+    ./script/generate ae_users_acl9_migration
