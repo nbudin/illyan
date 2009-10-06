@@ -29,6 +29,7 @@ begin
     gemspec.email = "natbudin@gmail.com"
     gemspec.homepage = "http://github.com/nbudin/ae_users"
     gemspec.authors = ["Nat Budin"]
+    gemspec.add_dependency('be9-acl9')
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError

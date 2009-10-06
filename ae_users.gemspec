@@ -9,13 +9,14 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Nat Budin"]
-  s.date = %q{2009-10-05}
+  s.date = %q{2009-10-06}
   s.email = %q{natbudin@gmail.com}
   s.extra_rdoc_files = [
     "README"
   ]
   s.files = [
-    "README",
+    ".gitignore",
+     "README",
      "Rakefile",
      "VERSION",
      "ae_users.gemspec",
@@ -110,8 +111,11 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
+      s.add_runtime_dependency(%q<be9-acl9>, [">= 0"])
     else
+      s.add_dependency(%q<be9-acl9>, [">= 0"])
     end
   else
+    s.add_dependency(%q<be9-acl9>, [">= 0"])
   end
 end
