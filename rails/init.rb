@@ -14,12 +14,6 @@ ActionController::Base.send(:include, AeUsers::ControllerExtensions::RequirePerm
 ActionView::Helpers::FormBuilder.send(:include, AeUsers::FormBuilderExtensions)
 ActionView::Helpers::InstanceTag.send(:include, AeUsers::InstanceTagExtensions)
 
-module ActionController
-  class Base
-    helper :ae_users
-  end
-end
-
 infl = begin
   Inflector
 rescue
