@@ -9,7 +9,7 @@ Acl9::config.merge!({
   :default_subject_method => :logged_in_person
 })
 
-ActiveRecord::Base.send(:include, AeUsers::Acts::Permissioned)
+ActiveRecord::Base.send(:include, AeUsers::ModelExtensions)
 ActiveRecord::Base.send(:include, AeUsers::Acts::SharedModel)
 ActionController::Base.send(:include, AeUsers::ControllerExtensions::RequirePermission)
 ActionView::Helpers::FormBuilder.send(:include, AeUsers::FormBuilderExtensions)
