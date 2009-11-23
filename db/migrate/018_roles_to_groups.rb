@@ -3,15 +3,15 @@ class RolesToGroups < ActiveRecord::Migration
     ActiveRecord::Base.establish_connection AeUsers.environment
     
     rename_table :roles, :groups
-    rename_table :people_roles, :people_groups
-    rename_column :people_groups, :role_id, :group_id
+    rename_table :people_roles, :groups_people
+    rename_column :groups_people, :role_id, :group_id
   end
   
   def self.down
     ActiveRecord::Base.establish_connection AeUsers.environment
     
-    rename_column :people_groups, :group_id, :role_id
-    rename_column :people_groups, :people_roles
-    rename_column :groups, :roles
+    rename_column :groups_people, :group_id, :role_id
+    rename_table :groups_people, :people_roles
+    rename_table :groups, :roles
   end
 end
