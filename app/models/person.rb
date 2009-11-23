@@ -9,24 +9,24 @@ class Person < ActiveRecord::Base
   has_and_belongs_to_many :groups
   
   # Add groups support to acl9's stock methods
+  def has_role_with_groups?(role_name, object=nil)
+    has_role_without_groups?(role_name, object) or groups.any? {|group| group.has_role?(role_name, object)}
+  end
   alias_method_chain :has_role?, :groups
-  def has_role?(role_name, object=nil)
-    has_role_without_groups?(role_name, object) or groups.any?(group.has_role?(role_name, object))
-  end
   
+  def has_roles_for_with_groups?(object)
+    has_roles_for_without_groups?(object) or groups.any? {|group| group.has_roles_for?(object)}
+  end
   alias_method_chain :has_roles_for?, :groups
-  def has_roles_for?(object)
-    has_roles_for_without_groups?(object) or groups.any?(group.has_roles_for?(object))
-  end
   
-  alias_method_chain :roles_for, :groups
-  def roles_for(object)
+  def roles_for_with_groups(object)
     roles = roles_for_without_groups(object)
     groups.each do |group|
       roles += group.roles_for(object)
     end
     return roles
   end
+  alias_method_chain :roles_for, :groups
 
   def self.sreg_map  
     {:fullname => Proc.new do |fullname|
