@@ -25,6 +25,67 @@ module AeUsersHelper
     return grants
   end
   
+  def authorization_subject(subject)
+    html = case subject
+    when Person
+      image_tag("ae_users/person.png", :alt => "Person")
+    else
+      image_tag("ae_users/group.png", :alt => "Group")
+    end
+    html << " "
+    if subject.respond_to?(:name)
+      html << subject.name
+    else
+      html << "#{subject.class.name.humanize} #{subject.id}"
+    end
+    return html
+  end
+  
+  def role_subjects_list(object, role, options = {})
+    options[:editing] ||= (logged_in? and logged_in_person.has_role?("change_permissions", object))
+    
+    role_id_base = "role_#{role}_on_#{object.class.name}_#{object.class.id}"
+
+    subjects = object.people_with_role(role) + object.groups_with_role(role)
+    html = content_tag(:ul) do
+      if subjects.length > 0
+        subjects.collect do |subject|
+          content_tag(:li) do
+            id = "#{role_id_base}_for_#{subject.class.name}_#{subject.id}"
+            content_tag(:span, :id => id) do
+              subject_html = authorization_subject(subject)
+              if options[:editing]
+                subject_html << link_to_remote("Remove",
+                  { :url => { :controller => "permission", :action => "revoke", :id => grant.id, :format => "js" },
+                    :success => "$('grant_#{grant.id}').remove();",
+                    :confirm => "Are you sure you want to revoke that permission?",
+                    :failure => "alert(request.responseText)" },
+                  { :class => "authorization_action" }
+                )
+              else
+                subject_html
+              end
+            end
+          end
+        end.join("\n")
+      else
+        content_tag(:li, "Nobody")
+      end
+    end
+    
+    if options[:editing]
+      subject_target_id = "#{role_id_base}_insert_subjects_here"
+      show_add_subject_id = "#{role_id_base}_show_add_subject"
+      html << content_tag(:div, :id => subject_target_id)
+      html << link_to_function("Add", :class => "authorization_action", :id => show_add_subject_id) do |page|
+        page[show_add_subject_id].hide
+        page[add_subject_id].show
+        # focus the userpicker shim element
+      end
+      
+    end
+  end
+  
   def all_permitted?(item, perm)
     if item
       # try to short-circuit this with an eager load check
