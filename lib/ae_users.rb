@@ -6,21 +6,17 @@ require 'ae_users/form_builder_extensions'
 require 'ae_users/instance_tag_extensions'
 
 module AeUsers
-  @@environment = :users
-  def self.environment
-    @@environment
+  @@user_store_base_url = nil
+  def self.user_store_base_url
+    @@user_store_base_url
   end
-
-  def self.environment=(new_environment)
-    @@environment = new_environment.to_sym
+  
+  def self.remote_user_store?
+    !(@@user_store_base_url.nil?)
   end
-
-  begin
-    @@db_name = Rails::Configuration.new.database_configuration["users"]["database"]
-    def self.db_name
-      @@db_name
-    end
-  rescue
+  
+  def self.user_store_base_url=(url)
+    @@user_store_base_url = url
   end
   
   @@signup_allowed = true
