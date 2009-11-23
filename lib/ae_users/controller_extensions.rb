@@ -215,7 +215,7 @@ module AeUsers
           code = <<-EOC
             before_filter :attempt_login_from_params
             
-            access_control #{conditions.inspect} do
+            access_control(#{conditions.inspect}) do
               allow logged_in
             end
           EOC
@@ -237,7 +237,7 @@ module AeUsers
           full_perm_name = "#{perm_name}_#{cn.tableize}"
           
           code = <<-EOC
-            access_control #{conditions.inspect} do
+            access_control(#{conditions.inspect}) do
               allow :superadmin
               allow #{full_perm_name.to_sym.inspect}
             end
@@ -253,10 +253,10 @@ module AeUsers
           end
 
           id_param = conditions.delete(:id_param) || :id
-          cn ||= controller.class.name.gsub(/Controller$/, "").singularize
+          cn ||= self.class.name.gsub(/Controller$/, "").singularize
           
           code = <<-EOC
-            access_control #{conditions.inspect} do
+            access_control(#{conditions.inspect}) do
               allow :superadmin
               allow #{perm_name.to_sym.inspect}, :for => #{cn.tableize.singularize.to_sym.inspect}
             end
