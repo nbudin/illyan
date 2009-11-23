@@ -32,23 +32,36 @@ module AeUsers
     @@signup_allowed = false
   end
   
-  @@permissioned_classes = []
-  def self.add_permissioned_class(klass)
-    if not @@permissioned_classes.include?(klass.name)
-      @@permissioned_classes.push(klass.name)
-    end
+  @@authorization_object_classes = Set.new
+  def self.add_authorization_object_class(klass)
+    @@authorization_object_classes.add(klass.name)
   end
   
-  def self.permissioned_classes
-    return @@permissioned_classes.collect do |name|
+  def self.authorization_object_classes
+    return @@authorization_object_classes.collect do |name|
       eval(name)
     end
   end
   
-  def self.permissioned_class(name)
-    if @@permissioned_classes.include?(name)
+  def self.authorization_object_class(name)
+    if @@authorization_object_classes.include?(name)
       return eval(name)
     end
+  end
+  
+  def self.add_permissioned_class(klass)
+    RAILS_DEFAULT_LOGGER.warn "#{caller.first}: AeUsers.add_permissioned_class is deprectated; use add_authorization_object_class instead"
+    add_authorization_object_class(klass)
+  end
+  
+  def self.permissioned_classes
+    RAILS_DEFAULT_LOGGER.warn "#{caller.first}: AeUsers.permissioned_classes is deprectated; use authorization_object_classes instead"
+    authorization_object_classes
+  end
+  
+  def self.permissioned_class(name)
+    RAILS_DEFAULT_LOGGER.warn "#{caller.first}: AeUsers.permissioned_class is deprectated; use authorization_object_class instead"
+    authorization_object_class(name)
   end
   
   @@js_framework = "prototype"

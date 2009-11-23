@@ -96,7 +96,7 @@ class Person < ActiveRecord::Base
   end
   
   def administrator_classes
-    AeUsers.permissioned_classes.select do |c|
+    AeUsers.authorization_object_classes.select do |c|
       has_role?("change_permissions_#{c.name.tableize}")
     end
   end
