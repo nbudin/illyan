@@ -97,14 +97,6 @@ module IllyanHelper
     return Permission.find(:all, :conditions => [sql, full_permission_name(item, perm)]).length > 0
   end
   
-  def logged_in?
-    return controller.logged_in?
-  end
-  
-  def logged_in_person
-    return controller.logged_in_person
-  end
-  
   def app_profile(person = nil)
     if person.nil?
       person = logged_in_person

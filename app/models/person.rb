@@ -1,6 +1,9 @@
 class Person < ActiveRecord::Base
   acts_as_illyan_shared_model
   acts_as_authorization_subject
+  acts_as_authentic do |c|
+    
+  end
   
   has_one :account
   has_many :open_id_identities

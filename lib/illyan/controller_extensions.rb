@@ -1,5 +1,24 @@
 module Illyan
   module ControllerExtensions
+    module AuthenticatedSessions
+      def self.included(base)
+        base.class_eval do
+          helper_method :authenticated_session, :authenticated_person, :logged_in_person
+        end
+      end
+      
+      private
+      
+      def authenticated_session
+        @authenticated_session ||= AuthenticatedSession.find
+      end
+      
+      def authenticated_person
+        @person ||= authenticated_session && authenticated_session.person
+      end
+      alias_method :authenticated_person, :logged_in_person      
+    end
+    
     module RequirePermission
       def self.included(base)
         base.extend ClassMethods
@@ -22,33 +41,6 @@ module Illyan
           flash[:error_messages] = msg
           redirect_to :controller => 'auth', :action => 'login'
         end        
-      end
-      
-      def logged_in?
-        if @logged_in_person
-          return @logged_in_person
-        end
-        if session[:person]
-          begin
-            @logged_in_person = Person.find(session[:person])
-          rescue ActiveRecord::RecordNotFound
-          end
-        elsif session[:account]
-          begin
-            acct = Account.find(session[:account])
-            session[:person] = acct.person.id
-            @logged_in_person = acct.person
-          rescue ActiveRecord::RecordNotFound
-          end
-        elsif attempt_login_from_params
-          return logged_in?
-        else
-          return @logged_in_person
-        end
-      end
-    
-      def logged_in_person
-        return logged_in?
       end
       
       def attempt_login(login)
