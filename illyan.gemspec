@@ -4,12 +4,17 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{ae_users}
+  s.name = %q{illyan}
   s.version = "0.6.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Nat Budin"]
-  s.date = %q{2009-10-13}
+  s.date = %q{2009-11-24}
+  s.description = %q{Illyan is an out-of-the-box setup for authentication, authorization, and (optionally)
+single sign-on.  Rather than reinventing the wheel, Illyan uses popular and proven
+solutions: Authlogic for authentication, acl9 for authorization, and CAS for single
+sign-on.
+}
   s.email = %q{natbudin@gmail.com}
   s.extra_rdoc_files = [
     "README"
@@ -64,6 +69,7 @@ Gem::Specification.new do |s|
      "app/views/auth_notifier/account_activation.rhtml",
      "app/views/auth_notifier/generated_password.rhtml",
      "app/views/permission/_add_grantee.rhtml",
+     "app/views/permission/_role.html.erb",
      "app/views/permission/_show.rhtml",
      "app/views/permission/grant.rhtml",
      "db/migrate/002_create_accounts.rb",
@@ -97,6 +103,7 @@ Gem::Specification.new do |s|
      "lib/ae_users/form_builder_extensions.rb",
      "lib/ae_users/instance_tag_extensions.rb",
      "lib/ae_users/model_extensions.rb",
+     "migrate_from_shared_database.sh",
      "rails/init.rb",
      "rails/tasks/ae_users_tasks.rake",
      "test/ae_users_test.rb",
@@ -106,7 +113,7 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.5}
-  s.summary = %q{An authentication and authorization system for Rails}
+  s.summary = %q{Instant authentication, authorization, and SSO for Rails}
   s.test_files = [
     "test/ae_users_test.rb"
   ]
@@ -116,11 +123,14 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<be9-acl9>, [">= 0"])
+      s.add_runtime_dependency(%q<acl9>, [">= 0"])
+      s.add_runtime_dependency(%q<authlogic>, [">= 0"])
     else
-      s.add_dependency(%q<be9-acl9>, [">= 0"])
+      s.add_dependency(%q<acl9>, [">= 0"])
+      s.add_dependency(%q<authlogic>, [">= 0"])
     end
   else
-    s.add_dependency(%q<be9-acl9>, [">= 0"])
+    s.add_dependency(%q<acl9>, [">= 0"])
+    s.add_dependency(%q<authlogic>, [">= 0"])
   end
 end

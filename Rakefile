@@ -24,12 +24,19 @@ end
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |gemspec|
-    gemspec.name = "ae_users"
-    gemspec.summary = "An authentication and authorization system for Rails"
+    gemspec.name = "illyan"
+    gemspec.summary = "Instant authentication, authorization, and SSO for Rails"
+    gemspec.description = <<EOD
+Illyan is an out-of-the-box setup for authentication, authorization, and (optionally)
+single sign-on.  Rather than reinventing the wheel, Illyan uses popular and proven
+solutions: Authlogic for authentication, acl9 for authorization, and CAS for single
+sign-on.
+EOD
     gemspec.email = "natbudin@gmail.com"
     gemspec.homepage = "http://github.com/nbudin/ae_users"
     gemspec.authors = ["Nat Budin"]
-    gemspec.add_dependency('be9-acl9')
+    gemspec.add_dependency('acl9')
+    gemspec.add_dependency('authlogic')
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError
