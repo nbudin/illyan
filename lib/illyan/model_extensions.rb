@@ -27,7 +27,6 @@ module Illyan
         
         Illyan.add_authorization_object_class(self)
 
-        extend Illyan::ModelExtensions::SingletonMethods
         include Illyan::ModelExtensions::InstanceMethods
       end
     end

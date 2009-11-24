@@ -119,7 +119,7 @@ class Person < ActiveRecord::Base
   
   if not Illyan.profile_class.nil?
     class_eval <<-END_CODE
-    def #{AeUsers.profile_class.name.tableize.singularize}
+    def #{Illyan.profile_class.name.tableize.singularize}
       app_profile
     end
     END_CODE
