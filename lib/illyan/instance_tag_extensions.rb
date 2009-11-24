@@ -1,4 +1,4 @@
-module AeUsers
+module Illyan
   module InstanceTagExtensions
     DEFAULT_USERPICKER_OPTIONS = {
       "auto_complete_url_params" => {:controller => "permission", :action => "auto_complete_for_permission_grantee"}
@@ -24,7 +24,7 @@ module AeUsers
     
     private
     def user_picker_js(options = {})
-      case AeUsers.js_framework
+      case Illyan.js_framework
       when "prototype"
         user_picker_js_for_prototype(options)
       when "jquery"
@@ -33,7 +33,7 @@ module AeUsers
     end
     
     def user_picker_extra_content(options = {})
-      if AeUsers.js_framework == "prototype"
+      if Illyan.js_framework == "prototype"
         return @template_object.tag("div", :id => "#{options['id']}_shim_auto_complete", :class => "auto_complete")
       end
       

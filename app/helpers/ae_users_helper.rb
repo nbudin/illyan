@@ -1,4 +1,4 @@
-module AeUsersHelper
+module IllyanHelper
   def permission_names(item)
     if item.kind_of? ActiveRecord::Base
       return item.class.permission_names
@@ -28,9 +28,9 @@ module AeUsersHelper
   def authorization_subject(subject)
     html = case subject
     when Person
-      image_tag("ae_users/person.png", :alt => "Person")
+      image_tag("illyan/person.png", :alt => "Person")
     else
-      image_tag("ae_users/group.png", :alt => "Group")
+      image_tag("illyan/group.png", :alt => "Group")
     end
     html << " "
     if subject.respond_to?(:name)
@@ -110,7 +110,7 @@ module AeUsersHelper
       person = logged_in_person
     end
 
-    AeUsers.profile_class.find_by_person_id(person.id)
+    Illyan.profile_class.find_by_person_id(person.id)
   end
   
   def person_field(object_name, method, options={})
@@ -135,7 +135,7 @@ module AeUsersHelper
     auto_complete_url = url_for(:controller => "permission", :action => "auto_complete_for_permission_grantee",
                                 :people => options[:people], :roles => options[:roles], :escape => false)
     
-    if AeUsers.js_framework == "prototype"
+    if Illyan.js_framework == "prototype"
       rhtml << <<-ENDRHTML
 <div id="#{domid}_shim_auto_complete" class="auto_complete"></div>
 <%= auto_complete_field('#{domid}_shim', :select => "grantee_id", :param_name => "q",
@@ -152,7 +152,7 @@ module AeUsersHelper
     }",
   :url => "#{auto_complete_url}") %>
 ENDRHTML
-    elsif AeUsers.js_framework == "jquery"
+    elsif Illyan.js_framework == "jquery"
       rhtml << <<-ENDRHTML
 <script type="text/javascript">
 jQuery(function() {

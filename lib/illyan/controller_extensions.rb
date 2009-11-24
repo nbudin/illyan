@@ -1,4 +1,4 @@
-module AeUsers
+module Illyan
   module ControllerExtensions
     module RequirePermission
       def self.included(base)
@@ -57,8 +57,8 @@ module AeUsers
           redirect_to :controller => 'auth', :action => :needs_activation, :account => @account, :email => login.email, :return_to => login.return_to
           return false
         elsif not @account.nil? and @account.check_password login.password
-          if (not AeUsers.profile_class.nil? and not @account.person.nil? and 
-            AeUsers.profile_class.find_by_person_id(@account.person.id).nil?)
+          if (not Illyan.profile_class.nil? and not @account.person.nil? and 
+            Illyan.profile_class.find_by_person_id(@account.person.id).nil?)
 
             session[:provisional_person] = @account.person.id
             redirect_to :controller => 'auth', :action => :needs_profile, :return_to => login.return_to
@@ -84,8 +84,8 @@ module AeUsers
         params.delete(:openid_url)
         
         optional_fields = Person.sreg_map.keys
-        if AeUsers.profile_class and AeUsers.profile_class.respond_to?('sreg_map')
-          optional_fields += AeUsers.profile_class.sreg_map.keys
+        if Illyan.profile_class and Illyan.profile_class.respond_to?('sreg_map')
+          optional_fields += Illyan.profile_class.sreg_map.keys
         end
         authenticate_with_open_id(openid_url, :optional => optional_fields) do |result, identity_url, registration|
           if result.successful?
@@ -94,7 +94,7 @@ module AeUsers
               @person = id.person
             end
             if id.nil? or @person.nil?
-              if AeUsers.signup_allowed?
+              if Illyan.signup_allowed?
                 session[:identity_url] = identity_url
                 redirect_to :controller => 'auth', :action => :needs_person, :return_to => return_to, :registration => registration.data
                 return false
@@ -103,7 +103,7 @@ module AeUsers
                 return false
               end
             else
-              if (not AeUsers.profile_class.nil? and AeUsers.profile_class.find_by_person_id(@person.id).nil?)
+              if (not Illyan.profile_class.nil? and Illyan.profile_class.find_by_person_id(@person.id).nil?)
                 session[:provisional_person] = @person.id
                 redirect_to :controller => 'auth', :action => :needs_profile, :return_to => return_to
                 return false
@@ -134,13 +134,13 @@ module AeUsers
       
       def attempt_login_from_params
         return_to = request.request_uri
-        if not params[:ae_email].blank? and not params[:ae_password].blank?
-          login = Login.new(:email => params[:ae_email], :password => params[:ae_password], :return_to => return_to)
+        if not params[:illyan_email].blank? and not params[:illyan_password].blank?
+          login = Login.new(:email => params[:illyan_email], :password => params[:illyan_password], :return_to => return_to)
           attempt_login(login)
         elsif not params[:openid_url].blank?
           attempt_open_id_login(return_to)
-        elsif not params[:ae_ticket].blank?
-          attempt_ticket_login(params[:ae_ticket])
+        elsif not params[:illyan_ticket].blank?
+          attempt_ticket_login(params[:illyan_ticket])
         end
       end
       
@@ -150,8 +150,8 @@ module AeUsers
         addr = EmailAddress.new :address => params[:email], :person => person, :primary => true
         person.account = account
         
-        if not AeUsers.profile_class.nil?
-          app_profile = AeUsers.profile_class.send(:new, :person => person)
+        if not Illyan.profile_class.nil?
+          app_profile = Illyan.profile_class.send(:new, :person => person)
           app_profile.attributes = params[:app_profile]
         end
             

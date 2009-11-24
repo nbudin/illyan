@@ -1,5 +1,5 @@
 class Person < ActiveRecord::Base
-  acts_as_ae_users_shared_model
+  acts_as_illyan_shared_model
   acts_as_authorization_subject
   
   has_one :account
@@ -85,18 +85,8 @@ class Person < ActiveRecord::Base
     end
   end
   
-  def permitted?(obj, perm_name)
-    logger.warn "#{caller.first}: Person#permitted? is deprecated; use Person#has_role? instead"
-    return has_role?(perm_name, obj)
-  end
-  
-  def uncached_permitted?(obj, perm_name)
-    logger.warn "#{caller.first}: Person#uncached_permitted? is deprecated; use Person#has_role? instead"
-    return has_role?(perm_name, obj)
-  end
-  
   def administrator_classes
-    AeUsers.authorization_object_classes.select do |c|
+    Illyan.authorization_object_classes.select do |c|
       has_role?("change_permissions_#{c.name.tableize}")
     end
   end
@@ -116,7 +106,7 @@ class Person < ActiveRecord::Base
   end
   
   def app_profile
-    @app_profile ||= AeUsers.profile_class.find_by_person_id(id)
+    @app_profile ||= Illyan.profile_class.find_by_person_id(id)
   end
   
   def profile
@@ -127,7 +117,7 @@ class Person < ActiveRecord::Base
     return "#{firstname} #{lastname}"
   end
   
-  if not AeUsers.profile_class.nil?
+  if not Illyan.profile_class.nil?
     class_eval <<-END_CODE
     def #{AeUsers.profile_class.name.tableize.singularize}
       app_profile

@@ -60,7 +60,7 @@ class PermissionController < ApplicationController
   
   private
   def get_authorization_subject_and_object
-    pc = AeUsers.permissioned_class(params[:item_klass])
+    pc = Illyan.permissioned_class(params[:item_klass])
     @authorization_subject = pc && pc.find(params[:item_id])
     
     if params[:klass] == 'Person'

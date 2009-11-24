@@ -34,14 +34,14 @@ class AuthController < ApplicationController
   def needs_person
     @open_id_identity = OpenIdIdentity.find_or_create_by_identity_url(session[:identity_url])
     @person = Person.new
-    if not AeUsers.profile_class.nil?
-      @app_profile = AeUsers.profile_class.send(:new, :person => @person)
+    if not Illyan.profile_class.nil?
+      @app_profile = Illyan.profile_class.send(:new, :person => @person)
     end
     
     if params[:registration]
       person_map = HashWithIndifferentAccess.new(Person.sreg_map)
-      profile_map = if AeUsers.profile_class and AeUsers.profile_class.respond_to?("sreg_map")
-        HashWithIndifferentAccess.new(AeUsers.profile_class.sreg_map)
+      profile_map = if Illyan.profile_class and Illyan.profile_class.respond_to?("sreg_map")
+        HashWithIndifferentAccess.new(Illyan.profile_class.sreg_map)
       else
         nil
       end
@@ -115,12 +115,12 @@ class AuthController < ApplicationController
       redirect_to :back
     end
     
-    if not AeUsers.signup_allowed?
+    if not Illyan.signup_allowed?
       flash[:error_messages] = ['Your account is not valid for this site.']
       redirect_to url_for("/")
     else
-      if not AeUsers.profile_class.nil?
-        @app_profile = AeUsers.profile_class.send(:new, :person_id => session[:provisional_person])
+      if not Illyan.profile_class.nil?
+        @app_profile = Illyan.profile_class.send(:new, :person_id => session[:provisional_person])
         @app_profile.attributes = params[:app_profile]
         
         if request.post?

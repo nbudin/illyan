@@ -24,8 +24,8 @@ class AccountController < ApplicationController
   
   def edit_profile
     @person = logged_in_person
-    if not AeUsers.profile_class.nil?
-      @app_profile = AeUsers.profile_class.find_by_person_id(@person.id)
+    if not Illyan.profile_class.nil?
+      @app_profile = Illyan.profile_class.find_by_person_id(@person.id)
     end
     
     if request.post?
@@ -160,7 +160,7 @@ class AccountController < ApplicationController
   
   private  
   def check_signup_allowed
-    if not AeUsers.signup_allowed?
+    if not Illyan.signup_allowed?
       access_denied "Account signup is not allowed on this site."
     end
   end

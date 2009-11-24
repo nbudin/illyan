@@ -1,7 +1,7 @@
 require 'digest/md5'
 
 class Account < ActiveRecord::Base
-  acts_as_ae_users_shared_model
+  acts_as_illyan_shared_model
   belongs_to :person
   
   def self.find_by_email_address(address)

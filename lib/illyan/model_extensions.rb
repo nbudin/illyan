@@ -1,16 +1,11 @@
-module AeUsers
+module Illyan
   module ModelExtensions
     def self.included(base)
       base.extend ClassMethods
     end
 
-    module ClassMethods
-      def acts_as_permissioned(options = {})
-        logger.warn "#{caller.first}: acts_as_permissioned is deprecated; use acts_as_ae_users_authorization_object instead"
-        acts_as_ae_users_authorization_object(options)
-      end
-      
-      def acts_as_ae_users_authorization_object(options = {})
+    module ClassMethods      
+      def acts_as_illyan_authorization_object(options = {})
         if options.has_key?(:subject_class_name)
           acts_as_authorization_object(options)
         else
@@ -30,17 +25,10 @@ module AeUsers
           self.role_names.add "change_permissions"
         end
         
-        AeUsers.add_authorization_object_class(self)
+        Illyan.add_authorization_object_class(self)
 
-        extend AeUsers::ModelExtensions::SingletonMethods
-        include AeUsers::ModelExtensions::InstanceMethods
-      end
-    end
-
-    module SingletonMethods
-      def permission_names
-        logger.warn "#{caller.first}: permission_names is deprecated; use role_names instead"
-        role_names
+        extend Illyan::ModelExtensions::SingletonMethods
+        include Illyan::ModelExtensions::InstanceMethods
       end
     end
 
