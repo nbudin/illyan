@@ -1,7 +1,7 @@
 class Login
   attr_accessor :email, :password, :remember, :return_to, :have_password
   
-  def initialize(args)
+  def initialize(args=nil)
     if not args.nil?
       if args[:email]
         self.email = args[:email]
