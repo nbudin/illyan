@@ -1,11 +1,14 @@
-class AuthenticatedSessionsController < ApplicationController
+class PersonSessionsController < ApplicationController
+  unloadable
+  
   def new
-    @authenticated_session = AuthenticatedSession.new
+    @person_session = PersonSession.new
+    @login = Login.new
   end
 
   def create
-    @authenticated_session = AuthenticatedSession.new(params[:authenticated_session])
-    if @authenticated_session.save
+    @person_session = PersonSession.new(params[:person_session])
+    if @person_session.save
       redirect_to account_url
     else
       render :action => :new
@@ -13,7 +16,7 @@ class AuthenticatedSessionsController < ApplicationController
   end
 
   def destroy
-    current_authenticated_session.destroy
-    redirect_to new_authenticated_session_url
+    current_person_session.destroy
+    redirect_to new_person_session_url
   end
 end

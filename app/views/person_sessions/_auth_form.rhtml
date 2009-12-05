@@ -1,54 +1,35 @@
-<%= auth_stylesheet %>
+<%= person_sessions_stylesheet %>
 
-<% form_for('login', @login, :url => {:action => 'login', :controller => 'auth'},
-        :html => {:class => 'auth_form'} ) do |f| -%>
-    <% if not logged_in? %>
-      <script type="text/javascript" src="<%=url_for :controller => 'auth', :action => "auth_form", 
-        :format => "js", :openid_url => params[:openid_url] %>"></script>
-      
-      <%= f.hidden_field "return_to" %>
-	  
-	  <p>
-     	  <label for="email" class="block">Email address</label>
-          <%= text_field "login", "email", :tabindex => 1%>
-      </p>
-      
-	  <% if AeUsers.signup_allowed? -%>
-      	<p>
-          <label class="block">Do you have a password?</label>
-          <%= f.radio_button "have_password", "false" %> <label for="login_have_password_false">No, I am a new user.</label>
-          <br/>
-          <%= f.radio_button "have_password", "true" %> <label for="login_have_password_true">Yes, my password is:</label>
-          <div style="margin-left: 2em; margin-top: 0; padding-top: 0;">
-            <%= password_field "login", "password" %>
-          </div>
-      	</p>
-	  <% else -%>
-	    <p>
-     	  <label for="password" class="block">Password</label>
-          <%= password_field "login", "password", :tabindex => 2 %>
-        </p>
-	  <% end -%>
-      
-      <p style="text-align: center;">
-        <%= submit_tag "Log in", :style => "width: 20%; display: inline" %>
-      </p>
- 	  
-    <% else %>
-      <div style="text-align: right; margin-right: 1em;">
-        <p>You are currently logged in as <%= logged_in_person.name %>.</p>
-        <p>
-          <% if logged_in_person.administrator? -%>
-            <%= image_tag "ae_users/admin.png" %>
-            <%= link_to "Administration", :controller => 'permission', :action => 'admin' %>
-            <span style="margin-right: 1em;">&nbsp;</span>
-          <% end -%>
-          <%= image_tag "ae_users/user.png" %>
-          <%= link_to "Edit profile", :controller => 'account', :action => 'edit_profile' %>
-          <span style="margin-right: 1em;">&nbsp;</span>
-          <%= image_tag "ae_users/logout.png" %>
-          <%= link_to "Log out", :controller => :auth, :action => :logout %>
-        </p>
-      </div>
-    <% end %>
+<% form_for(@person_session, :html => {:class => 'auth_form'} ) do |f| -%>
+		<script type="text/javascript" src="<%=url_for :controller => 'auth', :action => "auth_form", 
+		  :format => "js", :openid_url => params[:openid_url] %>"></script>
+		
+		<%= f.hidden_field "return_to" %>
+		
+		<p>
+		    <%= f.label "email", "Email address", :class => "block" %>
+			<%= f.text_field "email", :tabindex => 1 %>
+		</p>
+		
+		<% if Illyan.signup_allowed? -%>
+		  <p>
+			<label class="block">Do you have a password?</label>
+			<%= f.radio_button "have_password", "false" %> <label for="login_have_password_false">No, I am a new user.</label>
+			<br/>
+			<%= f.radio_button "have_password", "true" %> <label for="login_have_password_true">Yes, my password is:</label>
+			<div style="margin-left: 2em; margin-top: 0; padding-top: 0;">
+			  <%= f.password_field "password" %>
+			</div>
+		  </p>
+		<% else -%>
+		  <p>
+		    <%= f.label "password", :class => "block" %>
+			<%= f.password_field "password", :tabindex => 2 %>
+		  </p>
+		<% end -%>
+		
+		<p style="text-align: center;">
+		  <%= submit_tag "Log in", :style => "width: 20%; display: inline" %>
+		</p>
+
 <% end -%>

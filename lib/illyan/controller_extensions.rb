@@ -3,20 +3,22 @@ module Illyan
     module AuthenticatedSessions
       def self.included(base)
         base.class_eval do
-          helper_method :authenticated_session, :authenticated_person, :logged_in_person
+          filter_parameter_logging :password, :password_confirmation
+          helper_method :person_session, :person, :logged_in_person, :logged_in?
         end
       end
       
       private
       
-      def authenticated_session
-        @authenticated_session ||= AuthenticatedSession.find
+      def person_session
+        @authenticated_session ||= PersonSession.find
       end
+      alias_method :logged_in?, :person_session
       
-      def authenticated_person
-        @person ||= authenticated_session && authenticated_session.person
+      def person
+        @person ||= person_session && person_session.person
       end
-      alias_method :authenticated_person, :logged_in_person      
+      alias_method :logged_in_person, :person
     end
     
     module RequirePermission
