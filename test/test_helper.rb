@@ -14,6 +14,9 @@ ActionMailer::Base.default_url_options[:host] = 'test.com'
 ActiveRecord::Migration.verbose = false
 ActiveRecord::Base.logger = Logger.new(nil)
 ActiveRecord::Base.establish_connection(:adapter => "sqlite3", :database => ":memory:")
+
+Dir["#{File.dirname(__FILE__)}/../generators/*/templates/*.rb"].each {|f| require f}
+AeUsersLocalTables.up
  
 Webrat.configure do |config|
   config.mode = :rails
