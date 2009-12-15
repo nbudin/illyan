@@ -1,10 +1,11 @@
 class AeUsersLocalTables < ActiveRecord::Migration
   def self.up
     create_table :accounts do |t|
-      t.column :password, :string
-      t.column :active, :boolean
-      t.column :activation_key, :string
       t.column :person_id, :integer
+      t.authenticatable :skip_email => true
+      t.rememberable
+      t.confirmable
+      t.recoverable
       t.timestamps
     end
     
@@ -34,26 +35,37 @@ class AeUsersLocalTables < ActiveRecord::Migration
       t.column :lastname, :string
       t.column :gender, :string
       t.column :birthdate, :datetime
+      t.trackable
       t.timestamps
     end
     
-    create_table :auth_tickets do |t|
-      t.column :secret, :string
-      t.column :person_id, :integer
+    create_table :roles do |t|
+      t.string "name"
+      t.string "authorizable_type"
+      t.integer "authorizable_id"
       t.timestamps
-      t.column :expires_at, :datetime
     end
-
-    add_index :auth_tickets, :secret, :unique => true
+    
+    create_table :people_roles, :id => false do |t|
+      t.integer "person_id"
+      t.integer "role_id"
+    end
+    
+    create_table :groups_roles, :id => false do |t|
+      t.integer "group_id"
+      t.integer "role_id"
+    end
   end
 
   def self.down
-    drop_table :auth_tickets
     drop_table :people
     drop_table :open_id_identities
     drop_table :groups_people
     drop_table :groups
     drop_table :email_addresses
     drop_table :accounts
+    drop_table :groups_roles
+    drop_table :people_roles
+    drop_table :roles
   end
 end

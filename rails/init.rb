@@ -1,6 +1,5 @@
 require 'illyan'
 require 'action_controller'
-require 'acl9'
 
 ActiveRecord::Base.send(:include, Illyan::ModelExtensions)
 ActiveRecord::Base.send(:include, Illyan::Acts::SharedModel)

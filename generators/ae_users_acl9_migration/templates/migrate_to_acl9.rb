@@ -19,7 +19,7 @@ class AeUsersAcl9Migration< ActiveRecord::Migration
     # Populate roles from existing permission names
     superadmin = Role.create!(:name => "superadmin")
     blanket_roles = {}
-    AeUsers.permissioned_classes.each do |klass|
+    Illyan.authorization_object_classes.each do |klass|
       klass.permission_names.each do |perm_name|
         klass.all.each do |obj|
           Role.create!(:name => perm_name, :authorizable => obj)
@@ -129,7 +129,7 @@ class AeUsersAcl9Migration< ActiveRecord::Migration
     role_to_permissions nil, nil, Role.find_by_name("superadmin")
     
     preload_all_models
-    AeUsers.permissioned_classes.each do |klass|
+    Illyan.authorization_object_classes.each do |klass|
       klass.permission_names.each do |perm_name|
         blanket_role = Role.find_by_name("#{perm_name}_#{klass.name.tableize}")
         role_to_permissions blanket_role.name, nil, blanket_role

@@ -1,9 +1,7 @@
 class Person < ActiveRecord::Base
   acts_as_illyan_shared_model
   acts_as_authorization_subject
-  acts_as_authentic do |c|
-    
-  end
+  devise :trackable
   
   has_one :account
   has_many :open_id_identities
@@ -86,6 +84,10 @@ class Person < ActiveRecord::Base
       ea.primary = true
       ea.save
     end
+  end
+  
+  def email
+    primary_email_address && primary_email_address.address
   end
   
   def administrator_classes

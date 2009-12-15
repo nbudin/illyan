@@ -2,6 +2,7 @@ require 'digest/md5'
 
 class Account < ActiveRecord::Base
   acts_as_illyan_shared_model
+  devise :all
   belongs_to :person
   
   def self.find_by_email_address(address)
@@ -9,6 +10,10 @@ class Account < ActiveRecord::Base
     if not p.nil?
       return p.account
     end
+  end
+  
+  def email
+    person && person.email
   end
   
   def password=(p)
