@@ -2,10 +2,6 @@ class AeUsersLocalTables < ActiveRecord::Migration
   def self.up
     create_table :accounts do |t|
       t.column :person_id, :integer
-      t.authenticatable :skip_email => true
-      t.rememberable
-      t.confirmable
-      t.recoverable
       t.timestamps
     end
     
@@ -35,6 +31,10 @@ class AeUsersLocalTables < ActiveRecord::Migration
       t.column :lastname, :string
       t.column :gender, :string
       t.column :birthdate, :datetime
+      t.authenticatable
+      t.rememberable
+      t.confirmable
+      t.recoverable
       t.trackable
       t.timestamps
     end

@@ -37,6 +37,7 @@ EOD
     gemspec.authors = ["Nat Budin"]
     gemspec.add_dependency('acl9')
     gemspec.add_dependency('devise')
+    gemspec.add_dependency('rack-openid')
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError

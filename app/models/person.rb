@@ -1,13 +1,48 @@
+require 'acl9'
+
 class Person < ActiveRecord::Base
   acts_as_illyan_shared_model
   acts_as_authorization_subject
-  devise :trackable
-  
-  has_one :account
+
+  devise :authenticatable, :rememberable, :confirmable, :recoverable, :trackable, :registerable
+
   has_many :open_id_identities
-  has_many :permissions, :dependent => :destroy, :include => :permissioned
-  has_many :email_addresses, :dependent => :destroy
+  validates_uniqueness_of :email, :allow_nil => true
   has_and_belongs_to_many :groups
+
+  def legacy_password_md5=(md5)
+    raise "legacy_password_md5 can never be set"
+  end
+
+  def delete_legacy_password!
+    write_attribute :legacy_password_md5, nil
+  end
+
+  def password=(password)
+    super(password)
+    delete_legacy_password!
+  end
+
+  def self.find_for_authentication(conditions)
+    joins = if conditions[:openid_url]
+      conditions["open_id_identities.identity_url"] = conditions.delete(:openid_url)
+      :open_id_identities
+    end
+    
+    find(:first, :conditions => conditions, :joins => joins)
+  end
+
+  def valid_for_authentication?(attributes)
+    if !attributes[:openid_url].blank?
+      return true
+    end
+
+    super(attributes)
+  end
+
+  def openid_url=(url)
+    # just pass
+  end
   
   # Add groups support to acl9's stock methods
   def has_role_with_groups?(role_name, object=nil)
@@ -54,40 +89,13 @@ class Person < ActiveRecord::Base
       end
     end,
     :email => Proc.new do |email|
-      {:primary_email_address => email}
+      {:email => email}
     end
     }
   end
-  
-  def self.find_by_email_address(address)
-    ea = EmailAddress.find_by_address(address)
-    if not ea.nil?
-      return ea.person
-    end
-  end
-  
-  def primary_email_address
-    primary = email_addresses.find_by_primary true
-    if not primary
-      primary = email_addresses.find :first
-    end
-    if primary.nil?
-      return nil
-    else
-      return primary.address
-    end
-  end
-  
-  def primary_email_address=(address)
-    if primary_email_address != address
-      ea = email_addresses.find_or_create_by_address(address)
-      ea.primary = true
-      ea.save
-    end
-  end
-  
-  def email
-    primary_email_address && primary_email_address.address
+
+  def openid_url
+    open_id_identities.first.try(:identity_url)
   end
   
   def administrator_classes

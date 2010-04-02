@@ -10,14 +10,27 @@ module Illyan
       
       private
       
-      def person_session
-        @authenticated_session ||= PersonSession.find
-      end
-      alias_method :logged_in?, :person_session
+#      def authenticated_objects
+#        [current_person].compact
+#      end
+
+#      def logged_in?
+#        authenticated_objects.size > 0
+#      end
       
+#      def person
+#        return @person if @person
+#
+#        authenticated_objects.each do |obj|
+#          @person ||= obj.person
+#          return @person unless @person.nil?
+#        end
+#      end
       def person
-        @person ||= person_session && person_session.person
+        current_person
       end
+
+      alias_method :logged_in?, :person
       alias_method :logged_in_person, :person
     end
     

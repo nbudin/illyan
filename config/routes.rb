@@ -1,3 +1,3 @@
 ActionController::Routing::Routes.draw do |map|
-  map.devise_for :accounts
+  map.devise_for :people
 end
