@@ -5,6 +5,8 @@ require 'illyan/controller_extensions'
 require 'illyan/form_builder_extensions'
 require 'illyan/instance_tag_extensions'
 require 'rack/openid'
+require 'devise'
+require 'acl9'
 
 module Illyan
   @@user_store_base_url = nil
