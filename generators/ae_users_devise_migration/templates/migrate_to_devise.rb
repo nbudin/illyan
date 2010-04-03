@@ -1,4 +1,4 @@
-class AeUsersDeviseMigration < ActiveRecord::Migration
+class IllyanDeviseMigration < ActiveRecord::Migration
   def self.up
     change_table :people do |t|
       t.database_authenticatable

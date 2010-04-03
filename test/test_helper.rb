@@ -16,7 +16,7 @@ ActiveRecord::Base.logger = Logger.new(nil)
 ActiveRecord::Base.establish_connection(:adapter => "sqlite3", :database => ":memory:")
 
 Dir["#{File.dirname(__FILE__)}/../generators/*/templates/*.rb"].each {|f| require f}
-AeUsersLocalTables.up
+IllyanLocalTables.up
  
 Webrat.configure do |config|
   config.mode = :rails
