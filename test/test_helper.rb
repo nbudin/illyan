@@ -3,9 +3,11 @@ require File.join(File.dirname(__FILE__), 'rails_app', 'config', 'environment')
  
 require 'test_help'
 require 'webrat'
-require 'mocha'
+require 'shoulda'
+require 'factory_girl'
  
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
+Dir["#{File.dirname(__FILE__)}/factories/*.rb"].each {|f| require f}
  
 ActionMailer::Base.delivery_method = :test
 ActionMailer::Base.perform_deliveries = true
