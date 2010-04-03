@@ -1,7 +1,7 @@
 class AeUsersDeviseMigration < ActiveRecord::Migration
   def self.up
     change_table :people do |t|
-      t.authenticatable
+      t.database_authenticatable
       t.rememberable
       t.confirmable
       t.recoverable

@@ -4,7 +4,7 @@ class Person < ActiveRecord::Base
   acts_as_illyan_shared_model
   acts_as_authorization_subject
 
-  devise :authenticatable, :rememberable, :confirmable, :recoverable, :trackable, :registerable
+  devise :database_authenticatable, :rememberable, :confirmable, :recoverable, :trackable, :registerable
 
   has_many :open_id_identities
   validates_uniqueness_of :email, :allow_nil => true
