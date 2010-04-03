@@ -1,6 +1,24 @@
 require 'test/test_helper'
 
 class PersonTest < ActiveSupport::TestCase
+  context "a person" do
+    setup do
+      assert @person = Factory.build(:person)
+      assert @email = @person.email
+    end
+    
+    context "having been saved" do
+      setup do
+        assert @person.save
+      end
+      
+      should "come up correctly in find_for_authentication calls" do
+        assert @found = Person.find_for_authentication(:email => @email)
+        assert_equal @person, @found
+      end
+    end
+  end
+  
   context "a person with an OpenID" do
     setup do
       assert @person = Factory.build(:openid_person)
