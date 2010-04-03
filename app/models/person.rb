@@ -9,13 +9,22 @@ class Person < ActiveRecord::Base
   has_many :open_id_identities
   validates_uniqueness_of :email, :allow_nil => true
   has_and_belongs_to_many :groups
-
-  def legacy_password_md5=(md5)
-    raise "legacy_password_md5 can never be set"
+  
+  def legacy_password_md5
+    @legacy_password_md5 ||= if self.class.columns.include? "legacy_password_md5"
+      read_attribute :legacy_password_md5
+    end
+  end
+  
+  def legacy_password_md5=(p)
+    @legacy_password_md5 = p
+    if self.class.columns.include? "legacy_password_md5"
+      write_attribute :legacy_password_md5
+    end
   end
 
   def delete_legacy_password!
-    write_attribute :legacy_password_md5, nil
+    self.legacy_password_md5 = nil
   end
 
   def password=(password)
