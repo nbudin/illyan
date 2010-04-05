@@ -1,4 +1,4 @@
-class AeUsersLocalTables < ActiveRecord::Migration
+class IllyanLocalTables < ActiveRecord::Migration
   def self.up
     create_table :accounts do |t|
       t.column :person_id, :integer
@@ -31,7 +31,7 @@ class AeUsersLocalTables < ActiveRecord::Migration
       t.column :lastname, :string
       t.column :gender, :string
       t.column :birthdate, :datetime
-      t.authenticatable
+      t.database_authenticatable
       t.rememberable
       t.confirmable
       t.recoverable

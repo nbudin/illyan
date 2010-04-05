@@ -15,5 +15,7 @@ end
 Rails::Initializer.run do |config|
   config.time_zone = 'UTC'
   config.plugin_locators << TestGemLocator
+  config.gem "acl9"
+  config.gem "devise"
 end
 

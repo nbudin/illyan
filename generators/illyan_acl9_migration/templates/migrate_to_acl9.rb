@@ -1,4 +1,4 @@
-class AeUsersAcl9Migration< ActiveRecord::Migration
+class IllyanAcl9Migration< ActiveRecord::Migration
   def self.preload_all_models 
     # Preload all models, to make sure we know all the permissioned classes
     Dir.glob(File.join(Rails.root, "app", "models", "**", "*.rb")).each do |model|
