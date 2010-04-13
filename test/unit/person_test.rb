@@ -12,7 +12,11 @@ class PersonTest < ActiveSupport::TestCase
       assert @person = Factory.build(:person)
       assert @email = @person.email
     end
-    
+
+    should "allow any auth params containing an openid url" do
+      assert @person.valid_for_authentication?(:openid_url => "http://openid.com")
+    end
+
     context "with a birthdate" do
       setup do
         @person.birthdate = DateTime.now - 5.days
@@ -33,6 +37,50 @@ class PersonTest < ActiveSupport::TestCase
         assert @found = Person.find_for_authentication(:email => @email)
         assert_equal @person, @found
       end
+    end
+  end
+
+  context "a person with a group" do
+    setup do
+      assert @person = Factory.create(:staffer)
+    end
+
+    should "appear in that group" do
+      assert @person.has_role?("staff")
+    end
+  end
+
+  context "a person with an object role via a group" do
+    setup do
+      assert @post = Factory.create(:group_post)
+      assert @group = @post.accepted_roles.first.groups.first
+      assert @person = Factory.build(:person)
+      assert @person.groups << @group
+    end
+
+    should "appear as having the right role, only for that object" do
+      assert !@person.has_role?("editor")
+      assert @person.has_role?("editor", @post)
+      assert @person.roles_for(@post).any? { |r| r.name == "editor" }
+    end
+  end
+
+  context "a person with a role that a group also has" do
+    setup do
+      assert @person = Factory.create(:person)
+      assert @group = Factory.create(:group)
+
+      @person.has_role!("captain")
+      @group.has_role!("captain")
+
+      assert @person.has_role?("captain")
+      assert @group.has_role?("captain")
+    end
+
+    should "delete the role without affecting it for the group" do
+      @person.has_no_role!("captain")
+      @group.reload
+      assert @group.has_role?("captain")
     end
   end
   

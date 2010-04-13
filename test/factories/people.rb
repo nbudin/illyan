@@ -23,3 +23,15 @@ Factory.define :openid_person, :parent => :person do |p|
     person.open_id_identities << Factory.build(:open_id_identity, :person => person)
   end
 end
+
+Factory.define :administrator, :parent => :person do |p|
+  p.after_build do |person|
+    person.has_role!("admin")
+  end
+end
+
+Factory.define :staffer, :parent => :person do |p|
+  p.after_create do |person|
+    person.groups << Factory.create(:staff_group)
+  end
+end
