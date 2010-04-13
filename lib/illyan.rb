@@ -145,5 +145,10 @@ module Illyan
 
       yield config
     end
+
+    Acl9::config.merge!(
+            :default_subject_class_name => "Person",
+            :protect_global_roles => true
+    )
   end
 end

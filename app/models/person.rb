@@ -146,31 +146,4 @@ class Person < ActiveRecord::Base
     end
     END_CODE
   end
-  
-  def has_role!(role_name, object=nil)
-    role = get_role(role_name, object)
-    
-    if role.nil?
-      role_attrs = case object
-                   when Class then { :authorizable_type => object.to_s }
-                   when nil then   {}
-                   else            { :authorizable => object }
-                   end.merge(      { :name => role_name.to_s })
-      
-      role = self._auth_role_class.create(role_attrs)
-    end
-    
-    if role && !self.role_objects.exists?(role.id)
-      role.people.add(self)
-    end
-  end
-  
-  private
-  def delete_role(role)
-    if role
-      role.people.delete(self)
-      
-      role.destroy if role.send(self.class.to_s.demodulize.tableize).empty?
-    end
-  end
 end
