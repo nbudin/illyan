@@ -106,17 +106,7 @@ class Person < ActiveRecord::Base
   def openid_url
     open_id_identities.first.try(:identity_url)
   end
-  
-  def administrator_classes
-    Illyan.authorization_object_classes.select do |c|
-      has_role?("change_permissions_#{c.name.tableize}")
-    end
-  end
-  
-  def administrator?
-    administrator_classes.length > 0
-  end
-  
+    
   def current_age
     age_as_of Date.today
   end
