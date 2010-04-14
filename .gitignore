@@ -2,3 +2,6 @@ pkg
 rdoc
 *.kpf
 test/rails_app/log/*.log
+.idea
+.project
+.specification
