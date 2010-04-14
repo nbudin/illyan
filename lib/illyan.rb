@@ -31,23 +31,6 @@ module Illyan
     @@signup_allowed = false
   end
   
-  @@authorization_object_classes = Set.new
-  def self.add_authorization_object_class(klass)
-    @@authorization_object_classes.add(klass.name)
-  end
-  
-  def self.authorization_object_classes
-    return @@authorization_object_classes.collect do |name|
-      eval(name)
-    end
-  end
-  
-  def self.authorization_object_class(name)
-    if @@authorization_object_classes.include?(name)
-      return eval(name)
-    end
-  end
-  
   @@js_framework = "prototype"
   def self.js_framework
     @@js_framework
