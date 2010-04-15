@@ -125,6 +125,8 @@ module Illyan
         manager.default_strategies.unshift :openid
         manager.default_strategies.unshift :legacy_md5
       end
+      
+      config.scoped_views = true
 
       yield config
     end
