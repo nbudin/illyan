@@ -15,6 +15,13 @@ require 'cucumber/web/tableish'
 require 'webrat'
 require 'webrat/core/matchers'
 
+require 'factory_girl'
+Dir["#{File.dirname(__FILE__)}/../../factories/*.rb"].each {|f| require f}
+
+require File.expand_path(File.dirname(__FILE__) + '/../../test_database')
+
+ActionMailer::Base.default_url_options[:host] = 'test.com'
+
 Webrat.configure do |config|
   config.mode = :rails
   config.open_error_files = false # Set to true if you want error pages to pop up in the browser

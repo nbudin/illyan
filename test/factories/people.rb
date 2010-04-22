@@ -24,6 +24,17 @@ Factory.define :openid_person, :parent => :person do |p|
   end
 end
 
+Factory.define :joe_user, :parent => :person do |p|
+  p.email "joe@user.com"
+  p.password "password"
+  p.firstname "Joe"
+  p.lastname "User"
+  
+  p.after_create do |joe|
+    joe.confirm!
+  end
+end
+
 Factory.define :administrator, :parent => :person do |p|
   p.after_build do |person|
     person.has_role!("admin")

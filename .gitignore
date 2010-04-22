@@ -5,3 +5,4 @@ test/rails_app/log/*.log
 .idea
 .project
 .specification
+test/rails_app/db/*.sqlite3
