@@ -111,7 +111,6 @@ module Illyan
   end
 
   def self.install_rack_openid
-    ActionController::Dispatcher.middleware.use Rack::Session::Cookie
     ActionController::Dispatcher.middleware.use Rack::OpenID
   end
 
