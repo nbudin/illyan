@@ -13,6 +13,14 @@ module NavigationHelpers
       
     when /the login page/
       new_person_session_path
+      
+    when /the signup page/
+      new_person_registration_path
+    
+    when /the confirmation path for "([^\"]*)"/
+      firstname, lastname = $1.split(/\s+/)
+      person = Person.find(:first, :conditions => {:firstname => firstname, :lastname => lastname})
+      person_confirmation_path(person, :confirmation_token => person.confirmation_token)
     
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
