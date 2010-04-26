@@ -18,10 +18,16 @@ Feature: Signup
     And I select "male" from "Gender"
     And I press "Sign up"
     Then "myemail@example.com" should receive a confirmation email for "Jonathan Livingston"
-    And I should be signed in as "Jonathan Livingston"
+    And I should not be signed in
     
-    When I follow "Log out"
+    When I go to the home page
+    Then I should not be signed in
+    
+    When I follow "Log in"
+    And I fill in "Email address" with "myemail@example.com"
+    And I fill in "Password" with "LetMeIn"
+    And I press "Log in"
     Then I should not be signed in
     
     When I go to the confirmation path for "Jonathan Livingston"
-    Then show me the page
+    Then I should be signed in as "Jonathan Livingston"
