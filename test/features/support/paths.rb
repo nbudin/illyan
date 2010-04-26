@@ -18,8 +18,7 @@ module NavigationHelpers
       new_person_registration_path
     
     when /the confirmation path for "([^\"]*)"/
-      firstname, lastname = $1.split(/\s+/)
-      person = Person.find(:first, :conditions => {:firstname => firstname, :lastname => lastname})
+      person = Person.find_by_email($1)
       person_confirmation_path(person, :confirmation_token => person.confirmation_token)
     
     # Add more mappings here.

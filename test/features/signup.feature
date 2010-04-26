@@ -17,7 +17,7 @@ Feature: Signup
     And I select "March 22, 1970" as the "Date of birth" date
     And I select "male" from "Gender"
     And I press "Sign up"
-    Then "myemail@example.com" should receive a confirmation email for "Jonathan Livingston"
+    Then "myemail@example.com" should receive a confirmation email
     And I should not be signed in
     
     When I go to the home page
@@ -29,5 +29,5 @@ Feature: Signup
     And I press "Log in"
     Then I should not be signed in
     
-    When I go to the confirmation path for "Jonathan Livingston"
+    When I go to the confirmation path for "myemail@example.com"
     Then I should be signed in as "Jonathan Livingston"

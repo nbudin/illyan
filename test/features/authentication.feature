@@ -5,16 +5,10 @@ Feature: Authentication
   
   Scenario: Normal email/password authentication
     Given the Joe User account
-    And I am on the login page
-    And I fill in "Email address" with "joe@user.com"
-    And I fill in "Password" with "password"
-    And I press "Log in"
+    And I sign in as "joe@user.com" with password "password"
     Then I should be signed in as "Joe User"
   
   Scenario: Bad credentials
     Given the Joe User account
-    And I am on the login page
-    And I fill in "Email" with "joe@user.com"
-    And I fill in "Password" with "wrongpassword"
-    And I press "Log in"
+    And I sign in as "joe@user.com" with password "wrongpassword"
     Then I should not be signed in

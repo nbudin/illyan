@@ -5,7 +5,7 @@
   </head>
   <body>
     <ul id="user_options">
-      <% if logged_in? -%>
+      <% if current_person -%>
         <li><%= current_person.name %></li>
         <li><%= link_to "Log out", destroy_person_session_path %></li>
       <% else -%>
