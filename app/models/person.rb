@@ -8,7 +8,7 @@ class Person < ActiveRecord::Base
   devise :database_authenticatable, :rememberable, :confirmable, :recoverable, :trackable, :registerable
 
   has_many :open_id_identities
-  accepts_nested_attributes_for :open_id_identities
+  accepts_nested_attributes_for :open_id_identities, :allow_destroy => true
   validates_uniqueness_of :email, :allow_nil => true
   has_and_belongs_to_many :groups
   
