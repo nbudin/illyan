@@ -3,10 +3,12 @@ require 'acl9'
 class Person < ActiveRecord::Base
   acts_as_illyan_shared_model
   acts_as_authorization_subject
+  acts_as_authorization_object
 
   devise :database_authenticatable, :rememberable, :confirmable, :recoverable, :trackable, :registerable
 
   has_many :open_id_identities
+  accepts_nested_attributes_for :open_id_identities
   validates_uniqueness_of :email, :allow_nil => true
   has_and_belongs_to_many :groups
   
@@ -52,6 +54,16 @@ class Person < ActiveRecord::Base
   def openid_url=(url)
     # just pass
   end
+  
+  # All users are their own admins
+  def has_role_with_self_admin?(role_name, object=nil)
+    if role_name.to_s == "admin" && object == self
+      true
+    else
+      has_role_without_self_admin?(role_name, object)
+    end
+  end
+  alias_method_chain :has_role?, :self_admin
   
   # Add groups support to acl9's stock methods
   def has_role_with_groups?(role_name, object=nil)

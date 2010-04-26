@@ -17,13 +17,17 @@
     <%= f.password_field :password_confirmation %>
   </p>
 
-  <%= render :partial => "people/personal_info", :locals => {:f => f} %>
-  <% if Illyan.profile_class -%>
-    <% f.fields_for :app_profile do |profile_form| %>
-        <%= render :partial => "#{Illyan.profile_class.name.tableize.singularize}/form", 
-      :locals => {:f => profile_form}%>
-    <% end %>
-  <% end -%>
+  <h2>Personal Information</h2>
+
+  <dl>
+    <%= render :partial => "people/personal_info", :locals => {:f => f} %>
+    <% if Illyan.profile_class -%>
+      <% f.fields_for :app_profile do |profile_form| %>
+          <%= render :partial => "#{Illyan.profile_class.name.tableize.singularize}/form", 
+        :locals => {:f => profile_form}%>
+      <% end %>
+    <% end -%>
+  </dl>
   
   <p><%= f.submit "Sign up" %></p>
 <% end -%>
