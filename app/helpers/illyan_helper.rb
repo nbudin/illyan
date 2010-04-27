@@ -1,30 +1,4 @@
 module IllyanHelper
-  def permission_names(item)
-    if item.kind_of? ActiveRecord::Base
-      return item.class.permission_names
-    else
-      return item.permission_names
-    end
-  end
-  
-  def full_permission_name(item, perm)
-    if item.kind_of? ActiveRecord::Base
-      return perm
-    else
-      return "#{perm}_#{item.class.name.tableize}"
-    end
-  end
-  
-  def permission_grants(item, perm)
-    if item.kind_of? ActiveRecord::Base
-      grants = item.permissions.select {|p| p.permission == perm }
-    else
-      full_perm_name = full_permission_name(item, perm)
-      grants = Permission.find_all_by_permission(full_perm_name)
-    end
-    return grants
-  end
-  
   def authorization_subject(subject)
     html = case subject
     when Person
@@ -84,25 +58,6 @@ module IllyanHelper
       end
       
     end
-  end
-  
-  def all_permitted?(item, perm)
-    if item
-      # try to short-circuit this with an eager load check
-      if item.permissions.select {|p| (p.permission == perm or p.permission.nil?) and p.role.nil? and p.person.nil? }.size > 0
-        return true
-      end
-    end
-    sql = "permission = ? and (role_id = 0 or role_id is null) and (person_id = 0 or person_id is null)"
-    return Permission.find(:all, :conditions => [sql, full_permission_name(item, perm)]).length > 0
-  end
-  
-  def app_profile(person = nil)
-    if person.nil?
-      person = logged_in_person
-    end
-
-    Illyan.profile_class.find_by_person_id(person.id)
   end
   
   def person_field(object_name, method, options={})
