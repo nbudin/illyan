@@ -29,5 +29,10 @@ group :test do
     :branch => "rails3"
   gem 'shoulda', :git => "git://github.com/thoughtbot/shoulda.git",
     :branch => "rails3", :require => nil
+end
+
+group :cucumber do
   gem 'webrat'
+  gem 'cucumber-rails'
+  gem 'launchy'
 end

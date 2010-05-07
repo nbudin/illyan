@@ -4,8 +4,8 @@
 # instead of editing this one. Cucumber will automatically load all features/**/*.rb
 # files.
 
-ENV["RAILS_ENV"] ||= "cucumber"
-require File.expand_path(File.dirname(__FILE__) + '/../../rails_app/config/environment')
+ENV["RAILS_ENV"] ||= "test"
+require File.expand_path(File.dirname(__FILE__) + '/../../config/environment')
 
 require 'cucumber/formatter/unicode' # Remove this line if you don't want Cucumber Unicode support
 require 'cucumber/rails/world'
@@ -14,13 +14,6 @@ require 'cucumber/web/tableish'
 
 require 'webrat'
 require 'webrat/core/matchers'
-
-require 'factory_girl'
-Dir["#{File.dirname(__FILE__)}/../../factories/*.rb"].each {|f| require f}
-
-require File.expand_path(File.dirname(__FILE__) + '/../../test_database')
-
-ActionMailer::Base.default_url_options[:host] = 'test.com'
 
 Webrat.configure do |config|
   config.mode = :rails
@@ -52,7 +45,6 @@ ActionController::Base.allow_rescue = false
 # subsequent scenarios. If you do this, we recommend you create a Before
 # block that will explicitly put your database in a known state.
 Cucumber::Rails::World.use_transactional_fixtures = true
-
 # How to clean your database when transactions are turned off. See
 # http://github.com/bmabey/database_cleaner for more info.
 if defined?(ActiveRecord::Base)
