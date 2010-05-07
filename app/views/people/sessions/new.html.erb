@@ -1,7 +1,7 @@
 <div id="login_email_password" class="login">
     <h2>Log in with a password</h2>
     
-    <% form_for(resource, :as => resource_name, :url => session_path(resource_name) ) do |f| -%>
+    <%= form_for(resource, :as => resource_name, :url => session_path(resource_name) ) do |f| -%>
     
     <p>
       <%= f.label :email, "Email address", :class => "block" %>
@@ -27,7 +27,7 @@
 <div id="login_openid" class="login">
   <h2>Log in with OpenID</h2>  
   
-  <% form_for(resource, :as => resource_name, :url => session_path(resource_name) ) do |f| -%>
+  <%= form_for(resource, :as => resource_name, :url => session_path(resource_name) ) do |f| -%>
     
     <p>
       <%= f.label :identity_url, "OpenID URL", :class => "block" %>

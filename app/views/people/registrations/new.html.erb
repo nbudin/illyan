@@ -1,6 +1,6 @@
 <h2>Sign up</h2>
 
-<% form_for resource_name, resource, :url => registration_path(resource_name) do |f| -%>
+<%= form_for resource, :as => resource_name, :url => registration_path(resource_name) do |f| -%>
   <%= f.error_messages %>
   <p>
     <%= f.label :email %>
@@ -21,15 +21,9 @@
 
   <dl>
     <%= render :partial => "people/personal_info", :locals => {:f => f} %>
-    <% if Illyan.profile_class -%>
-      <% f.fields_for :app_profile do |profile_form| %>
-          <%= render :partial => "#{Illyan.profile_class.name.tableize.singularize}/form", 
-        :locals => {:f => profile_form}%>
-      <% end %>
-    <% end -%>
   </dl>
   
   <p><%= f.submit "Sign up" %></p>
 <% end -%>
 
-<%= render :partial => "shared/devise_links" %>
+<%= render :partial => "devise/shared/links" %>

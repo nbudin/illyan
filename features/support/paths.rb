@@ -19,7 +19,7 @@ module NavigationHelpers
     
     when /the confirmation path for "([^\"]*)"/
       person = Person.find_by_email($1)
-      person_confirmation_path(person, :confirmation_token => person.confirmation_token)
+      person_confirmation_path(:confirmation_token => person.confirmation_token)
     
     when /the profile page for "([^\"]*)"/
       edit_person_path(Person.find_by_email($1))

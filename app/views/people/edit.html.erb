@@ -2,7 +2,7 @@
 
 <%= error_messages_for :person %>
 
-<% form_for @person do |f| -%>
+<%= form_for @person do |f| -%>
   <h2>Change your password</h2>
   
   <dl>
@@ -17,7 +17,7 @@
 <% end -%>
 
 
-<% form_for @person do |f| -%>
+<%= form_for @person do |f| -%>
   <h2>OpenIDs</h2>
 
   <p>OpenID is a free and easy way to use a single digital identity across the Internet.  (For more information,
@@ -25,7 +25,7 @@
   to log into this site!  You can even link multiple OpenIDs to your account.  Add as many as you like below.</p>
 
   <table>
-    <% f.fields_for :open_id_identities do |identity_fields| -%>
+    <%= f.fields_for :open_id_identities do |identity_fields| -%>
       <tr>
         <% if identity_fields.object.new_record? -%>
           <td colspan="2">
@@ -49,18 +49,12 @@
   <%= f.submit "Update OpenIDs" %>
 <% end -%>
 
-<% form_for @person do |f| -%>
+<%= form_for @person do |f| -%>
   <h2>Personal Information</h2>
   <dl>
     <dt><%= f.label :email %></dt>
     <dd><%= f.text_field :email %></dd>
     <%= render :partial => 'personal_info', :locals => {:f => f} %>
-    <% if Illyan.profile_class -%>
-      <% f.fields_for :app_profile do |profile_form| %>
-          <%= render :partial => "#{Illyan.profile_class.name.tableize}/form", 
-        :locals => {:f => profile_form}%>
-      <% end %>
-    <% end -%>
   </dl>
 
   <%= f.submit "Edit profile" %>

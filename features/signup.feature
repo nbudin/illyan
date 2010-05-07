@@ -14,7 +14,9 @@ Feature: Signup
     And I fill in "Password confirmation" with "LetMeIn"
     And I fill in "First name" with "Jonathan"
     And I fill in "Last name" with "Livingston"
-    And I select "March 22, 1970" as the "Date of birth" date
+    And I select "March" from "person[birthdate(2i)]"
+    And I select "22" from "person[birthdate(3i)]"
+    And I select "1970" from "person[birthdate(1i)]"
     And I select "male" from "Gender"
     And I press "Sign up"
     Then "myemail@example.com" should receive a confirmation email

@@ -1,6 +1,5 @@
 Then /^I should be signed in as "([^\"]*)"$/ do |name|
-  assert controller.current_person
-  assert_equal name, controller.current_person.name
+  Then "I should see \"#{name}\" within \".auth_options\""
 end
 
 Then /^I sign in as "([^\"]*)" with password "([^\"]*)"$/ do |email, password|
@@ -17,12 +16,12 @@ Given /^I am signed in as the Joe User account$/ do
 end 
 
 Then /^I should not be signed in$/ do
-  assert_nil controller.current_person
+  Then "I should see \"Log in\" within \".auth_options\""
 end
 
 Then /^"([^\"]*)" should receive a confirmation email$/ do |email|
   assert msg = ActionMailer::Base.deliveries.first
   assert_equal msg.to[0], email
-  assert_match /#{email}/, msg.body
-  assert msg.body.include?(path_to "the confirmation path for \"#{email}\"")
+  assert_match /#{email}/, msg.body.to_s
+  assert msg.body.to_s.include?(path_to "the confirmation path for \"#{email}\"")
 end

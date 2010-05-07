@@ -8,5 +8,4 @@ Feature: Profiles
     And I go to the profile page for "joe@user.com"
     Then the "First name" field should contain "Joe"
     And the "Last name" field should contain "User"
-    And show me the page
     
