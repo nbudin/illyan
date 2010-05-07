@@ -1,18 +1,18 @@
 require 'test/test_helper'
 
 class AuthorizationObjectTest < ActiveSupport::TestCase
-  subject { Factory(:post) }
+  subject { Factory(:person) }
   
   should_have_many :accepted_roles
   
-  context "A new post" do
+  context "A new person" do
     setup do
-      assert @post = Factory.create(:post)
+      assert @person = Factory.create(:person)
     end
     
     should "not have any authorized people or groups" do
-      assert_equal 0, @post.people.count
-      assert_equal 0, @post.groups.count
+      assert_equal 0, @person.people.count
+      assert_equal 0, @person.groups.count
     end
   end
 end

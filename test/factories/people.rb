@@ -35,6 +35,15 @@ Factory.define :joe_user, :parent => :person do |p|
   end
 end
 
+Factory.define :group_administered_person, :parent => :person do |p|
+  p.firstname "Group-administered"
+  p.lastname "Person"
+  p.after_create do |person|
+    group = Factory.create(:group, :name => "Red Team")
+    group.has_role!("admin", person)
+  end
+end
+
 Factory.define :administrator, :parent => :person do |p|
   p.after_build do |person|
     person.has_role!("admin")
