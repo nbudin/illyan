@@ -132,23 +132,7 @@ class Person < ActiveRecord::Base
     end
   end
   
-  def app_profile
-    @app_profile ||= Illyan.profile_class.find_by_person_id(id)
-  end
-  
-  def profile
-    app_profile
-  end
-  
   def name
     return "#{firstname} #{lastname}"
-  end
-  
-  if not Illyan.profile_class.nil?
-    class_eval <<-END_CODE
-    def #{Illyan.profile_class.name.tableize.singularize}
-      app_profile
-    end
-    END_CODE
   end
 end
