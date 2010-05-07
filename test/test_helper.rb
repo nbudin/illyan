@@ -1,26 +1,13 @@
 ENV["RAILS_ENV"] = "test"
-require File.join(File.dirname(__FILE__), 'rails_app', 'config', 'environment')
+require File.expand_path('../../config/environment', __FILE__)
+require 'rails/test_help'
 
-require 'test_help'
-require 'webrat'
-require 'shoulda'
-require 'factory_girl'
- 
-Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
-Dir["#{File.dirname(__FILE__)}/factories/*.rb"].each {|f| require f}
- 
-ActionMailer::Base.delivery_method = :test
-ActionMailer::Base.perform_deliveries = true
-ActionMailer::Base.default_url_options[:host] = 'test.com'
- 
-require File.join(File.dirname(__FILE__), 'test_database')
- 
-Webrat.configure do |config|
-  config.mode = :rails
-  config.open_error_files = false
-end
- 
 class ActiveSupport::TestCase
-  self.use_transactional_fixtures = true
-  self.use_instantiated_fixtures = false
+  # Setup all fixtures in test/fixtures/*.(yml|csv) for all tests in alphabetical order.
+  #
+  # Note: You'll currently still have to declare fixtures explicitly in integration tests
+  # -- they do not yet inherit this setting
+  fixtures :all
+
+  # Add more helper methods to be used by all tests here...
 end
