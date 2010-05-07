@@ -1,7 +1,6 @@
 require 'acl9'
 
 class Person < ActiveRecord::Base
-  acts_as_illyan_shared_model
   acts_as_authorization_subject
   acts_as_authorization_object
 

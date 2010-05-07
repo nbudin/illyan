@@ -1,27 +1,14 @@
 # AeUsers
 require 'active_record'
-require 'illyan/acts'
 require 'illyan/controller_extensions'
 require 'illyan/form_builder_extensions'
 require 'illyan/instance_tag_extensions'
+require 'illyan/openid_strategy'
 require 'rack/openid'
 require 'devise'
 require 'acl9'
 
-module Illyan
-  @@user_store_base_url = nil
-  def self.user_store_base_url
-    @@user_store_base_url
-  end
-  
-  def self.remote_user_store?
-    !(@@user_store_base_url.nil?)
-  end
-  
-  def self.user_store_base_url=(url)
-    @@user_store_base_url = url
-  end
-  
+module Illyan  
   @@signup_allowed = true
   def self.signup_allowed?
     @@signup_allowed
