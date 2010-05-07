@@ -14,7 +14,8 @@ class PersonTest < ActiveSupport::TestCase
     end
 
     should "allow any auth params containing an openid url" do
-      assert @person.valid_for_authentication?(:openid_url => "http://openid.com")
+      @person.identity_url = "http://openid.com"
+      assert @person.valid_for_authentication?
     end
     
     should "be their own admin" do
