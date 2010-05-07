@@ -46,52 +46,7 @@ module Illyan
     map.open_id_complete 'auth', :controller => "auth", :action => "login", :requirements => { :method => :get }
   end
 
-  def self.install_legacy_md5_strategy
-    Warden::Strategies.add(:legacy_md5) do
-      def valid?
-        params[scope] && params[scope]["email"] && params[scope]["password"]
-      end
-
-      def authenticate!
-        p = Person.find_for_authentication(:email => params[scope]["email"])
-
-        if p.nil? or p.legacy_password_md5.blank?
-          pass
-        else
-          if Digest::MD5.hexdigest(params[scope]["password"]) == p.legacy_password_md5
-            success!(p)
-          else
-            pass
-          end
-        end
-      end
-    end
-  end
-  
-  def self.install_openid_warden_strategy
-    Warden::Strategies.add(:openid, Illyan::Strategies::OpenIDAuthenticatable)
-  end
-
-  def self.install_rack_openid
-    ActionController::Dispatcher.middleware.use Rack::OpenID
-  end
-
   def self.setup
-    install_openid_warden_strategy
-    install_legacy_md5_strategy
-    install_rack_openid
-
-    Devise.setup do |config|
-      config.warden do |manager|
-        manager.default_strategies.unshift :openid
-        manager.default_strategies.unshift :legacy_md5
-      end
-      
-      config.scoped_views = true
-
-      yield config
-    end
-
     Acl9::config.merge!(
             :default_subject_class_name => "Person",
             :default_subject_method => "current_person",
