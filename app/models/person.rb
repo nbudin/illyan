@@ -35,23 +35,27 @@ class Person < ActiveRecord::Base
   end
 
   def self.find_for_authentication(conditions)
-    joins = if conditions[:openid_url]
-      conditions["open_id_identities.identity_url"] = conditions.delete(:openid_url)
+    joins = if conditions[:identity_url]
+      conditions["open_id_identities.identity_url"] = conditions.delete(:identity_url)
       :open_id_identities
     end
     
     find(:first, :conditions => conditions, :joins => joins)
   end
+  
+  def self.find_by_identity_url(identity_url)
+    find(:first, :conditions => {:open_id_identities => {:identity_url => identity_url}}, :joins => :open_id_identities)
+  end
 
   def valid_for_authentication?(attributes)
-    if !attributes[:openid_url].blank?
+    if !attributes[:identity_url].blank?
       return true
     end
 
     super(attributes)
   end
 
-  def openid_url=(url)
+  def identity_url=(url)
     # just pass
   end
   
@@ -115,7 +119,7 @@ class Person < ActiveRecord::Base
     }
   end
 
-  def openid_url
+  def identity_url
     open_id_identities.first.try(:identity_url)
   end
     

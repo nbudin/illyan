@@ -82,32 +82,7 @@ module Illyan
   end
   
   def self.install_openid_warden_strategy
-    Warden::Strategies.add(:openid) do
-      def valid?
-        env[Rack::OpenID::RESPONSE] || !params["openid_identifier"].blank?
-      end
-
-      def authenticate!
-        if resp = env[Rack::OpenID::RESPONSE]
-          RAILS_DEFAULT_LOGGER.info "Attempting OpenID auth: #{env["rack.openid.response"].inspect}"
-          case resp.status
-          when :success
-            u = Person.find_for_authentication(:openid_url => resp.identity_url)
-            success!(u)
-          when :cancel
-            fail!("OpenID auth cancelled")
-          when :failure
-            fail!("OpenID auth failed")
-          end
-        else
-          header_data = Rack::OpenID.build_header(:identifier => params["openid_identifier"])
-          RAILS_DEFAULT_LOGGER.info header_data
-          custom!([401, {
-                Rack::OpenID::AUTHENTICATE_HEADER => header_data
-              }, "Sign in with OpenID"])
-        end
-      end
-    end
+    Warden::Strategies.add(:openid, Illyan::Strategies::OpenIDAuthenticatable)
   end
 
   def self.install_rack_openid
