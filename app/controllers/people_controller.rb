@@ -1,5 +1,6 @@
 class PeopleController < ApplicationController
-  before_filter :get_person, :except => :index 
+  unloadable
+  before_filter :get_person, :except => [:index]
   
   access_control do
     allow :admin
