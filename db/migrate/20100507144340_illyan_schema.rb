@@ -1,4 +1,4 @@
-class IllyanLocalTables < ActiveRecord::Migration
+class IllyanSchema < ActiveRecord::Migration
   def self.up
     create_table :accounts do |t|
       t.column :person_id, :integer
