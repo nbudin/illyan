@@ -58,16 +58,16 @@ class PersonTest < ActiveSupport::TestCase
 
   context "a person with an object role via a group" do
     setup do
-      assert @post = Factory.create(:group_post)
-      assert @group = @post.accepted_roles.first.groups.first
+      assert @gap = Factory.create(:group_administered_person)
+      assert @group = @gap.accepted_roles.first.groups.first
       assert @person = Factory.build(:person)
       assert @person.groups << @group
     end
 
     should "appear as having the right role, only for that object" do
-      assert !@person.has_role?("editor")
-      assert @person.has_role?("editor", @post)
-      assert @person.roles_for(@post).any? { |r| r.name == "editor" }
+      assert !@person.has_role?("admin")
+      assert @person.has_role?("admin", @gap)
+      assert @person.roles_for(@gap).any? { |r| r.name == "admin" }
     end
   end
 
@@ -97,7 +97,7 @@ class PersonTest < ActiveSupport::TestCase
     end
     
     should "find its own OpenID url correctly" do
-      assert_equal @identity_url, @person.openid_url
+      assert_equal @identity_url, @person.identity_url
     end
     
     context "having been saved" do
@@ -106,7 +106,7 @@ class PersonTest < ActiveSupport::TestCase
       end
       
       should "come up correctly in find_for_authentication calls" do
-        assert @found = Person.find_for_authentication(:openid_url => @identity_url)
+        assert @found = Person.find_for_authentication(:identity_url => @identity_url)
         assert_equal @person, @found
       end
     end
