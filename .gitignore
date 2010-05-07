@@ -8,3 +8,4 @@ test/rails_app/log/*.log
 .specification
 test/rails_app/db/*.sqlite3
 .bundle
+db/*.sqlite3
