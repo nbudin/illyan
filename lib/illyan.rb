@@ -44,12 +44,4 @@ module Illyan
   def self.map_openid(map)
     map.open_id_complete 'auth', :controller => "auth", :action => "login", :requirements => { :method => :get }
   end
-
-  def self.setup
-    Acl9::config.merge!(
-            :default_subject_class_name => "Person",
-            :default_subject_method => "current_person",
-            :protect_global_roles => true
-    )
-  end
 end
