@@ -23,6 +23,10 @@ gem 'rack-openid'
 
 # Bundle gems for certain environments:
 # gem 'rspec', :group => :test
-# group :test do
-#   gem 'webrat'
-# end
+group :test do
+  gem 'factory_girl', :git => "git://github.com/thoughtbot/factory_girl.git",
+    :branch => "rails3"
+  gem 'shoulda', :git => "git://github.com/thoughtbot/shoulda.git",
+    :branch => "rails3", :require => nil
+  gem 'webrat'
+end
