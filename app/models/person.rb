@@ -46,12 +46,12 @@ class Person < ActiveRecord::Base
     find(:first, :conditions => {:open_id_identities => {:identity_url => identity_url}}, :joins => :open_id_identities)
   end
 
-  def valid_for_authentication?(attributes)
-    if !attributes[:identity_url].blank?
+  def valid_for_authentication?
+    if !identity_url.blank?
       return true
     end
 
-    super(attributes)
+    super
   end
 
   def identity_url=(url)
