@@ -1,3 +1,5 @@
+require 'illyan/strategies'
+
 Warden::Strategies.add(:openid, Illyan::Strategies::OpenIDAuthenticatable)
 Warden::Strategies.add(:openid, Illyan::Strategies::LegacyMD5)
 

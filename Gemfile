@@ -9,7 +9,6 @@ gem 'mysql'
 gem 'devise', '1.1.rc1'
 gem 'acl9'
 gem 'rack-openid'
-
 # Use unicorn as the web server
 # gem 'unicorn'
 
