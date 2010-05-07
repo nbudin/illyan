@@ -1,4 +1,7 @@
 Illyan::Application.routes.draw do |map|
+  devise_for :people
+  devise_for :open_id_identities
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
