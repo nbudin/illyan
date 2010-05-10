@@ -11,7 +11,7 @@ gem 'acl9'
 gem 'rack-openid', :require => 'rack/openid'
 
 # Use unicorn as the web server
-# gem 'unicorn'
+gem 'unicorn'
 
 # Deploy with Capistrano
 # gem 'capistrano'
