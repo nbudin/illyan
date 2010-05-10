@@ -9,6 +9,10 @@ class PeopleController < ApplicationController
       allow :admin, :of => :person
     end
   end
+  
+  def index
+    @people = Person.all(:order => [:lastname, :firstname])
+  end
 
   def edit
     # don't do this yet; I need to figure out the security implications of letting people add their own

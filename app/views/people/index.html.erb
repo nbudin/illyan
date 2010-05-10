@@ -1,0 +1,13 @@
+<table>
+	<tr>
+		<th>Name</th>
+		<th>Email</th>
+	</tr>
+	<% @people.each do |person| -%>
+		<tr>
+			<td><%= person.lastname %>, <%= person.firstname %></td>
+			<td><%= person.email %></td>
+			<td><%= link_to "Edit", edit_person_path(person) %></td>
+		</tr>
+	<% end -%>
+</table>
