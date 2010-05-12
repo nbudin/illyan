@@ -7,6 +7,18 @@
   <%= csrf_meta_tag %>
 </head>
 <body>
+	<% if flash[:notice] %>
+	  <div class="notice">
+	    <%= flash[:notice] %>
+	  </div>
+	<% end %>
+	
+	<% if flash[:alert] %>
+    <div class="alert">
+      <%= flash[:alert] %>
+    </div>
+  <% end %>
+  
   <div class="auth_options">
     <% if current_person -%>
       <%= link_to current_person.name, edit_person_path(current_person) %>

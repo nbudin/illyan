@@ -1,0 +1,34 @@
+body {
+	font-family: sans-serif;
+	margin-top: 24px;
+}
+
+table {
+	width: 100%;
+}
+
+.auth_options, .notice, .alert {
+	position: absolute;
+	top: 0px;
+	left: 5px;
+	border: 2px #666 solid;
+	border-top: none;
+	padding: 3px;
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
+	font-size: 13px;
+}
+
+.auth_options {
+	background-color: #ccf;
+	left: auto;
+	right: 5px;
+}
+
+.notice {
+	background-color: #ffc;
+}
+
+.alert {
+	background-color: #fcc;
+}
