@@ -5,13 +5,11 @@
 <%= form_for @person do |f| -%>
   <h2>Change your password</h2>
   
-  <dl>
-    <dt><%= f.label :password %></dt>
-    <dd><%= f.password_field :password %></dd>
+  <%= f.label :password, "New password" %>
+  <%= f.password_field :password %>
     
-    <dt><%= f.label :password_confirmation %></dt>
-    <dd><%= f.password_field :password_confirmation %></dd>
-  </dl>
+  <%= f.label :password_confirmation, "Again to confirm" %>
+  <%= f.password_field :password_confirmation %>
   
   <%= f.submit "Change password" %>
 <% end -%>
@@ -31,7 +29,7 @@
           <td colspan="2">
             <%= identity_fields.label :identity_url, "Add: " %>
             <%= identity_fields.text_field :identity_url, 
-                :style => "background: #FFFFFF url('#{image_path 'illyan/openid.gif'}') no-repeat scroll 0pt 50%; padding-left: 18px; width: 60%;" %>
+                :style => "background: #FFFFFF url('#{image_path 'openid.gif'}') no-repeat scroll 0pt 50%; padding-left: 18px; width: 60%;" %>
           </td>
         <% else -%>
           <td><%= identity_fields.object.identity_url %></td>
@@ -51,11 +49,10 @@
 
 <%= form_for @person do |f| -%>
   <h2>Personal Information</h2>
-  <dl>
-    <dt><%= f.label :email %></dt>
-    <dd><%= f.text_field :email %></dd>
-    <%= render :partial => 'personal_info', :locals => {:f => f} %>
-  </dl>
-
+  
+  <%= f.label :email %>
+  <%= f.text_field :email %>
+  <%= render :partial => 'personal_info', :locals => {:f => f} %>
+  
   <%= f.submit "Edit profile" %>
 <% end %>
