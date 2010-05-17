@@ -6,6 +6,7 @@ gem 'rails', '3.0.0.beta3'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'sqlite3-ruby', :require => 'sqlite3'
+gem 'warden', '0.10.3'
 gem 'devise', '1.1.rc1'
 gem 'acl9'
 gem 'rack-openid', :require => 'rack/openid'
