@@ -10,6 +10,7 @@ gem 'warden', '0.10.3'
 gem 'devise', '1.1.rc1'
 gem 'acl9'
 gem 'rack-openid', :require => 'rack/openid'
+gem 'xebec', :path => '/Users/nbudin/code/xebec'
 
 # Use unicorn as the web server
 gem 'unicorn'

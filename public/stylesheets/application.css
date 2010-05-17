@@ -7,7 +7,7 @@ table {
 	width: 100%;
 }
 
-.auth_options, .notice, .alert {
+nav.application, .navbar.application, .notice, .alert {
 	position: absolute;
 	top: 0px;
 	left: 5px;
@@ -19,10 +19,37 @@ table {
 	font-size: 13px;
 }
 
-.auth_options {
+nav.application, .navbar.application {
 	background-color: #ccf;
 	left: auto;
 	right: 5px;
+}
+
+nav ul, .navbar ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+nav ul li, .navbar ul li {
+	display: inline-block;
+	margin: 2px;
+	padding: 3px;
+	background-color: rgba(255, 255, 255, 0.5);
+	border-radius: 3px;
+}
+
+nav ul li:hover, .navbar ul li:hover {
+	background-color: white;
+}
+
+nav ul li.current, .navbar ul li.current, nav ul li.current:hover, .navbar ul li.current:hover {
+	background-color: white;
+}
+
+nav ul li a, .navbar ul li a {
+	color: black;
+	text-decoration: none;
 }
 
 .notice {
