@@ -9,3 +9,4 @@ test/rails_app/log/*.log
 test/rails_app/db/*.sqlite3
 .bundle
 db/*.sqlite3
+tmp/*
