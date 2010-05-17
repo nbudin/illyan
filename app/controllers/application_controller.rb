@@ -16,4 +16,14 @@ class ApplicationController < ActionController::Base
       nb.nav_item "Log in", new_person_session_path
     end
   end
+  
+  before_filter :authenticate_person!
+  
+  rescue_from Acl9::AccessDenied do
+    if current_person
+      render 'shared/access_denied'
+    else
+      redirect_to new_person_session_path
+    end
+  end
 end

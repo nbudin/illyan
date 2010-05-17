@@ -1,8 +1,7 @@
 class PeopleController < ApplicationController
-  unloadable
   before_filter :get_person, :except => [:index]
   
-  access_control do
+  access_control :except => [:index] do
     allow :admin
     
     actions :show, :edit, :update do
@@ -11,6 +10,10 @@ class PeopleController < ApplicationController
   end
   
   def index
+    unless current_person.has_role? :admin
+      redirect_to edit_person_path(current_person)
+    end
+    
     @people = Person.all(:order => [:lastname, :firstname])
   end
 
