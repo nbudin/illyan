@@ -4,12 +4,14 @@ class Person < ActiveRecord::Base
   acts_as_authorization_subject
   acts_as_authorization_object
 
-  devise :database_authenticatable, :rememberable, :confirmable, :recoverable, :trackable, :registerable
+  devise :database_authenticatable, :rememberable, :confirmable, :recoverable, :trackable, :registerable, :validatable
 
   has_many :open_id_identities
   accepts_nested_attributes_for :open_id_identities, :allow_destroy => true
   validates_uniqueness_of :email, :allow_nil => true
   has_and_belongs_to_many :groups
+  
+  attr_accessible :firstname, :lastname, :gender, :birthdate, :email, :password
   
   def legacy_password_md5
     @legacy_password_md5 ||= if self.class.columns.include? "legacy_password_md5"
