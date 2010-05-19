@@ -39,6 +39,13 @@ ActiveRecord::Schema.define(:version => 20100507144340) do
     t.integer "role_id"
   end
 
+  create_table "login_tickets", :force => true do |t|
+    t.string   "ticket",          :null => false
+    t.string   "client_hostname", :null => false
+    t.datetime "consumed_at"
+    t.datetime "created_at",      :null => false
+  end
+
   create_table "open_id_identities", :force => true do |t|
     t.integer "person_id"
     t.string  "identity_url", :limit => 4000
@@ -72,12 +79,39 @@ ActiveRecord::Schema.define(:version => 20100507144340) do
     t.integer "role_id"
   end
 
+  create_table "proxy_granting_tickets", :force => true do |t|
+    t.integer  "service_ticket_id", :null => false
+    t.string   "ticket",            :null => false
+    t.string   "client_hostname",   :null => false
+    t.string   "iou",               :null => false
+    t.datetime "created_at",        :null => false
+  end
+
   create_table "roles", :force => true do |t|
     t.string   "name"
     t.string   "authorizable_type"
     t.integer  "authorizable_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "service_tickets", :force => true do |t|
+    t.integer  "proxy_granting_ticket_id"
+    t.integer  "ticket_granting_ticket_id"
+    t.string   "ticket",                    :null => false
+    t.string   "client_hostname",           :null => false
+    t.text     "service",                   :null => false
+    t.string   "username",                  :null => false
+    t.string   "type"
+    t.datetime "consumed_at"
+    t.datetime "created_at",                :null => false
+  end
+
+  create_table "ticket_granting_tickets", :force => true do |t|
+    t.string   "ticket",          :null => false
+    t.string   "client_hostname", :null => false
+    t.string   "username",        :null => false
+    t.datetime "created_at",      :null => false
   end
 
 end
