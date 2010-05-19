@@ -8,6 +8,8 @@ Bundler.require(:default, Rails.env) if defined?(Bundler)
 
 module Illyan
   class Application < Rails::Application
+    cattr_accessor :site_title
+    
     config.middleware.use Rack::OpenID
 
     # Settings in config/environments/* take precedence over those specified here.
