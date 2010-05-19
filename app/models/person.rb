@@ -134,6 +134,19 @@ class Person < ActiveRecord::Base
     end
   end
   
+  def confirmed_at_ymdhms
+    confirmed_at.try(:strftime, "%Y-%m-%d %H:%M:%S")
+  end
+  
+  def confirmed_at_ymdhms=(str)
+    if str.blank?
+      self.confirmed_at = nil
+      generate_confirmation_token
+    else
+      self.confirmed_at = DateTime.strptime("Y-%m-%d %H:%M:%S")
+    end
+  end
+  
   def name
     return "#{firstname} #{lastname}"
   end
