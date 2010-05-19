@@ -7,9 +7,9 @@ class ApplicationController < ActionController::Base
 
   nav_bar :application do |nb|
     if current_person
-      nb.nav_item current_person.name, edit_person_path(current_person)
+      nb.nav_item current_person.name, profile_path
       if current_person.has_role?(:admin)
-        nb.nav_item :people
+        nb.nav_item :admin_people
       end
       nb.nav_item "Log out", destroy_person_session_path
     else

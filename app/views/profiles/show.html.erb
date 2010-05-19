@@ -1,0 +1,10 @@
+<div class="card">
+  <h2>My Profile</h2>
+
+  <%= render :partial => 'profile' %>
+
+  <ul>
+    <li><%= link_to "Edit profile", edit_profile_path %></li>
+    <li><%= link_to "Change password", change_password_profile_path %>
+  </ul>
+</div>

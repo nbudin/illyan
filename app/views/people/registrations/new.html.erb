@@ -1,29 +1,24 @@
-<h2>Sign up</h2>
-
 <%= form_for resource, :as => resource_name, :url => registration_path(resource_name) do |f| -%>
+  <h2>Sign up</h2>
+
   <%= f.error_messages %>
-  <p>
-    <%= f.label :email %>
-    <%= f.text_field :email %>
-  </p>
-
-  <p>
-    <%= f.label :password %>
-    <%= f.password_field :password %>
-  </p>
-
-  <p>
-    <%= f.label :password_confirmation %>
-    <%= f.password_field :password_confirmation %>
-  </p>
-
-  <h2>Personal Information</h2>
-
-  <dl>
-    <%= render :partial => "people/personal_info", :locals => {:f => f} %>
-  </dl>
   
-  <p><%= f.submit "Sign up" %></p>
+  <h3 style="clear: left;">Login Information</h3>
+
+  <%= f.label :email %>
+  <%= f.text_field :email %>
+
+  <%= f.label :password %>
+  <%= f.password_field :password %>
+  
+  <%= f.label :password_confirmation %>
+  <%= f.password_field :password_confirmation %>
+
+  <h3 style="clear: left;">Profile</h3>
+  
+  <%= render :partial => "profiles/personal_info", :locals => {:f => f} %>
+  
+  <%= f.submit "Sign up" %>
 <% end -%>
 
 <%= render :partial => "devise/shared/links" %>

@@ -1,21 +1,8 @@
-<h1>Profile for <%= @person.name %></h1>
+<h1><%= @person.name %></h1>
 
 <%= error_messages_for :person %>
 
-<%= form_for @person do |f| -%>
-  <h2>Change your password</h2>
-  
-  <%= f.label :password, "New password" %>
-  <%= f.password_field :password %>
-    
-  <%= f.label :password_confirmation, "Again to confirm" %>
-  <%= f.password_field :password_confirmation %>
-  
-  <%= f.submit "Change password" %>
-<% end -%>
-
-
-<%= form_for @person do |f| -%>
+<%= form_for @person, :url => profile_path do |f| -%>
   <h2>OpenIDs</h2>
 
   <p>OpenID is a free and easy way to use a single digital identity across the Internet.  (For more information,
@@ -47,12 +34,8 @@
   <%= f.submit "Update OpenIDs" %>
 <% end -%>
 
-<%= form_for @person do |f| -%>
-  <h2>Personal Information</h2>
-  
-  <%= f.label :email %>
-  <%= f.text_field :email %>
-  <%= render :partial => 'personal_info', :locals => {:f => f} %>
-  
-  <%= f.submit "Edit profile" %>
+<%= form_for @person, :url => profile_path do |f| -%>
+  <h2>Edit My Profile</h2>
+
+  <%= render :partial => 'edit', :locals => { :f => f } %>
 <% end %>

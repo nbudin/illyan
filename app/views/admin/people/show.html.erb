@@ -1,0 +1,44 @@
+<h1><%= @person.name%></h1>
+
+<div class="card">
+  <h2>Profile</h2>
+
+  <%= render :partial => "profiles/profile" %>
+  
+  <ul>
+    <li><%= link_to "Edit profile", edit_admin_person_path(@person) %></li>
+  </ul>
+</div>
+
+
+<div class="card">
+  <h2>Account Data</h2>
+
+  <dl>
+    
+    <dt>Created</dt>
+    <dd><%= @person.created_at %></dd>
+
+    <dt>Last updated</dt>
+    <dd><%= @person.updated_at %></dd>
+
+    <dt>Logged in</dt>
+    <dd><%= @person.current_sign_in_at %> from <%= @person.current_sign_in_ip%></dd>
+
+    <dt>Last logged in</dt>
+    <dd><%= @person.last_sign_in_at %> from <%= @person.last_sign_in_ip%></dd>
+
+    <dt>Has logged in</dt>
+    <dd><%= pluralize(@person.sign_in_count, "time") %></dd>  
+  
+    <dt>Confirmation sent</dt>
+    <dd><%= @person.confirmation_sent_at %></dd>
+  
+    <dt>Confirmed</dt>
+    <dd><%= @person.confirmed_at %></dd>
+  </dl>
+
+  <ul>
+    <li><%= link_to "Edit account data", edit_account_admin_person_path(@person) %></li>
+  </ul>
+</div>

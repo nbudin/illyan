@@ -1,0 +1,16 @@
+<%= error_messages_for :person %>
+  
+<%= form_for(@person, :url => admin_people_path) do |f| -%>
+  <h2>New Person</h2>
+  
+  <%= f.label :email %>
+  <%= f.text_field :email %>
+  <%= render :partial => 'profiles/personal_info', :locals => {:f => f} %>
+  
+  <% if admin? -%>
+    <h3>Account Data</h3>
+    <%= render :partial => 'admin_fields', :locals => {:f => f} %>
+  <% end -%>
+  
+  <%= f.submit "Create" %>
+<% end %>

@@ -15,7 +15,17 @@ Illyan::Application.routes.draw do |map|
 
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
-  resources :people
+  resource :profile do
+    get :change_password
+  end
+  
+  namespace :admin do
+    resources :people do
+      member do
+        get :edit_account
+      end
+    end
+  end
 
   # Sample resource route with options:
   #   resources :products do
@@ -52,7 +62,7 @@ Illyan::Application.routes.draw do |map|
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => "people#index"
+  root :to => "profiles#show"
 
   # See how all your routes lay out with "rake routes"
 

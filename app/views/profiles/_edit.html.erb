@@ -1,0 +1,5 @@
+<%= f.label :email %>
+<%= f.text_field :email %>
+<%= render :partial => 'profiles/personal_info', :locals => {:f => f} %>
+
+<%= f.submit "Edit profile" %>

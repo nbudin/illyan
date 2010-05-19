@@ -1,0 +1,23 @@
+<% if admin? %>
+  <%= f.label :confirmed_at_ymdhms, "Confirmed at" %>
+  <%= f.text_field :confirmed_at_ymdhms %>
+  <%= button_to_function ("Confirm now", nil) do |page|
+    page << %{
+      function zeroPad(n) {
+        if (n < 10)
+          return "0" + n;
+        else
+          return n.toString();
+      }
+      
+      var now = new Date();
+      var ymdhms = now.getFullYear().toString() + "-";
+      ymdhms += zeroPad(now.getMonth()) + "-";
+      ymdhms += zeroPad(now.getDay()) + " ";
+      ymdhms += zeroPad(now.getHours()) + ":";
+      ymdhms += zeroPad(now.getMinutes()) + ":";
+      ymdhms += zeroPad(now.getSeconds());
+    }
+  
+  end %>
+<% end %>
