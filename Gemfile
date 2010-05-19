@@ -12,6 +12,9 @@ gem 'acl9'
 gem 'rack-openid', :require => 'rack/openid'
 gem 'xebec', :path => '/Users/nbudin/code/xebec'
 
+gem 'ruby-net-ldap'
+gem 'castronaut', :git => "http://github.com/relevance/castronaut.git"
+
 # Use unicorn as the web server
 gem 'unicorn'
 
