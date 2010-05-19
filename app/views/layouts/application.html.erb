@@ -1,27 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Illyan</title>
+  <title><%= page_title %></title>
   <%= stylesheet_link_tag :all %>
   <%= javascript_include_tag :defaults %>
   <%= csrf_meta_tag %>
 </head>
 <body>
-	<% if flash[:notice] %>
-	  <div class="notice">
-	    <%= flash[:notice] %>
-	  </div>
-	<% end %>
-	
-	<% if flash[:alert] %>
-    <div class="alert">
-      <%= flash[:alert] %>
-    </div>
-  <% end %>
-  
-  <%= nav_bar :application %>
+  <div id="top">
+    <%= nav_bar :application %>
+    
+  	<% if flash[:notice] %>
+  	  <div class="notice">
+  	    <%= flash[:notice] %>
+  	  </div>
+  	<% end %>
 
-<%= yield %>
+  	<% if flash[:alert] %>
+      <div class="alert">
+        <%= flash[:alert] %>
+      </div>
+    <% end %>
+
+    <div id="banner">
+      <%= Illyan::Application.site_title %>
+    </div>
+  </div>
+
+  <%= yield %>
 
 </body>
 </html>

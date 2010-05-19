@@ -1,13 +1,36 @@
 body {
 	font-family: sans-serif;
-	margin-top: 2em;
+	margin-top: 3em;
 }
 
 table {
 	width: 100%;
+	border-collapse: collapse;
 }
 
-form {
+thead {
+	color: white;
+	background-color: #900;
+	border-bottom: 1px black solid;
+}
+
+th, td {
+	border-right: 1px #666 dotted;
+}
+
+th:last-child, td:last-child {
+	border-right: none;
+}
+
+tbody tr:nth-child(even) {
+	background-color: #fbb;
+}
+
+tbody tr:nth-child(odd) {
+	background-color: #fdd;
+}
+
+.card, form {
 	padding: 10px;
 	margin-top: 1em;
 	margin-bottom: 1em;
@@ -16,23 +39,36 @@ form {
 	border-radius: 5px;
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
+	clear: both;
+	overflow: hidden;
 }
 
-form h2 {
+.card h2, form h2 {
 	margin-top: 0;
 }
 
-form label {
-	clear: both;
+.card h3, form h3 {
+	margin-left: 150px;
+	text-decoration: underline;
+}
+
+.card dl {
+	float: left;
+	margin: 0;
+}
+
+.card dt, form label {
+	clear: left;
 	float: left;
 	width: 140px;
 	margin-bottom: 2px;
 	text-align: right;
 	padding-right: 10px;
+	font-weight: bold;
 }
 
-form input, form .input, form > select {
-	margin-left: 150px;
+form input, form .input, .card dd, form > select {
+	float: left;
 	display: block;
 	margin-bottom: 2px;
 }
@@ -43,30 +79,57 @@ form input[type=checkbox] {
 }
 
 form input[type=submit] {
+	clear: left;
+	margin-left: 150px;
 	margin-top: 1em;
 }
 
-form .input {
-	margin-top: 0;
-	margin-bottom: 0;
+form .input, .card dd {
+	margin: 0;
+}
+
+.card ul {
+	clear: both;
+	list-style-type: none;
+	padding-top: 12pt;
+	margin-left: 150px;
+	padding-left: 0;
+}
+
+.card ul li {
+	margin-left: 0;
+	padding-left: 0;
+}
+
+#top {
+	position: absolute;
+	top: 0px;
+	width: 99%;
+	padding: 0;
+	margin: 0;
+	border-bottom: 1px black solid;
+	height: 2.5em;
+}
+
+#banner {
+	font-size: 2.5em;
+	font-weight: bold;
 }
 
 nav.application, .navbar.application, .notice, .alert {
-	position: absolute;
-	top: 0px;
-	left: 5px;
 	border: 2px #666 solid;
 	border-top: none;
 	padding: 3px;
 	border-bottom-left-radius: 3px;
 	border-bottom-right-radius: 3px;
 	font-size: 13px;
+	float: right;
+	margin-right: 5px;
 }
 
 nav.application, .navbar.application {
 	background-color: #ccf;
 	left: auto;
-	right: 5px;
 }
 
 nav ul, .navbar ul {
