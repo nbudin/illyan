@@ -12,8 +12,10 @@ gem 'acl9', :git => 'http://github.com/nbudin/acl9.git' # just until Oleg releas
 gem 'rack-openid', :require => 'rack/openid'
 gem 'xebec', :path => '/Users/nbudin/code/xebec'
 
+gem 'sinatra'
 gem 'ruby-net-ldap'
-gem 'castronaut', :git => "http://github.com/relevance/castronaut.git"
+gem 'fast_xs'
+gem 'castronaut', :path => "/Users/nbudin/code/castronaut"
 
 # Use unicorn as the web server
 gem 'unicorn'
