@@ -1,4 +1,5 @@
 class Admin::PeopleController < ApplicationController
+  before_filter :authenticate_person!
   before_filter :get_person, :except => [:index, :new, :create]
   
   access_control do

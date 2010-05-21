@@ -17,7 +17,6 @@ class ApplicationController < ActionController::Base
     end
   end
   
-  before_filter :authenticate_person!
   
   rescue_from Acl9::AccessDenied do
     if current_person
