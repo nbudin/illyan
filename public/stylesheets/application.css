@@ -57,7 +57,7 @@ tbody tr:nth-child(odd) {
 	margin: 0;
 }
 
-.card dt, form label {
+.card dt, form > label {
 	clear: left;
 	float: left;
 	width: 140px;
