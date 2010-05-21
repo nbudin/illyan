@@ -22,7 +22,10 @@ class CasController < ApplicationController
     @presenter = Castronaut::Presenters::Login.new(self)
     @presenter.represent!
     return if response.redirect_url
-    authenticate_person!
+    unless person_signed_in?
+      session[:person_return_to] = request.url
+      return redirect_to(new_person_session_url)
+    end
     
     client_host = @presenter.client_host
     service = @presenter.service
