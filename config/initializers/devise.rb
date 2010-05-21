@@ -13,7 +13,7 @@ Devise.setup do |config|
   config.scoped_views = true
   
   # Configure the e-mail address which will be shown in DeviseMailer.
-  config.mailer_sender = "please-change-me@config-initializers-devise.com"
+  config.mailer_sender = "Nat Budin <nat@sugarpond.net>"
 
   # ==> Configuration for any authentication mechanism
   # Configure which keys are used when authenticating an user. By default is
