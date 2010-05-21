@@ -8,6 +8,7 @@ gem 'rails', '3.0.0.beta3'
 gem 'sqlite3-ruby', :require => 'sqlite3'
 gem 'warden', '0.10.3'
 gem 'devise', '1.1.rc1'
+gem 'devise_openid_authenticatable', '1.0.0.alpha1'
 gem 'acl9', :git => 'http://github.com/nbudin/acl9.git' # just until Oleg releases the join table name fix
 gem 'rack-openid', :require => 'rack/openid'
 gem 'xebec', :path => '/Users/nbudin/code/xebec'

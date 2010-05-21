@@ -4,7 +4,8 @@ class Person < ActiveRecord::Base
   acts_as_authorization_subject
   acts_as_authorization_object
 
-  devise :database_authenticatable, :rememberable, :confirmable, :recoverable, :trackable, :registerable, :validatable
+  devise :database_authenticatable, :openid_authenticatable, 
+    :rememberable, :confirmable, :recoverable, :trackable, :registerable, :validatable
 
   has_many :open_id_identities
   accepts_nested_attributes_for :open_id_identities, :allow_destroy => true
