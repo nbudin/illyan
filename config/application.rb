@@ -8,7 +8,7 @@ Bundler.require(:default, Rails.env) if defined?(Bundler)
 
 module Illyan
   class Application < Rails::Application
-    cattr_accessor :site_title
+    cattr_accessor :site_title, :site_logo, :theme
     
     config.middleware.use Rack::OpenID
 

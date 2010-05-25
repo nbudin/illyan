@@ -2,14 +2,13 @@
 <html>
 <head>
   <title><%= page_title %></title>
-  <%= stylesheet_link_tag :all %>
+  <%= stylesheet_link_tag 'application' %>
+  <%= theme_stylesheet_link_tag %>
   <%= javascript_include_tag :defaults %>
   <%= csrf_meta_tag %>
 </head>
 <body>
-  <div id="top">
-    <%= nav_bar :application %>
-    
+  <div id="top">  
   	<% if flash[:notice] %>
   	  <div class="notice">
   	    <%= flash[:notice] %>
@@ -22,8 +21,10 @@
       </div>
     <% end %>
 
+    <%= nav_bar :application %>
+
     <div id="banner">
-      <%= Illyan::Application.site_title %>
+      <%= site_banner%>
     </div>
   </div>
 
