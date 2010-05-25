@@ -1,0 +1,116 @@
+body {
+	font-family: Liberation Serif, Georgia, serif;
+}
+
+#top {
+    height: auto;
+	min-height: 46px;
+	border-bottom: 2px #1087e0 solid;
+	max-width: 805px;
+	padding-left: 5px;
+	margin-left: -5px;
+	background-color: #E4F3FF;
+	
+	background-image: -webkit-gradient(
+        linear,
+        left top,
+        left bottom,
+        color-stop(0.0, rgba(16,135,224,0.2)),
+        color-stop(1.0, rgba(16,135,224,0))
+    );
+    background-image: -moz-linear-gradient(
+        center top,
+        rgba(16,135,224,0.2) 0%,
+        rgba(16,135,224,0) 100%
+    );
+}
+
+nav.application, .navbar.application, .notice, .alert {
+	border: 0;
+	padding-top: 0;
+	padding-bottom: 0;
+	border-radius: 0;
+	margin: 0;
+}
+
+.notice, .alert {
+    float: none;
+    clear: both;
+    width: 100%;
+    height: auto;
+    margin-left: -5px;
+    border-bottom: 1px black solid;
+    text-align: center;
+}
+
+nav.application ul li, .navbar.application ul li {
+    display: inline;
+	display: inline-block;
+	background-color: transparent;
+	padding: 0;
+	margin: 0;
+	margin-left: 2px;
+	text-align: right;
+	border-radius: 0;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+}
+
+nav.application ul li.current, .navbar.application ul li.current {
+    text-decoration: none;
+	color: #666;
+	background-color: #fff;
+	border-top: 2px #666 solid;
+	height: 39px;
+    display: inline-block;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 5px;
+}
+
+nav.application ul li a, .navbar.application ul li {
+	text-decoration: none;
+	color: #e4f3ff;
+	background-color: #1087e0;
+	height: 39px;
+    border-top: 2px white solid;
+    display: inline-block;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 5px;
+}
+
+nav.application ul li a:hover, .navbar.application ul li a:hover {
+    background-color: white;
+    color: #1087e0;
+}
+
+nav.application, .navbar.application {
+    background: none;
+	padding-right: 0;
+}
+
+#banner {
+	margin-top: 2px;
+	height: 44px;
+}
+
+html {
+    background-color: #fff;
+    background-image: url(/images/account-central/20.gif);
+    height: 100%;
+}
+
+body {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    padding: 5px;
+    border-width: 0 100px 0 100px;
+    /*-webkit-border-image: url(/images/account-central/body-border.png) 0 100 0 100 stretch stretch;*/
+    /*box-shadow: 0px 0px 200px #000;
+    -moz-box-shadow: 0px 0px 200px #000;
+    -webkit-box-shadow: 0px 0px 200px #000;*/
+    height: 100%;
+}

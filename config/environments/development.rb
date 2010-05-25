@@ -20,4 +20,6 @@ Illyan::Application.configure do
   config.action_mailer.default_url_options = { :host => 'localhost:4001' }
 end
 
-Illyan::Application.site_title = "Illyan"
+Illyan::Application.site_title = "Sugar Pond Account Central"
+Illyan::Application.site_logo = "account-central.png"
+Illyan::Application.theme = "account-central"
