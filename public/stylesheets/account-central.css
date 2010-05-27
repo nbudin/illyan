@@ -114,3 +114,36 @@ body {
     -webkit-box-shadow: 0px 0px 200px #000;*/
     height: 100%;
 }
+
+.card, form {
+    border: 2px #9aa60f solid;
+    background-color: #cbd090;
+    background-image: -webkit-gradient(
+        linear,
+        left top,
+        left bottom,
+        color-stop(0.0, rgba(255,255,255,0)),
+        color-stop(1.0, rgba(255,255,255,0.5))
+    );
+    background-image: -moz-linear-gradient(
+        center top,
+        rgba(255,255,255,0) 0%,
+        rgba(255,255,255,0.5) 100%
+    );
+}
+
+form input, form select, form textarea {
+    font-family: Liberation Serif, Georgia, serif;
+    font-size: 12pt;
+    padding: 1pt;
+}
+
+form input[type=text], form input[type=password], form textarea {
+    background-color: #9aa60f;
+    color: white;
+    border: none;
+}
+
+form input[type=text]:focus, form input[type=password]:focus, form textarea:focus {
+    background-color: #ef6600;
+}
