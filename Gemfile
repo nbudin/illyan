@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.0.beta3'
+gem 'rails', '3.0.0.beta4'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -33,10 +33,8 @@ gem 'unicorn'
 # Bundle gems for certain environments:
 # gem 'rspec', :group => :test
 group :test do
-  gem 'factory_girl', :git => "git://github.com/thoughtbot/factory_girl.git",
-    :branch => "rails3"
-  gem 'shoulda', :git => "git://github.com/thoughtbot/shoulda.git",
-    :branch => "rails3", :require => nil
+  gem 'factory_girl_rails'
+  gem 'shoulda', '>= 2.10.3'
   gem 'capybara'
   gem 'cucumber-rails'
   gem 'launchy'
