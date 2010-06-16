@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100507144340) do
+ActiveRecord::Schema.define(:version => 20100616173925) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "person_id"
@@ -29,14 +29,14 @@ ActiveRecord::Schema.define(:version => 20100507144340) do
     t.string "name"
   end
 
+  create_table "groups_owners", :id => false, :force => true do |t|
+    t.integer "group_id"
+    t.integer "owner_id"
+  end
+
   create_table "groups_people", :id => false, :force => true do |t|
     t.integer "person_id", :null => false
     t.integer "group_id",  :null => false
-  end
-
-  create_table "groups_roles", :id => false, :force => true do |t|
-    t.integer "group_id"
-    t.integer "role_id"
   end
 
   create_table "login_tickets", :force => true do |t|
@@ -72,11 +72,7 @@ ActiveRecord::Schema.define(:version => 20100507144340) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "people_roles", :id => false, :force => true do |t|
-    t.integer "person_id"
-    t.integer "role_id"
+    t.boolean  "admin"
   end
 
   create_table "proxy_granting_tickets", :force => true do |t|
@@ -85,14 +81,6 @@ ActiveRecord::Schema.define(:version => 20100507144340) do
     t.string   "client_hostname",   :null => false
     t.string   "iou",               :null => false
     t.datetime "created_at",        :null => false
-  end
-
-  create_table "roles", :force => true do |t|
-    t.string   "name"
-    t.string   "authorizable_type"
-    t.integer  "authorizable_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "service_tickets", :force => true do |t|

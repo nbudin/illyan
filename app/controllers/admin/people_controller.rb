@@ -1,11 +1,6 @@
 class Admin::PeopleController < ApplicationController
-  before_filter :authenticate_person!
-  before_filter :get_person, :except => [:index, :new, :create]
-  
-  access_control do
-    allow :admin
-  end
-  
+  load_and_authorize_resource
+    
   def index    
     @people = Person.all(:order => [:lastname, :firstname])
   end

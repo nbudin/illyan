@@ -1,9 +1,9 @@
 module ApplicationHelper
-  include Acl9Helpers
+  #include Acl9Helpers
   
-  access_control :admin? do
-    allow :admin
-  end
+  #access_control :admin? do
+  #  allow :admin
+  #end
   
   def page_title
     title = "#{Illyan::Application.site_title}"

@@ -1,9 +1,4 @@
-require 'acl9'
-
 class Person < ActiveRecord::Base
-  acts_as_authorization_subject
-  acts_as_authorization_object
-
   devise :database_authenticatable, :openid_authenticatable, 
     :rememberable, :confirmable, :recoverable, :trackable, :registerable, :validatable
 
@@ -62,34 +57,34 @@ class Person < ActiveRecord::Base
   end
   
   # All users are their own admins
-  def has_role_with_self_admin?(role_name, object=nil)
-    if role_name.to_s == "admin" && object == self
-      true
-    else
-      has_role_without_self_admin?(role_name, object)
-    end
-  end
-  alias_method_chain :has_role?, :self_admin
+  #def has_role_with_self_admin?(role_name, object=nil)
+  #  if role_name.to_s == "admin" && object == self
+  #    true
+  #  else
+  #    has_role_without_self_admin?(role_name, object)
+  #  end
+  #end
+  #alias_method_chain :has_role?, :self_admin
   
   # Add groups support to acl9's stock methods
-  def has_role_with_groups?(role_name, object=nil)
-    has_role_without_groups?(role_name, object) or groups.any? {|group| group.has_role?(role_name, object)}
-  end
-  alias_method_chain :has_role?, :groups
+  #def has_role_with_groups?(role_name, object=nil)
+  #  has_role_without_groups?(role_name, object) or groups.any? {|group| group.has_role?(role_name, object)}
+  #end
+  #alias_method_chain :has_role?, :groups
   
-  def has_roles_for_with_groups?(object)
-    has_roles_for_without_groups?(object) or groups.any? {|group| group.has_roles_for?(object)}
-  end
-  alias_method_chain :has_roles_for?, :groups
+  #def has_roles_for_with_groups?(object)
+  #  has_roles_for_without_groups?(object) or groups.any? {|group| group.has_roles_for?(object)}
+  #end
+  #alias_method_chain :has_roles_for?, :groups
   
-  def roles_for_with_groups(object)
-    roles = roles_for_without_groups(object)
-    groups.each do |group|
-      roles += group.roles_for(object)
-    end
-    return roles
-  end
-  alias_method_chain :roles_for, :groups
+  #def roles_for_with_groups(object)
+  #  roles = roles_for_without_groups(object)
+  #  groups.each do |group|
+  #    roles += group.roles_for(object)
+  #  end
+  #  return roles
+  #end
+  #alias_method_chain :roles_for, :groups
 
   def self.sreg_map  
     {:fullname => Proc.new do |fullname|

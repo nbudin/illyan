@@ -1,4 +1,6 @@
 Illyan::Application.routes.draw do |map|
+  resources :services
+
   devise_for :people
   devise_for :open_id_identities
   

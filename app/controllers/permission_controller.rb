@@ -2,14 +2,14 @@ class PermissionController < ApplicationController
   unloadable
   
   before_filter :get_authorization_subject_and_object, :only => [:grant, :revoke]
-  access_control do
-    deny anonymous
-    allow :superadmin
-    allow :change_permissions, :only => [:edit]
-    allow :change_permissions, :for => :authorization_object, :only => [:grant]
-    allow :change_permissions, :for => :authorization_object, :only => [:revoke],
-                               :unless => :revoking_own_change_permissions_role?
-  end
+  #access_control do
+  #  deny anonymous
+  #  allow :superadmin
+  #  allow :change_permissions, :only => [:edit]
+  #  allow :change_permissions, :for => :authorization_object, :only => [:grant]
+  #  allow :change_permissions, :for => :authorization_object, :only => [:revoke],
+  #                             :unless => :revoking_own_change_permissions_role?
+  #end
   
   def auto_complete_for_permission_grantee
     if params[:q]
