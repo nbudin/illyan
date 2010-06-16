@@ -21,8 +21,8 @@ module NavigationHelpers
       person = Person.find_by_email($1)
       person_confirmation_path(:confirmation_token => person.confirmation_token)
     
-    when /the profile page for "([^\"]*)"/
-      edit_person_path(Person.find_by_email($1))
+    when /the profile page/
+      edit_profile_path
     
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:

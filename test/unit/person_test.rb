@@ -5,7 +5,6 @@ class PersonTest < ActiveSupport::TestCase
   
   should_have_many :open_id_identities
   should_validate_uniqueness_of :email
-  should_allow_values_for :email, nil
   
   context "a person" do
     setup do
@@ -16,11 +15,6 @@ class PersonTest < ActiveSupport::TestCase
     should "allow any auth params containing an openid url" do
       @person.identity_url = "http://openid.com"
       assert @person.valid_for_authentication?
-    end
-    
-    should "be their own admin" do
-      assert @person.has_role?("admin", @person)
-      assert !@person.has_role?("admin")
     end
 
     context "with a birthdate" do

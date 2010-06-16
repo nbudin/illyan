@@ -1,5 +1,5 @@
 Then /^I should be signed in as "([^\"]*)"$/ do |name|
-  Then "I should see \"#{name}\" within \".auth_options\""
+  Then "I should see \"#{name}\" within \"nav.application\""
 end
 
 Then /^I sign in as "([^\"]*)" with password "([^\"]*)"$/ do |email, password|
@@ -16,7 +16,7 @@ Given /^I am signed in as the Joe User account$/ do
 end 
 
 Then /^I should not be signed in$/ do
-  Then "I should see \"Log in\" within \".auth_options\""
+  Then "I should see \"Log In\" within \"nav.application\""
 end
 
 Then /^"([^\"]*)" should receive a confirmation email$/ do |email|

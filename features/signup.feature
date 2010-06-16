@@ -5,7 +5,7 @@ Feature: Signup
   
   Scenario: New user registration
     Given I am on the home page
-    And I follow "Log in"
+    And I follow "Log In"
     And I follow "Sign up"
     
     Then I should be on the signup page
@@ -25,7 +25,7 @@ Feature: Signup
     When I go to the home page
     Then I should not be signed in
     
-    When I follow "Log in"
+    When I follow "Log In"
     And I fill in "Email address" with "myemail@example.com"
     And I fill in "Password" with "LetMeIn"
     And I press "Log in"

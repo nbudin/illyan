@@ -12,6 +12,7 @@ end
 
 Factory.define :person do |p|
   p.email { Factory.next :email }
+  p.password "password"
 end
 
 Factory.define :legacy_person, :parent => :person do |p|
