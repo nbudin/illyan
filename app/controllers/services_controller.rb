@@ -13,17 +13,6 @@ class ServicesController < ApplicationController
     end
   end
 
-  # GET /services/1
-  # GET /services/1.xml
-  def show
-    @service = Service.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @service }
-    end
-  end
-
   # GET /services/new
   # GET /services/new.xml
   def new
@@ -47,7 +36,7 @@ class ServicesController < ApplicationController
 
     respond_to do |format|
       if @service.save
-        format.html { redirect_to(@service, :notice => 'Service was successfully created.') }
+        format.html { redirect_to(services_path, :notice => 'Service was successfully created.') }
         format.xml  { render :xml => @service, :status => :created, :location => @service }
       else
         format.html { render :action => "new" }
@@ -63,7 +52,7 @@ class ServicesController < ApplicationController
 
     respond_to do |format|
       if @service.update_attributes(params[:service])
-        format.html { redirect_to(@service, :notice => 'Service was successfully updated.') }
+        format.html { redirect_to(services_path, :notice => 'Service was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
