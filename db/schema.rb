@@ -95,6 +95,15 @@ ActiveRecord::Schema.define(:version => 20100616173925) do
     t.datetime "created_at",                :null => false
   end
 
+  create_table "services", :force => true do |t|
+    t.string   "name"
+    t.string   "url"
+    t.string   "logo_url"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "ticket_granting_cookies", :force => true do |t|
     t.string   "value",            :null => false
     t.string   "username",         :null => false

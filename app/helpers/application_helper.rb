@@ -13,10 +13,12 @@ module ApplicationHelper
   end
   
   def site_banner
-    if Illyan::Application.site_logo
-      image_tag(Illyan::Application.site_logo, :alt => Illyan::Application.site_title)
-    else
-      Illyan::Application.site_title
+    link_to root_url do
+      if Illyan::Application.site_logo
+        image_tag(Illyan::Application.site_logo, :alt => Illyan::Application.site_title)
+      else
+        Illyan::Application.site_title
+      end
     end
   end
   

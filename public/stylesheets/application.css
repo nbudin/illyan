@@ -166,3 +166,30 @@ nav ul li a, .navbar ul li a {
 .alert {
 	background-color: #fcc;
 }
+
+ul.services {
+    padding-left: 0;
+    margin-left: 0;
+}
+
+ul.services li {
+    list-style-type: none;
+    display: inline;
+    display: inline-block;
+    width: 250px;
+    min-height: 50px;
+    border: 2px #ddd solid;
+    vertical-align: top;
+    padding: 5px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    font-size: 10pt;
+}
+
+ul.services li a:first-child {
+    font-size: 40px;
+    font-weight: bold;
+    color: black;
+    text-decoration: none;
+}
