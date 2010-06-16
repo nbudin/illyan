@@ -88,6 +88,16 @@ form .input, .card dd {
 	margin: 0;
 }
 
+form .input input {
+    float: none;
+    display: inline;
+}
+
+form h1, h2, h3, h4, h5, h6 {
+    padding-top: 12pt;
+    clear: both;
+}
+
 .card ul {
 	clear: both;
 	list-style-type: none;

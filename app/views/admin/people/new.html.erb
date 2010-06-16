@@ -7,10 +7,8 @@
   <%= f.text_field :email %>
   <%= render :partial => 'profiles/personal_info', :locals => {:f => f} %>
   
-  <% if admin? -%>
-    <h3>Account Data</h3>
-    <%= render :partial => 'admin_fields', :locals => {:f => f} %>
-  <% end -%>
+  <h3>Account Data</h3>
+  <%= render :partial => 'admin_fields', :locals => {:f => f} %>
   
   <%= f.submit "Create" %>
 <% end %>

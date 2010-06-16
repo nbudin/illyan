@@ -139,7 +139,7 @@ class Person < ActiveRecord::Base
       self.confirmed_at = nil
       generate_confirmation_token
     else
-      self.confirmed_at = DateTime.strptime("Y-%m-%d %H:%M:%S")
+      self.confirmed_at = DateTime.strptime(str, "%Y-%m-%d %H:%M:%S")
     end
   end
   

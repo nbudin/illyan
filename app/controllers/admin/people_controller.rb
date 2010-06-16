@@ -15,8 +15,13 @@ class Admin::PeopleController < ApplicationController
   def edit
   end
   
+  def edit_account
+  end
+  
   def update
     @person.attributes = params[:person]
+    set_protected_attributes!
+    
     @person.open_id_identities.each do |oid|
       if oid.new_record?
         puts "Before: #{@person.open_id_identities.inspect}"
@@ -49,8 +54,11 @@ class Admin::PeopleController < ApplicationController
   
   def create
     @person = Person.new(params[:person])
+    set_protected_attributes!
+    @person.password = (0..8).map{ ('a'..'z').to_a[rand(26)] }.join
     
     if @person.save
+      @person.send_reset_password_instructions
       respond_to do |format|
         format.html { redirect_to admin_person_url(@person) }
         format.xml  { head :ok }
@@ -68,5 +76,11 @@ class Admin::PeopleController < ApplicationController
   private
   def get_person
     @person = Person.find(params[:id])
+  end
+  
+  def set_protected_attributes!
+    %w{confirmed_at_ymdhms admin}.each do |attr|
+      @person.send("#{attr}=", params[:person][attr])
+    end
   end
 end

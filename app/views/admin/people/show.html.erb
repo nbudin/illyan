@@ -16,6 +16,9 @@
 
   <dl>
     
+    <dt>Access level</dt>
+    <dd><%= @person.admin? ? "Administrator" : "Unprivileged" %></dd>
+    
     <dt>Created</dt>
     <dd><%= @person.created_at %></dd>
 
