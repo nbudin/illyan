@@ -37,13 +37,17 @@ namespace :ae_users do
             illyan_person.groups << group
           end
         
-          illyan_person.legacy_password_md5 = ae_person.account.password
-          if ae_person.account.try(:active)
-            illyan_person.confirmed_at ||= Time.new
+          if illyan_person.encrypted_password.blank? and illyan_person.legacy_password_md5.blank?
+            puts "Setting legacy password for #{email}"
+            illyan_person.legacy_password_md5 = ae_person.account.password
           end
         
           if illyan_person.save
             puts "Imported person #{email}"
+            if ae_person.account.try(:active) && !illyan_person.confirmed?
+              illyan_person.confirm!
+              puts "Confirmed person #{email}"
+            end
           else
             puts "Couldn't import person #{email}: #{illyan_person.errors.full_messages.join(", ")}"
           end

@@ -17,19 +17,6 @@ class Person < ActiveRecord::Base
   
   attr_accessible :firstname, :lastname, :gender, :birthdate, :email, :password
   
-  def legacy_password_md5
-    @legacy_password_md5 ||= if self.class.columns.include? "legacy_password_md5"
-      read_attribute :legacy_password_md5
-    end
-  end
-  
-  def legacy_password_md5=(p)
-    @legacy_password_md5 = p
-    if self.class.columns.include? "legacy_password_md5"
-      write_attribute :legacy_password_md5
-    end
-  end
-
   def delete_legacy_password!
     self.legacy_password_md5 = nil
   end
