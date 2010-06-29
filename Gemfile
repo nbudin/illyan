@@ -18,6 +18,8 @@ gem 'ruby-net-ldap'
 gem 'fast_xs'
 gem 'castronaut', :git => "http://github.com/nbudin/castronaut.git"
 
+gem 'ae_users_migrator'
+
 # Use unicorn as the web server
 gem 'unicorn'
 
