@@ -18,6 +18,9 @@ class Admin::PeopleController < ApplicationController
   def edit_account
   end
   
+  def change_password
+  end
+  
   def update
     @person.attributes = params[:person]
     set_protected_attributes!

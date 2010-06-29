@@ -25,6 +25,7 @@ Illyan::Application.routes.draw do |map|
     resources :people do
       member do
         get :edit_account
+        get :change_password
       end
     end
   end

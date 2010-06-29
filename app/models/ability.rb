@@ -2,7 +2,7 @@ class Ability
   include CanCan::Ability
   
   def initialize(person)
-    alias_action :edit_account, :to => :update
+    alias_action [:edit_account, :change_password], :to => :update
     
     if person.admin?
       can [:read, :create, :update, :destroy], Person
