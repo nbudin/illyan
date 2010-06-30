@@ -1,9 +1,13 @@
-module Illyan
+module Devise
+  module Models
+    module LegacyMd5Authenticatable 
+    end
+  end
+  
   module Strategies
-    class LegacyMD5 < Devise::Strategies::Base
+    class LegacyMD5Authenticatable < Devise::Strategies::Base
       def valid?
-        mapping.to.respond_to?(:legacy_password_md5) && params[scope] && 
-          params[scope]["email"] && params[scope]["password"]
+        params[scope] && params[scope]["email"] && params[scope]["password"]
       end
 
       def authenticate!
@@ -13,6 +17,13 @@ module Illyan
           pass
         else
           if Digest::MD5.hexdigest(params[scope]["password"]) == p.legacy_password_md5
+            
+            # save password as non-legacy version for next time
+            p.password = params[scope]["password"]
+            unless p.save
+              Rails.logger.warn "Couldn't save non-legacy password for #{p.name}: #{p.errors.full_messages.join(", ")}"
+            end
+            
             success!(p)
           else
             pass
@@ -22,3 +33,6 @@ module Illyan
     end
   end
 end
+
+Warden::Strategies.add(:legacy_md5_authenticatable, Devise::Strategies::LegacyMD5Authenticatable)
+Devise.add_module(:legacy_md5_authenticatable, :strategy => true)

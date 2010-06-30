@@ -1,15 +1,8 @@
 require 'illyan/strategies'
 
-Warden::Strategies.add(:openid, Illyan::Strategies::LegacyMD5)
-
 # Use this hook to configure devise mailer, warden hooks and so forth. The first
 # four configuration values can also be set straight in your models.
-Devise.setup do |config|
-  config.warden do |manager|
-    manager.default_strategies.unshift :openid
-    manager.default_strategies.unshift :legacy_md5
-  end
-      
+Devise.setup do |config|      
   config.scoped_views = true
   
   # Configure the e-mail address which will be shown in DeviseMailer.

@@ -1,5 +1,5 @@
 class Person < ActiveRecord::Base
-  devise :database_authenticatable, :openid_authenticatable, 
+  devise :database_authenticatable, :openid_authenticatable, :legacy_md5_authenticatable,
     :rememberable, :confirmable, :recoverable, :trackable, :registerable, :validatable
     
   # override Devise's password validations to allow password to be blank if legacy_password_md5 set
