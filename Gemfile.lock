@@ -4,14 +4,14 @@ dependencies:
     group: 
     - :default
     version: = 1.0.0.alpha1
-  rails: 
-    group: 
-    - :default
-    version: = 3.0.0.beta4
   ruby-net-ldap: 
     group: 
     - :default
     version: ">= 0"
+  rails: 
+    group: 
+    - :default
+    version: = 3.0.0.beta4
   sqlite3-ruby: 
     group: 
     - :default
@@ -30,40 +30,44 @@ dependencies:
     group: 
     - :default
     version: ">= 0"
+  castronaut: 
+    group: 
+    - :default
+    version: ">= 0"
   rack-openid: 
     group: 
     - :default
     version: ">= 0"
     require: 
     - rack/openid
-  castronaut: 
-    group: 
-    - :default
-    version: ">= 0"
   thin: 
     group: 
     - :development
     version: ">= 0"
-  sinatra: 
+  will_paginate: 
     group: 
     - :default
-    version: ">= 0"
+    version: = 3.0.pre
   devise: 
     group: 
     - :default
     version: = 1.1.rc1
+  sinatra: 
+    group: 
+    - :default
+    version: ">= 0"
   cucumber-rails: 
     group: 
     - :test
     version: ">= 0"
-  warden: 
-    group: 
-    - :default
-    version: = 0.10.3
   cancan: 
     group: 
     - :default
     version: ">= 1.1"
+  warden: 
+    group: 
+    - :default
+    version: = 0.10.3
   launchy: 
     group: 
     - :test
@@ -194,10 +198,12 @@ specs:
     version: 1.3.0
 - thin: 
     version: 1.2.7
+- will_paginate: 
+    version: 3.0.pre
 - xebec: 
     version: 2.6.0
     source: 1
-hash: 9d9ca281b299da5d11a9f432d564bc7b27ffa649
+hash: 17e7d9abefcb8325c121e2bbc7e34bb7b2913ad1
 sources: 
 - Git: 
     uri: http://github.com/nbudin/castronaut.git

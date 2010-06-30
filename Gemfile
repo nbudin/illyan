@@ -19,6 +19,7 @@ gem 'fast_xs'
 gem 'castronaut', :git => "http://github.com/nbudin/castronaut.git"
 
 gem 'ae_users_migrator'
+gem 'will_paginate', '3.0.pre'
 
 group :development do
   # Use thin in development mode

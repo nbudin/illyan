@@ -3,7 +3,7 @@ class Admin::PeopleController < ApplicationController
     
   def index
     authorize! :list, Person
-    @people = Person.all(:order => [:lastname, :firstname])
+    @people = Person.paginate(:page => params[:page], :order => "lower(lastname), lower(firstname)")
   end
   
   def new

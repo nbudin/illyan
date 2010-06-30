@@ -207,3 +207,29 @@ ul.services li a:first-child {
     color: black;
     text-decoration: none;
 }
+
+.pagination {
+    text-align: center;
+    margin-top: 12pt;
+    margin-bottom: 12pt;
+    color: #666;
+}
+
+.pagination em, .pagination a {
+    padding-left: 4pt;
+    padding-right: 4pt;
+    font-weight: bold;
+    text-decoration: none;
+    font-style: normal;
+    /*color: #e0107b;*/
+}
+
+.pagination a:hover {
+    text-decoration: underline;
+}
+
+.pagination em {
+    color: black;
+    border: none;
+}
+

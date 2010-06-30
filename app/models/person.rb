@@ -2,6 +2,9 @@ class Person < ActiveRecord::Base
   devise :database_authenticatable, :openid_authenticatable, :legacy_md5_authenticatable,
     :rememberable, :confirmable, :recoverable, :trackable, :registerable, :validatable
     
+  cattr_reader :per_page
+  @@per_page = 20
+  
   # override Devise's password validations to allow password to be blank if legacy_password_md5 set
   protected
   def password_required?
