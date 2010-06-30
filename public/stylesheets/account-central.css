@@ -1,15 +1,30 @@
+html {
+    background-color: #383838;
+    background-image: url(/images/account-central/20.gif);
+    height: 100%;
+}
+
 body {
 	font-family: Liberation Serif, Georgia, serif;
+	margin: 0;
+    background-image: url(/images/account-central/body-border.png);
+    background-repeat: repeat-y;
+    background-position: 50% 50%;
+    height: 100%;
 }
 
 #top {
     height: auto;
 	min-height: 46px;
 	border-bottom: 2px #1087e0 solid;
+	width: 100%;
 	max-width: 805px;
 	padding-left: 5px;
-	margin-left: -5px;
+    margin-left: auto;
+	margin-right: auto;
+	position: static;
 	background-color: #E4F3FF;
+	display: block;
 	
 	background-image: -webkit-gradient(
         linear,
@@ -91,17 +106,11 @@ nav.application, .navbar.application {
 }
 
 #banner {
-	margin-top: 2px;
+	padding-top: 2px;
 	height: 44px;
 }
 
-html {
-    background-color: #fff;
-    background-image: url(/images/account-central/20.gif);
-    height: 100%;
-}
-
-body {
+#content {
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
@@ -112,7 +121,6 @@ body {
     /*box-shadow: 0px 0px 200px #000;
     -moz-box-shadow: 0px 0px 200px #000;
     -webkit-box-shadow: 0px 0px 200px #000;*/
-    height: 100%;
 }
 
 .card, form {
