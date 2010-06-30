@@ -1,5 +1,4 @@
 class ServicesController < ApplicationController
-  before_filter :authenticate_person!
   load_and_authorize_resource
 
   # GET /services

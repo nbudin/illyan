@@ -1,7 +1,8 @@
 class Admin::PeopleController < ApplicationController
   load_and_authorize_resource
     
-  def index    
+  def index
+    authorize! :list, Person
     @people = Person.all(:order => [:lastname, :firstname])
   end
   
