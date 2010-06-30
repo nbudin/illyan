@@ -5,25 +5,22 @@ gem 'rails', '3.0.0.beta4'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3-ruby', :require => 'sqlite3'
 gem 'warden', '0.10.3'
 gem 'devise', '1.1.rc1'
 gem 'devise_openid_authenticatable', '1.0.0.alpha1'
 gem 'cancan', '>= 1.1'
-gem 'rack-openid', :require => 'rack/openid'
-gem 'xebec', :git => 'http://github.com/jamesarosen/xebec.git'
+gem 'xebec', '~> 2.6.0'
 
 gem 'sinatra'
-gem 'ruby-net-ldap'
 gem 'fast_xs'
 gem 'castronaut', :git => "http://github.com/nbudin/castronaut.git"
 
-gem 'ae_users_migrator'
 gem 'will_paginate', '3.0.pre'
 
 group :development do
-  # Use thin in development mode
   gem 'thin'
+  gem 'ae_users_migrator'
+  gem 'sqlite3-ruby', :require => 'sqlite3'
 end
 
 # Deploy with Capistrano

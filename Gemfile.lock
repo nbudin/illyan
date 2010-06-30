@@ -4,17 +4,13 @@ dependencies:
     group: 
     - :default
     version: = 1.0.0.alpha1
-  ruby-net-ldap: 
-    group: 
-    - :default
-    version: ">= 0"
   rails: 
     group: 
     - :default
     version: = 3.0.0.beta4
   sqlite3-ruby: 
     group: 
-    - :default
+    - :development
     version: ">= 0"
     require: 
     - sqlite3
@@ -28,18 +24,12 @@ dependencies:
     version: ">= 2.10.3"
   ae_users_migrator: 
     group: 
-    - :default
+    - :development
     version: ">= 0"
   castronaut: 
     group: 
     - :default
     version: ">= 0"
-  rack-openid: 
-    group: 
-    - :default
-    version: ">= 0"
-    require: 
-    - rack/openid
   thin: 
     group: 
     - :development
@@ -60,14 +50,14 @@ dependencies:
     group: 
     - :test
     version: ">= 0"
-  cancan: 
-    group: 
-    - :default
-    version: ">= 1.1"
   warden: 
     group: 
     - :default
     version: = 0.10.3
+  cancan: 
+    group: 
+    - :default
+    version: ">= 1.1"
   launchy: 
     group: 
     - :test
@@ -83,7 +73,7 @@ dependencies:
   xebec: 
     group: 
     - :default
-    version: ">= 0"
+    version: ~> 2.6.0
 specs: 
 - rake: 
     version: 0.8.7
@@ -188,8 +178,6 @@ specs:
     version: 0.7.3
 - launchy: 
     version: 0.3.5
-- ruby-net-ldap: 
-    version: 0.0.4
 - shoulda: 
     version: 2.11.1
 - sinatra: 
@@ -202,16 +190,11 @@ specs:
     version: 3.0.pre
 - xebec: 
     version: 2.6.0
-    source: 1
-hash: 17e7d9abefcb8325c121e2bbc7e34bb7b2913ad1
+hash: f54ce55addc873b8dfb193c515a670415777de33
 sources: 
 - Git: 
     uri: http://github.com/nbudin/castronaut.git
     git: http://github.com/nbudin/castronaut.git
-    ref: 5ee91c6a7012786d2a64b76bb15a2b0789e82065
-- Git: 
-    uri: http://github.com/jamesarosen/xebec.git
-    git: http://github.com/jamesarosen/xebec.git
-    ref: 74c2819efc1c484fb9619dbe3d05c9fe2c6a7154
+    ref: 634f50ced4a841466b0f9a8ab9dccbe0b3822e7c
 - Rubygems: 
     uri: http://rubygems.org
