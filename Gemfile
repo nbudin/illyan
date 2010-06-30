@@ -20,8 +20,10 @@ gem 'castronaut', :git => "http://github.com/nbudin/castronaut.git"
 
 gem 'ae_users_migrator'
 
-# Use unicorn as the web server
-gem 'unicorn'
+group :development do
+  # Use thin in development mode
+  gem 'thin'
+end
 
 # Deploy with Capistrano
 # gem 'capistrano'
