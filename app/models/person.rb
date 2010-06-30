@@ -17,6 +17,7 @@ class Person < ActiveRecord::Base
   accepts_nested_attributes_for :open_id_identities, :allow_destroy => true
   validates_uniqueness_of :email, :allow_nil => true
   has_and_belongs_to_many :groups
+  has_and_belongs_to_many :services, :foreign_key => :user_id, :join_table => "services_users"
   
   attr_accessible :firstname, :lastname, :gender, :birthdate, :email, :password
   

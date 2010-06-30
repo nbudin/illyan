@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100629213512) do
+ActiveRecord::Schema.define(:version => 20100630175920) do
 
   create_table "accounts", :force => true do |t|
     t.integer   "person_id"
@@ -103,15 +103,25 @@ ActiveRecord::Schema.define(:version => 20100629213512) do
     t.text      "description"
     t.timestamp "created_at"
     t.timestamp "updated_at"
+    t.boolean   "public"
   end
 
+  add_index "services", ["public"], :name => "index_services_on_public"
+
+  create_table "services_users", :id => false, :force => true do |t|
+    t.integer "service_id", :null => false
+    t.integer "user_id",    :null => false
+  end
+
+  add_index "services_users", ["user_id"], :name => "index_services_users_on_user_id"
+
   create_table "ticket_granting_cookies", :force => true do |t|
-    t.string   "value",            :null => false
-    t.string   "username",         :null => false
-    t.datetime "consumed_at"
-    t.text     "extra_attributes"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.string    "value",            :null => false
+    t.string    "username",         :null => false
+    t.timestamp "consumed_at"
+    t.text      "extra_attributes"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
   end
 
   create_table "ticket_granting_tickets", :force => true do |t|

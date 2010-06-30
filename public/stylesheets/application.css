@@ -67,15 +67,10 @@ tbody tr:nth-child(odd) {
 	font-weight: bold;
 }
 
-form input, form .input, .card dd, form > select {
+form input, form .input, .card dd, form > select, form textarea {
 	float: left;
 	display: block;
 	margin-bottom: 2px;
-}
-
-form input[type=checkbox] {
-	display: inline;
-	margin-left: 0;
 }
 
 form input[type=submit] {
