@@ -126,6 +126,10 @@ form h1, h2, h3, h4, h5, h6 {
 	font-weight: bold;
 }
 
+#banner a img {
+    border: 0;
+}
+
 nav.application, .navbar.application, .notice, .alert {
 	border: 2px #666 solid;
 	border-top: none;
