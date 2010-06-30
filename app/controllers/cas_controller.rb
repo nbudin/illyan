@@ -38,6 +38,14 @@ class CasController < ApplicationController
     if !service.blank?
       service_ticket = Castronaut::Models::ServiceTicket.generate_ticket_for(service, client_host, ticket_granting_ticket)
       if service_ticket && service_ticket.service_uri
+        
+        # If this person hasn't logged into this service before, add it to their services list
+        illyan_service = Service.service_for_ticket(service_ticket)
+        if illyan_service && !current_person.services.include?(illyan_service)
+          current_person.services << illyan_service
+          current_person.save
+        end
+        
         return redirect_to service_ticket.service_uri, :status => 303
       else
         flash[:alert] = "The target service your browser supplied appears to be invalid. Please contact your system administrator for help."
