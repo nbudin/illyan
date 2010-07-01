@@ -1,4 +1,6 @@
 class HomeController < ApplicationController
+  before_filter :cleanup_login_service!
+  
   def index
     @services = Service.where(:public => true)
     

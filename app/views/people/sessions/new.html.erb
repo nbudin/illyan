@@ -1,5 +1,5 @@
 <%= form_for(resource, :as => resource_name, :url => session_path(resource_name) ) do |f| -%>
-  <h2>Log in with a password</h2>
+  <h2><%= login_headline_with_account %></h2>
   
   <%= f.label :email, "Email address", :class => "block" %>
   <%= f.text_field :email, :tabindex => 1 %>
@@ -12,12 +12,12 @@
     <%= f.check_box :remember_me %> 
   <% end -%>
   
-  <%= f.submit "Log in" %>
+  <%= f.submit login_headline %>
 
 <% end -%>
 
 <%= form_for(resource, :as => resource_name, :url => session_path(resource_name) ) do |f| -%>
-  <h2>Log in with OpenID</h2>
+  <h2><%= login_headline("with OpenID") %></h2>
   
   <%= f.label :identity_url, "OpenID URL", :class => "block" %>
   <%= f.text_field :identity_url %>

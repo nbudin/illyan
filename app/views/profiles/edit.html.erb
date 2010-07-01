@@ -2,6 +2,12 @@
 
 <%= error_messages_for :person %>
 
+<% 
+
+%{
+  
+  Disabling OpenID for now
+  
 <%= form_for @person, :url => profile_path do |f| -%>
   <h2>OpenIDs</h2>
 
@@ -33,6 +39,10 @@
   
   <%= f.submit "Update OpenIDs" %>
 <% end -%>
+}
+
+%>
+
 
 <%= form_for @person, :url => profile_path do |f| -%>
   <h2>Edit My Profile</h2>

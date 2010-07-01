@@ -1,5 +1,4 @@
-class CasController < ApplicationController
-  
+class CasController < ApplicationController  
   # A couple of methods to emulate Sinatra here.  We're mostly going to be calling
   # Castronaut presenters directly, which expect certain controller methods to exist.
   def erb(template_name, options = {})
@@ -23,13 +22,18 @@ class CasController < ApplicationController
     @presenter = Castronaut::Presenters::Login.new(self)
     @presenter.represent!
     return if response.redirect_url
+    
+    service = @presenter.service
+    @current_login_service = Service.service_for_url(service)
+    session[:login_service] = @current_login_service.try(:id)
+    
     unless person_signed_in?
       session[:person_return_to] = request.url
-      return redirect_to(new_person_session_url)
+      return redirect_to(new_person_session_path)
     end
     
     client_host = @presenter.client_host
-    service = @presenter.service
+    
     
     # if we haven't redirected yet, we must already be logged into Devise
     ticket_granting_ticket = Castronaut::Models::TicketGrantingTicket.generate_for(current_person.email, client_host)
@@ -40,9 +44,8 @@ class CasController < ApplicationController
       if service_ticket && service_ticket.service_uri
         
         # If this person hasn't logged into this service before, add it to their services list
-        illyan_service = Service.service_for_ticket(service_ticket)
-        if illyan_service && !current_person.services.include?(illyan_service)
-          current_person.services << illyan_service
+        if current_login_service && !current_person.services.include?(current_login_service)
+          current_person.services << current_login_service
           current_person.save
         end
         

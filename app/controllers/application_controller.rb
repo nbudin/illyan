@@ -28,4 +28,14 @@ class ApplicationController < ActionController::Base
       redirect_to new_person_session_path
     end
   end
+  
+  protected
+  def current_login_service
+    @current_login_service ||= session[:login_service] && Service.find(session[:login_service])
+  end
+  helper_method :current_login_service
+  
+  def cleanup_login_service!
+    session[:login_service] = nil
+  end
 end
