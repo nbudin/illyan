@@ -1,3 +1,5 @@
+@import url("liberation-serif/stylesheet.css");
+
 html {
     background-color: #383838;
     background-image: url(/images/account-central/20.gif);
@@ -65,7 +67,9 @@ nav.application ul li, .navbar.application ul li {
 	padding: 0;
 	margin: 0;
 	margin-left: 2px;
-	text-align: right;
+	max-width: 90px;
+	float: left;
+	text-align: center;
 	border-radius: 0;
 	-webkit-border-radius: 0;
 	-moz-border-radius: 0;
@@ -83,7 +87,7 @@ nav.application ul li.current, .navbar.application ul li.current {
     padding-top: 5px;
 }
 
-nav.application ul li a, .navbar.application ul li {
+nav.application ul li a, .navbar.application ul li a {
 	text-decoration: none;
 	color: #e4f3ff;
 	background-color: #1087e0;
