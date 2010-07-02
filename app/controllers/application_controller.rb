@@ -8,10 +8,15 @@ class ApplicationController < ActionController::Base
   def current_ability
     @current_ability ||= Ability.new(current_person)
   end
+  
+  def profile_name
+    Illyan::Application.account_name || "Profile"
+  end
+  helper_method :profile_name
 
   nav_bar :application do |nb|
     if current_person
-      nb.nav_item current_person.name, profile_path
+      nb.nav_item "My #{profile_name}", profile_path
       nb.nav_item :people, admin_people_path if can? :list, Person
       nb.nav_item :services, services_path if can? :list, Service
       nb.nav_item "Log out", destroy_person_session_path
@@ -36,6 +41,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_login_service
   
   def cleanup_login_service!
+    session[:person_return_to] = nil
     session[:login_service] = nil
   end
 end
