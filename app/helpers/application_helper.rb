@@ -20,7 +20,11 @@ module ApplicationHelper
   end
   
   def login_headline_with_account
-    login_headline "with your #{Illyan::Application.account_name}"
+    if Illyan::Application.account_name
+      login_headline "with your #{Illyan::Application.account_name}"
+    else
+      login_headline
+    end
   end
   
   def page_title
