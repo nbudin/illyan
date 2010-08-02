@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
   helper_method :profile_name
 
   nav_bar :application do |nb|
-    if current_person
+    if person_signed_in?
       nb.nav_item "My #{profile_name}", profile_path
       nb.nav_item :people, admin_people_path if can? :list, Person
       nb.nav_item :services, services_path if can? :list, Service

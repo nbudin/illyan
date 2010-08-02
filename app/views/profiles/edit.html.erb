@@ -2,13 +2,7 @@
 
 <%= error_messages_for :person %>
 
-<% 
-
-%{
-  
-  Disabling OpenID for now
-  
-<%= form_for @person, :url => profile_path do |f| -%>
+<%= form_for(@person, :url => profile_path) do |f| -%>
   <h2>OpenIDs</h2>
 
   <p>OpenID is a free and easy way to use a single digital identity across the Internet.  (For more information,
@@ -16,7 +10,7 @@
   to log into this site!  You can even link multiple OpenIDs to your account.  Add as many as you like below.</p>
 
   <table>
-    <%= f.fields_for :open_id_identities do |identity_fields| -%>
+    <%= f.fields_for(:open_id_identities) do |identity_fields| -%>
       <tr>
         <% if identity_fields.object.new_record? -%>
           <td colspan="2">
@@ -39,12 +33,8 @@
   
   <%= f.submit "Update OpenIDs" %>
 <% end -%>
-}
 
-%>
-
-
-<%= form_for @person, :url => profile_path do |f| -%>
+<%= form_for(@person, :url => profile_path) do |f| %>
   <h2>Edit My Profile</h2>
 
   <%= render :partial => 'edit', :locals => { :f => f } %>
