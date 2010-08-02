@@ -1,4 +1,4 @@
-require 'test/test_helper'
+require 'test_helper'
 
 class OpenIdIdentityTest < ActiveSupport::TestCase
   subject { Factory(:open_id_identity) }

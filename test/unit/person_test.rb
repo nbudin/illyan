@@ -1,4 +1,4 @@
-require 'test/test_helper'
+require 'test_helper'
 
 class PersonTest < ActiveSupport::TestCase
   subject { Factory(:person) }

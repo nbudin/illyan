@@ -149,7 +149,7 @@ DEPENDENCIES
   factory_girl_rails
   fast_xs
   launchy
-  rails (= 3.0.0.beta4)
+  rails (= 3.0.0.rc)
   shoulda (>= 2.10.3)
   sinatra
   sqlite3-ruby
