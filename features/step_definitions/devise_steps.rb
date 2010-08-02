@@ -1,5 +1,5 @@
 Then /^I should be signed in as "([^\"]*)"$/ do |name|
-  Then "I should see \"#{name}\" within \"nav.application\""
+  Then "I should see \"My Profile\" within \"nav.application\""
 end
 
 Then /^I sign in as "([^\"]*)" with password "([^\"]*)"$/ do |email, password|

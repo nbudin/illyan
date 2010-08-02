@@ -16,7 +16,9 @@ Factory.define :person do |p|
 end
 
 Factory.define :legacy_person, :parent => :person do |p|
-  p.legacy_password_md5 Digest::MD5.hexdigest("password")
+  p.after_build do |person|
+    person.legacy_password_md5 = Digest::MD5.hexdigest("password")
+  end
 end
 
 Factory.define :openid_person, :parent => :person do |p|
@@ -53,6 +55,6 @@ end
 
 Factory.define :staffer, :parent => :person do |p|
   p.after_create do |person|
-    person.groups << Factory.create(:staff_group)
+    person.groups << Factory.create(:group, :name => "Staff")
   end
 end

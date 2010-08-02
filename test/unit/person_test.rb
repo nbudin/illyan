@@ -3,8 +3,8 @@ require 'test/test_helper'
 class PersonTest < ActiveSupport::TestCase
   subject { Factory(:person) }
   
-  should_have_many :open_id_identities
-  should_validate_uniqueness_of :email
+  should have_many(:open_id_identities)
+  should validate_uniqueness_of(:email)
   
   context "a person" do
     setup do
@@ -40,50 +40,6 @@ class PersonTest < ActiveSupport::TestCase
     end
   end
 
-  context "a person with a group" do
-    setup do
-      assert @person = Factory.create(:staffer)
-    end
-
-    should "appear in that group" do
-      assert @person.has_role?("staff")
-    end
-  end
-
-  context "a person with an object role via a group" do
-    setup do
-      assert @gap = Factory.create(:group_administered_person)
-      assert @group = @gap.accepted_roles.first.groups.first
-      assert @person = Factory.build(:person)
-      assert @person.groups << @group
-    end
-
-    should "appear as having the right role, only for that object" do
-      assert !@person.has_role?("admin")
-      assert @person.has_role?("admin", @gap)
-      assert @person.roles_for(@gap).any? { |r| r.name == "admin" }
-    end
-  end
-
-  context "a person with a role that a group also has" do
-    setup do
-      assert @person = Factory.create(:person)
-      assert @group = Factory.create(:group)
-
-      @person.has_role!("captain")
-      @group.has_role!("captain")
-
-      assert @person.has_role?("captain")
-      assert @group.has_role?("captain")
-    end
-
-    should "delete the role without affecting it for the group" do
-      @person.has_no_role!("captain")
-      @group.reload
-      assert @group.has_role?("captain")
-    end
-  end
-  
   context "a person with an OpenID" do
     setup do
       assert @person = Factory.build(:openid_person)

@@ -2,7 +2,7 @@ require 'test_helper'
 
 class ServicesControllerTest < ActionController::TestCase
   setup do
-    @service = services(:one)
+    @service = Factory.create(:service)
   end
 
   test "should get index" do
