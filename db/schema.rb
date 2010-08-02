@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100630175920) do
+ActiveRecord::Schema.define(:version => 20100802152941) do
 
   create_table "accounts", :force => true do |t|
     t.integer   "person_id"
@@ -51,6 +51,8 @@ ActiveRecord::Schema.define(:version => 20100630175920) do
     t.string  "identity_url", :limit => 4000
   end
 
+  add_index "open_id_identities", ["identity_url"], :name => "index_open_id_identities_on_identity_url"
+
   create_table "people", :force => true do |t|
     t.string    "firstname"
     t.string    "lastname"
@@ -75,6 +77,8 @@ ActiveRecord::Schema.define(:version => 20100630175920) do
     t.boolean   "admin"
     t.string    "legacy_password_md5"
   end
+
+  add_index "people", ["email"], :name => "index_people_on_email"
 
   create_table "proxy_granting_tickets", :force => true do |t|
     t.integer   "service_ticket_id", :null => false
