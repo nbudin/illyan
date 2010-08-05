@@ -2,7 +2,7 @@ class CasController < ApplicationController
   # A couple of methods to emulate Sinatra here.  We're mostly going to be calling
   # Castronaut presenters directly, which expect certain controller methods to exist.
   def erb(template_name, options = {})
-    gem_path = File.split(Gem.loaded_specs['nbudin-castronaut'].loaded_from).first
+    gem_path = File.split(Gem.loaded_specs['nbudin-castronaut'].load_paths.first).first
     template_file = File.join(gem_path, "app/views/#{template_name}.erb")
     locals = options.delete(:locals)
     template = Tilt[:erb].new(template_file, 1, options)
