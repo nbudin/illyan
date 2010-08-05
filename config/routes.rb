@@ -30,15 +30,11 @@ Illyan::Application.routes.draw do |map|
     end
   end
   
-  controller :cas do
-    namespace :cas do
-      match 'login' => :login, :via => :get
-      match 'login' => :login, :via => :post
-      match 'logout' => :logout, :via => :get
-      match 'serviceValidate' => :service_validate, :via => :get
-      match 'proxyValidate' => :proxy_validate, :via => :get
-    end
-  end
+  match 'cas/login' => 'cas#login', :via => :get
+  match 'cas/login' => 'cas#login', :via => :post
+  match 'cas/logout' => 'cas#logout', :via => :get
+  match 'cas/serviceValidate' => 'cas#service_validate', :via => :get
+  match 'cas/proxyValidate' => 'cas#proxy_validate', :via => :get
 
   # Sample resource route with options:
   #   resources :products do
