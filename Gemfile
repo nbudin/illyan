@@ -13,7 +13,7 @@ gem 'xebec', '~> 2.6.0'
 
 gem 'sinatra'
 gem 'fast_xs'
-gem 'castronaut', :git => "http://github.com/nbudin/castronaut.git"
+gem 'nbudin-castronaut'
 
 gem 'will_paginate', '3.0.pre'
 
