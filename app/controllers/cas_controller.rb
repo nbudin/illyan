@@ -80,7 +80,9 @@ class CasController < ApplicationController
     @presenter.extra_attributes.merge!(
       :firstname => person.firstname,
       :lastname => person.lastname,
-      :email => person.email
+      :email => person.email,
+      :gender => person.gender,
+      :birthdate => person.birthdate.rfc2822
     )
     @presenter.your_mission.call
   end
