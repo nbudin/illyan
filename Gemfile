@@ -5,13 +5,11 @@ gem 'rails', '3.0.0.rc'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'warden', '0.10.3'
-gem 'devise', '1.1.rc1'
-gem 'devise_openid_authenticatable', '1.0.0.alpha1'
+gem 'devise', '~> 1.1.1'
+gem 'devise_openid_authenticatable', '1.0.0.alpha4'
 gem 'cancan', '>= 1.1'
 gem 'xebec', '~> 2.6.0'
 
-gem 'sinatra'
 gem 'fast_xs'
 gem 'nbudin-castronaut', :require => "castronaut"
 

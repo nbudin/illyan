@@ -10,7 +10,7 @@ module Illyan
   class Application < Rails::Application
     cattr_accessor :site_title, :site_logo, :theme, :account_name
     
-    config.middleware.use Rack::OpenID
+    config.middleware.insert_before(Warden::Manager, Rack::OpenID)
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
