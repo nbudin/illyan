@@ -16,7 +16,6 @@ gem 'nbudin-castronaut', :require => "castronaut"
 gem 'will_paginate', '3.0.pre'
 
 group :development do
-  gem 'thin'
   gem 'ae_users_migrator'
   gem 'sqlite3-ruby', :require => 'sqlite3'
 end
