@@ -82,7 +82,7 @@ class CasController < ApplicationController
       :lastname => person.lastname,
       :email => person.email,
       :gender => person.gender,
-      :birthdate => person.birthdate.rfc2822
+      :birthdate => person.birthdate.try(:rfc2822)
     )
     @presenter.your_mission.call
   end
