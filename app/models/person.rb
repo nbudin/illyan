@@ -8,6 +8,8 @@ class Person < ActiveRecord::Base
   # override Devise's password validations to allow password to be blank if legacy_password_md5 set
   protected
   def password_required?
+    return false if skip_password_required
+    
     if !legacy_password_md5.blank? || identity_url || invitation_token.present?
       false
     else
@@ -25,7 +27,7 @@ class Person < ActiveRecord::Base
   has_and_belongs_to_many :services, :foreign_key => :user_id, :join_table => "services_users"
   
   attr_accessible :firstname, :lastname, :gender, :birthdate, :email, :password, :service_ids
-  
+  attr_accessor :skip_password_required
   
   def delete_legacy_password!
     self.legacy_password_md5 = nil

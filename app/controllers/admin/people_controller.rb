@@ -63,17 +63,18 @@ class Admin::PeopleController < ApplicationController
   def create
     @person = Person.new(params[:person])
     set_protected_attributes!
-    @person.confirmed_at ||= Time.now
+    @person.skip_confirmation!
     if current_service
       @person.services << current_service
     end
+    @person.skip_password_required = true
     
-    if @person.save
+    if @person.valid?
       @person.invite!
       respond_to do |format|
         format.html { redirect_to admin_person_url(@person) }
-        format.xml  { head :ok }
-        format.json { head :ok }
+        format.xml  { render :xml => @person }
+        format.json { render :json => @person }
       end
     else
       respond_to do |format|

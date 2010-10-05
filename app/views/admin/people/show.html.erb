@@ -37,7 +37,7 @@
     
     <dt>Invitation token</dt>
     <dd>
-      <% if @person.invited? %>
+      <% if @person.invitation_token %>
         <%= @person.invitation_token %> (sent at <%= @person.invitation_sent_at%>)
       <% end -%>
     </dd>
