@@ -1,6 +1,6 @@
 class Person < ActiveRecord::Base
   devise :database_authenticatable, :openid_authenticatable, :legacy_md5_authenticatable,
-    :rememberable, :confirmable, :recoverable, :trackable, :registerable, :validatable
+    :rememberable, :confirmable, :recoverable, :trackable, :registerable, :validatable, :invitable
     
   cattr_reader :per_page
   @@per_page = 20
@@ -8,7 +8,11 @@ class Person < ActiveRecord::Base
   # override Devise's password validations to allow password to be blank if legacy_password_md5 set
   protected
   def password_required?
-    legacy_password_md5.blank? && super
+    if !legacy_password_md5.blank? || identity_url || invitation_token.present?
+      false
+    else
+      super
+    end
   end
   
   public
@@ -16,10 +20,12 @@ class Person < ActiveRecord::Base
   has_many :open_id_identities
   accepts_nested_attributes_for :open_id_identities, :allow_destroy => true
   validates_uniqueness_of :email, :allow_nil => true
+  validates_presence_of :email, :unless => :identity_url
   has_and_belongs_to_many :groups
   has_and_belongs_to_many :services, :foreign_key => :user_id, :join_table => "services_users"
   
-  attr_accessible :firstname, :lastname, :gender, :birthdate, :email, :password
+  attr_accessible :firstname, :lastname, :gender, :birthdate, :email, :password, :service_ids
+  
   
   def delete_legacy_password!
     self.legacy_password_md5 = nil

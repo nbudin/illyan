@@ -63,10 +63,13 @@ class Admin::PeopleController < ApplicationController
   def create
     @person = Person.new(params[:person])
     set_protected_attributes!
-    @person.password = (0..8).map{ ('a'..'z').to_a[rand(26)] }.join
+    @person.confirmed_at ||= Time.now
+    if current_service
+      @person.services << current_service
+    end
     
     if @person.save
-      @person.send_reset_password_instructions
+      @person.invite!
       respond_to do |format|
         format.html { redirect_to admin_person_url(@person) }
         format.xml  { head :ok }
@@ -87,7 +90,7 @@ class Admin::PeopleController < ApplicationController
   end
   
   def set_protected_attributes!
-    %w{confirmed_at_ymdhms admin}.each do |attr|
+    %w{admin confirmed_at_ymdhms}.each do |attr|
       @person.send("#{attr}=", params[:person][attr])
     end
   end

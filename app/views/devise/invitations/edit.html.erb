@@ -1,0 +1,25 @@
+<h2>Welcome to your new <%= profile_name %></h2>
+
+<%= form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => { :method => :put } do |f| %>
+  <%= devise_error_messages! %>
+  <%= f.hidden_field :invitation_token %>
+    
+  <h2>Set a password</h2>
+  
+  <p>You'll need to set a password so you can log into your <%= profile_name %>.  Please enter a password below, then again for
+    confirmation.</p>
+
+  <%= f.label :password %>
+  <%= f.password_field :password %>
+
+  <%= f.label :password_confirmation %>
+  <%= f.password_field :password_confirmation %>
+  
+  <h2>Personal Info</h2>
+  
+  <p>You can set your personal information below.  (You don't have to enter all of this now if you don't want to.)</p>
+  
+  <%= render :partial => "profiles/personal_info", :locals => { :f => f } %>
+
+  <%= f.submit "Set up my #{profile_name}" %>
+<% end %>

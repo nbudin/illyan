@@ -1,8 +1,8 @@
-# This file is auto-generated from the current state of the database. Instead 
+# This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your 
+# Note that this schema.rb definition is the authoritative source for your
 # database schema. If you need to create the application database on another
 # system, you should be using db:schema:load, not running all the migrations
 # from scratch. The latter is a flawed and unsustainable approach (the more migrations
@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100812151441) do
+ActiveRecord::Schema.define(:version => 20101005175647) do
 
   create_table "groups", :force => true do |t|
     t.string "name"
@@ -63,9 +63,12 @@ ActiveRecord::Schema.define(:version => 20100812151441) do
     t.timestamp "updated_at"
     t.boolean   "admin"
     t.string    "legacy_password_md5"
+    t.string    "invitation_token",     :limit => 20
+    t.datetime  "invitation_sent_at"
   end
 
   add_index "people", ["email"], :name => "index_people_on_email"
+  add_index "people", ["invitation_token"], :name => "index_people_on_invitation_token", :unique => true
 
   create_table "proxy_granting_tickets", :force => true do |t|
     t.integer   "service_ticket_id", :null => false
@@ -88,15 +91,17 @@ ActiveRecord::Schema.define(:version => 20100812151441) do
   end
 
   create_table "services", :force => true do |t|
-    t.string    "name"
-    t.string    "url"
-    t.string    "logo_url"
-    t.text      "description"
-    t.timestamp "created_at"
-    t.timestamp "updated_at"
-    t.boolean   "public"
+    t.string   "name"
+    t.string   "url"
+    t.string   "logo_url"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "public"
+    t.string   "authentication_token"
   end
 
+  add_index "services", ["authentication_token"], :name => "index_services_on_authentication_token", :unique => true
   add_index "services", ["public"], :name => "index_services_on_public"
 
   create_table "services_users", :id => false, :force => true do |t|
