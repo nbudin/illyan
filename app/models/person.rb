@@ -148,7 +148,23 @@ class Person < ActiveRecord::Base
     end
   end
   
+  def fallback_name
+    email || identity_url
+  end
+  
   def name
-    return "#{firstname} #{lastname}"
+    if firstname.present? || lastname.present?
+      "#{firstname} #{lastname}".strip
+    else
+      fallback_name
+    end
+  end
+  
+  def inverted_name
+    if firstname.present? && lastname.present?
+      "#{lastname}, #{firstname}"
+    else
+      fallback_name
+    end
   end
 end

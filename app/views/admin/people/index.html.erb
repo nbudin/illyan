@@ -8,7 +8,7 @@
 	<tbody>
   	<% @people.each do |person| -%>
   		<tr>
-  			<td><%= link_to "#{person.lastname}, #{person.firstname}", admin_person_path(person) %></td>
+  			<td><%= link_to person.inverted_name, admin_person_path(person) %></td>
   			<td><%= person.email %></td>
   		</tr>
   	<% end -%>
