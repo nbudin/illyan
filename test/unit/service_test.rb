@@ -1,8 +1,20 @@
 require 'test_helper'
 
 class ServiceTest < ActiveSupport::TestCase
-  # Replace this with your real tests.
-  test "the truth" do
-    assert true
+  context "a new service" do
+    setup do
+      assert @service = Factory.build(:service)
+    end
+    
+    context "having been saved" do
+      setup do
+        assert @service.save
+      end
+      
+      should "have an authentication token" do
+        assert !@service.authentication_token.blank?
+      end
+    end
   end
+  
 end

@@ -11,6 +11,10 @@ class Admin::PeopleController < ApplicationController
   end
   
   def show
+    respond_to do |format|
+      format.html {}
+      format.json { render :json => @person.to_json }
+    end
   end
   
   def edit

@@ -6,6 +6,7 @@
     <th>Url</th>
     <th>Logo</th>
     <th>Description</th>
+    <th>Illyan API key</th>
     <th></th>
     <th></th>
   </tr>
@@ -16,8 +17,9 @@
     <td><%= service.url %></td>
     <td><%= image_tag service.logo_url unless service.logo_url.blank? %></td>
     <td><%= truncate service.description %></td>
+    <td><%= service.authentication_token %></td>
     <td><%= link_to 'Edit', edit_service_path(service) %></td>
-    <td><%= link_to 'Destroy', service, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to 'Destroy', service, :method => :delete, :confirm => 'Are you sure?'  %></td>
   </tr>
 <% end %>
 </table>

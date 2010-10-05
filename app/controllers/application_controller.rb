@@ -1,12 +1,12 @@
 class ApplicationController < ActionController::Base
-  protect_from_forgery
+  protect_from_forgery :unless => :current_service
   layout 'application'
   
   include Xebec::ControllerSupport
   helper Xebec::NavBarHelper
   
   def current_ability
-    @current_ability ||= Ability.new(current_person)
+    @current_ability ||= Ability.new(current_person || current_service)
   end
   
   def profile_name
@@ -28,6 +28,8 @@ class ApplicationController < ActionController::Base
   rescue_from CanCan::AccessDenied do
     if current_person
       render 'shared/access_denied'
+    elsif current_service
+      render :text => "Access denied for #{current_service.name} service", :status => :forbidden
     else
       flash[:alert] = "Please log in to access that page."
       redirect_to new_person_session_path

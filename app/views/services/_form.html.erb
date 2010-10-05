@@ -24,6 +24,9 @@
 
   <%= f.label :description %>
   <%= f.text_area :description %>
+  
+  <%= f.label :authentication_token, "Illyan API key" %>
+  <%= f.text_field :authentication_token %>
 
   <%= f.submit %>
 <% end %>
