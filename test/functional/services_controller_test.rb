@@ -3,6 +3,8 @@ require 'test_helper'
 class ServicesControllerTest < ActionController::TestCase
   setup do
     @service = Factory.create(:service)
+    @person = Factory.create(:person, :admin => true)
+    sign_in @person
   end
 
   test "should get index" do
@@ -22,11 +24,6 @@ class ServicesControllerTest < ActionController::TestCase
     end
 
     assert_redirected_to service_path(assigns(:service))
-  end
-
-  test "should show service" do
-    get :show, :id => @service.to_param
-    assert_response :success
   end
 
   test "should get edit" do
