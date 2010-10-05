@@ -34,6 +34,13 @@
 
     <dt>Has logged in</dt>
     <dd><%= pluralize(@person.sign_in_count, "time") %></dd>  
+    
+    <dt>Invitation token</dt>
+    <dd>
+      <% if @person.invited? %>
+        <%= @person.invitation_token %> (sent at <%= @person.invitation_sent_at%>)
+      <% end -%>
+    </dd>
   
     <dt>Confirmation sent</dt>
     <dd><%= @person.confirmation_sent_at %></dd>
