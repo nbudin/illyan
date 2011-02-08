@@ -10,7 +10,7 @@ gem 'devise', '~> 1.1.1'
 gem 'devise_openid_authenticatable', '1.0.0.alpha7'
 gem 'devise_invitable', '>= 0.4.rc', :git => 'http://github.com/scambra/devise_invitable.git'
 gem 'cancan', '>= 1.1'
-gem 'xebec', '~> 2.6.0'
+gem 'xebec', '~> 2.6.1'
 gem 'jquery-rails'
 
 gem 'fast_xs'
