@@ -23,17 +23,6 @@ group :development do
   gem 'sqlite3-ruby', :require => 'sqlite3'
 end
 
-# Deploy with Capistrano
-# gem 'capistrano'
-
-# Bundle the extra gems:
-# gem 'bj'
-# gem 'nokogiri', '1.4.1'
-# gem 'sqlite3-ruby', :require => 'sqlite3'
-# gem 'aws-s3', :require => 'aws/s3'
-
-# Bundle gems for certain environments:
-# gem 'rspec', :group => :test
 group :test do
   gem 'factory_girl_rails'
   gem 'shoulda', '>= 2.10.3'
