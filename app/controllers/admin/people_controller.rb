@@ -66,15 +66,13 @@ class Admin::PeopleController < ApplicationController
     if @person.nil?
       attrs = params[:person]
       attrs[:confirmed_at] = Time.now
-      if current_service
-        attrs[:services] = [current_service]
-      end
+      attrs[:services] = [current_service] if current_service
       @person = Person.invite!(attrs)
     elsif current_service
-      @person.services << current_service
+      @person.services << current_service unless @person.services.include?(current_service)
     end
     
-    if @person
+    if @person.save
       respond_to do |format|
         format.html { redirect_to admin_person_url(@person) }
         format.xml  { render :xml => @person.to_xml }

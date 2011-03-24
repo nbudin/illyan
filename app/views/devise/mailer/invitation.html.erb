@@ -3,7 +3,7 @@
 <% if @resource.services.size == 1 -%>
   <p>You've been invited to <%= link_to @resource.services.first.name, @resource.services.first.url %>!  This service uses
     <%= link_to Illyan::Application.site_title, root_url %> for account management, so you will need to create a
-    <%= profile_name %> there.</p>
+    <%= Illyan::Application.account_name || "profile" %> there.</p>
     
   <p>To accept the invitation, please follow the link below.</p>
 <% else -%>

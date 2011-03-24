@@ -26,7 +26,7 @@ class Person < ActiveRecord::Base
   has_and_belongs_to_many :groups
   has_and_belongs_to_many :services, :foreign_key => :user_id, :join_table => "services_users"
   
-  attr_accessible :firstname, :lastname, :gender, :birthdate, :email, :password, :service_ids
+  attr_accessible :firstname, :lastname, :gender, :birthdate, :email, :password, :service_ids, :services, :confirmed_at
   attr_accessor :skip_password_required
   
   def delete_legacy_password!
@@ -174,5 +174,19 @@ class Person < ActiveRecord::Base
     options[:include] ||= []
     options[:include] << :services unless options[:include].include?(:services)
     super(options)
+  end
+  
+  def headers_for(action)
+    case action.to_sym
+    when :invitation, :invitation_instructions
+      { :subject => if services.size == 1
+        "#{services.first.name} Invitation"
+        else
+          "#{Illyan::Application.site_title} Invitation"
+        end
+      }
+    else
+      {}
+    end
   end
 end
