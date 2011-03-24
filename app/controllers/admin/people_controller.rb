@@ -13,6 +13,7 @@ class Admin::PeopleController < ApplicationController
   def show
     respond_to do |format|
       format.html {}
+      format.xml  { render :xml => @person.to_xml }
       format.json { render :json => @person.to_json }
     end
   end
@@ -61,20 +62,23 @@ class Admin::PeopleController < ApplicationController
   end
   
   def create
-    @person = Person.new(params[:person])
-    set_protected_attributes!
-    @person.skip_confirmation!
-    if current_service
+    @person = Person.find_by_email(params[:person][:email])
+    if @person.nil?
+      attrs = params[:person]
+      attrs[:confirmed_at] = Time.now
+      if current_service
+        attrs[:services] = [current_service]
+      end
+      @person = Person.invite!(attrs)
+    elsif current_service
       @person.services << current_service
     end
-    @person.skip_password_required = true
     
-    if @person.valid?
-      @person.invite!
+    if @person
       respond_to do |format|
         format.html { redirect_to admin_person_url(@person) }
-        format.xml  { render :xml => @person }
-        format.json { render :json => @person }
+        format.xml  { render :xml => @person.to_xml }
+        format.json { render :json => @person.to_json }
       end
     else
       respond_to do |format|

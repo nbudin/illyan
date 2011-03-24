@@ -169,4 +169,10 @@ class Person < ActiveRecord::Base
       fallback_name
     end
   end
+  
+  def to_xml(options = {})
+    options[:include] ||= []
+    options[:include] << :services unless options[:include].include?(:services)
+    super(options)
+  end
 end

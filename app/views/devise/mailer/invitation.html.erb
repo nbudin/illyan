@@ -1,6 +1,15 @@
 <p>Hello <%= @resource.email %>!</p>
 
-<p>Someone has invited you to <%= root_url %>, you can accept it through the link below.</p>
+<% if @resource.services.size == 1 -%>
+  <p>You've been invited to <%= link_to @resource.services.first.name, @resource.services.first.url %>!  This service uses
+    <%= link_to Illyan::Application.site_title, root_url %> for account management, so you will need to create a
+    <%= profile_name %> there.</p>
+    
+  <p>To accept the invitation, please follow the link below.</p>
+<% else -%>
+  <p>You've been invited to <%= link_to Illyan::Application.site_title, root_url %>!  To accept the invitation, please follow
+    the link below.</p>
+<% end -%>
 
 <p><%= link_to 'Accept invitation', accept_invitation_url(@resource, :invitation_token => @resource.invitation_token) %></p>
 
