@@ -1,10 +1,20 @@
 class CasController < ApplicationController  
   # A couple of methods to emulate Sinatra here.  We're mostly going to be calling
   # Castronaut presenters directly, which expect certain controller methods to exist.
-  def erb(template_name, options = {})
+  private
+  def castronaut_template_path(filename)
     gem_path = File.split(Gem.loaded_specs['nbudin-castronaut'].load_paths.first).first
-    template_file = File.join(gem_path, "app/views/#{template_name}.erb")    
-    puts(render options.update(:file => template_file))
+    File.join(gem_path, "app", "views", filename)
+  end
+  
+  public
+  
+  def erb(template_name, options = {})
+    logger.debug(render options.update(:file => castronaut_template_path("#{template_name}.erb")))
+  end
+  
+  def builder(template_name, options = {})
+    logger.debug(render options.update(:file => castronaut_template_path("#{template_name}.builder")))
   end
   
   def redirect(url, status=302)
@@ -76,14 +86,16 @@ class CasController < ApplicationController
     @presenter = Castronaut::Presenters::ProxyValidate.new(self)
     @presenter.represent!
     
-    person = Person.find_by_email(@presenter.username)
-    @presenter.extra_attributes.merge!(
-      :firstname => person.firstname,
-      :lastname => person.lastname,
-      :email => person.email,
-      :gender => person.gender,
-      :birthdate => person.birthdate.try(:rfc2822)
-    )
+    person = Person.find_by_email(@presenter.username) if @presenter.proxy_ticket_result.ticket
+    if person
+      @presenter.extra_attributes.merge!(
+        :firstname => person.firstname,
+        :lastname => person.lastname,
+        :email => person.email,
+        :gender => person.gender,
+        :birthdate => person.birthdate.try(:rfc2822)
+      )
+    end
     @presenter.your_mission.call
   end
 end

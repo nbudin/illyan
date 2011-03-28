@@ -14,7 +14,7 @@ gem 'xebec', '~> 2.6.1'
 gem 'jquery-rails'
 
 gem 'fast_xs'
-gem 'nbudin-castronaut', :require => "castronaut", :git => 'http://github.com/nbudin/castronaut.git'
+gem 'nbudin-castronaut', ">= 0.8.0", :require => "castronaut", :git => "http://github.com/nbudin/castronaut.git"
 
 gem 'will_paginate', '3.0.pre2'
 
