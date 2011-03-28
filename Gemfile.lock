@@ -1,8 +1,8 @@
 GIT
   remote: http://github.com/nbudin/castronaut.git
-  revision: a6421b3fdaf4882c61925a77b1fec64312f17416
+  revision: 673f138af24c8917451757fab4f5a15431ce1134
   specs:
-    nbudin-castronaut (0.8.1)
+    nbudin-castronaut (0.8.2)
       builder (>= 2.0.0)
       json
       sinatra
@@ -161,7 +161,7 @@ DEPENDENCIES
   jquery-rails
   launchy
   mail (~> 2.2.15)
-  nbudin-castronaut (>= 0.8.1)!
+  nbudin-castronaut (>= 0.8.2)!
   rails (~> 3.0.0)
   shoulda (>= 2.10.3)
   sqlite3-ruby
