@@ -12,6 +12,7 @@ gem 'devise_invitable', '>= 0.4.rc', :git => 'http://github.com/scambra/devise_i
 gem 'cancan', '>= 1.1'
 gem 'xebec', '~> 2.6.1'
 gem 'jquery-rails'
+gem 'hoptoad_notifier'
 
 gem 'fast_xs'
 gem 'nbudin-castronaut', ">= 0.8.2", :require => "castronaut", :git => "http://github.com/nbudin/castronaut.git"
