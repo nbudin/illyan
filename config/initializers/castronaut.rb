@@ -1,9 +1,5 @@
-module Illyan
-  class CastronautConfiguration
-    def logger
-      Rails.logger
-    end
-  end
-end
+require 'castronaut'
+require 'castronaut/rails_configuration'
 
-Castronaut.config = Illyan::CastronautConfiguration.new
+Castronaut.config = Castronaut::RailsConfiguration.new
+Castronaut.config.organization_name = Illyan::Application.site_title

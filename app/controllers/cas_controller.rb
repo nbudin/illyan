@@ -1,45 +1,23 @@
-class CasController < ApplicationController  
-  # A couple of methods to emulate Sinatra here.  We're mostly going to be calling
-  # Castronaut presenters directly, which expect certain controller methods to exist.
-  private
-  def castronaut_template_path(filename)
-    gem_path = File.split(Gem.loaded_specs['nbudin-castronaut'].load_paths.first).first
-    File.join(gem_path, "app", "views", filename)
-  end
-  
-  public
-  
-  def erb(template_name, options = {})
-    logger.debug(render options.update(:file => castronaut_template_path("#{template_name}.erb")))
-  end
-  
-  def builder(template_name, options = {})
-    logger.debug(render options.update(:file => castronaut_template_path("#{template_name}.builder")))
-  end
-  
-  def redirect(url, status=302)
-    redirect_to url, :status => status
-  end
-  
+class CasController < ApplicationController
   def login
     response.headers.merge! 'Pragma' => 'no-cache',
       'Cache-Control' => 'no-store',
       'Expires' => (Time.now - 5.years).rfc2822
-    @presenter = Castronaut::Presenters::Login.new(self)
-    @presenter.represent!
-    return if response.redirect_url
+
+    if castronaut_response.redirect?
+      return redirect_to castronaut_response.location
+    end
     
-    service = @presenter.service
-    @current_login_service = Service.service_for_url(service)
-    session[:login_service] = @current_login_service.try(:id)
+    service = params['service']
+    current_login_service = Service.service_for_url(service)
+    session[:login_service] = current_login_service.try(:id)
     
     unless person_signed_in?
       session[:person_return_to] = request.url
       return redirect_to(new_person_session_path)
     end
     
-    client_host = @presenter.client_host
-    
+    client_host = request.remote_ip
     
     # if we haven't redirected yet, we must already be logged into Devise
     ticket_granting_ticket = Castronaut::Models::TicketGrantingTicket.generate_for(current_person.email, client_host)
@@ -65,37 +43,53 @@ class CasController < ApplicationController
   end
   
   def logout
-    @presenter = Castronaut::Presenters::Logout.new(self)
     sign_out(:person)
+    passthrough_response!
+  end
+  
+  def serviceValidate
+    passthrough_response!
+  end
+  
+  def proxyValidate
+    if params[:ticket]
+      st = Castronaut::Models::ServiceTicket.find_by_ticket(params[:ticket])
+      if st && st.username
+        person = Person.find_by_email(st.username)
+        if person
+          env["castronaut.extra_attributes"] = {
+            :firstname => person.firstname,
+            :lastname => person.lastname,
+            :email => person.email,
+            :gender => person.gender,
+            :birthdate => person.birthdate.try(:rfc2822)
+          }
+        end
+      end
+    end
     
-    @presenter.represent!    
-    if params[:destination]
-      redirect_to params[:destination]
-    else
-      @presenter.your_mission.call
+    passthrough_response!
+  end
+  
+  private
+  def castronaut_response
+    @castronaut_response ||= begin
+      cas_request = Rack::Request.new(env)
+      request.path_info = request.path_info.sub(/^\/cas/, '')
+      status, headers, body = Illyan::Application.castronaut.call(cas_request.env)
+      
+      Rack::Response.new(body, status, headers)
     end
   end
   
-  def service_validate
-    @presenter = Castronaut::Presenters::ServiceValidate.new(self)
-    @presenter.represent!
-    @presenter.your_mission.call
+  def render_response!(resp)
+    resp.headers.each do |k, v|
+      response.headers[k] = v
+    end      
+    render :text => resp.body, :status => resp.status
   end
   
-  def proxy_validate
-    @presenter = Castronaut::Presenters::ProxyValidate.new(self)
-    @presenter.represent!
-    
-    person = Person.find_by_email(@presenter.username) if @presenter.proxy_ticket_result.ticket
-    if person
-      @presenter.extra_attributes.merge!(
-        :firstname => person.firstname,
-        :lastname => person.lastname,
-        :email => person.email,
-        :gender => person.gender,
-        :birthdate => person.birthdate.try(:rfc2822)
-      )
-    end
-    @presenter.your_mission.call
+  def passthrough_response!
+    render_response!(castronaut_response)
   end
 end

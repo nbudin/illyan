@@ -32,6 +32,7 @@ class IllyanSchema < ActiveRecord::Migration
       t.column :gender, :string
       t.column :birthdate, :datetime
       t.database_authenticatable
+      t.encryptable
       t.rememberable
       t.confirmable
       t.recoverable

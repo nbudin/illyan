@@ -1,3 +1,6 @@
+require 'castronaut/application'
+Castronaut::Application.set(:path, "/cas")
+
 Illyan::Application.routes.draw do
   resources :services
 
@@ -29,12 +32,8 @@ Illyan::Application.routes.draw do
     end
   end
   
-  match 'cas/login' => 'cas#login', :via => :get
-  match 'cas/login' => 'cas#login', :via => :post
-  match 'cas/logout' => 'cas#logout', :via => :get
-  match 'cas/serviceValidate' => 'cas#service_validate', :via => :get
-  match 'cas/proxyValidate' => 'cas#proxy_validate', :via => :get
-
+  match '/cas/:action', :controller => "cas"
+  
   # Sample resource route with options:
   #   resources :products do
   #     member do
