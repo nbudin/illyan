@@ -16,14 +16,4 @@
 
 <% end -%>
 
-<%= form_for(resource, :as => resource_name, :url => session_path(resource_name) ) do |f| -%>
-  <h2><%= login_headline("with OpenID") %></h2>
-  
-  <%= f.label :identity_url, "OpenID URL", :class => "block" %>
-  <%= f.text_field :identity_url %>
-
-  <%= submit_tag "Log in with OpenID" %>
-  
-<% end -%>
-
 <%= render :partial => "devise/shared/links" %>

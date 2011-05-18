@@ -2,38 +2,6 @@
 
 <%= error_messages_for :person %>
 
-<%= form_for(@person, :url => profile_path) do |f| -%>
-  <h2>OpenIDs</h2>
-
-  <p>OpenID is a free and easy way to use a single digital identity across the Internet.  (For more information,
-  <%= link_to "visit the OpenID web site", "http://www.openid.net" %>.)  If you have an OpenID, you can use it
-  to log into this site!  You can even link multiple OpenIDs to your account.  Add as many as you like below.</p>
-
-  <table>
-    <%= f.fields_for(:open_id_identities) do |identity_fields| -%>
-      <tr>
-        <% if identity_fields.object.new_record? -%>
-          <td colspan="2">
-            <%= identity_fields.label :identity_url, "Add: " %>
-            <%= identity_fields.text_field :identity_url, 
-                :style => "background: #FFFFFF url('#{image_path 'openid.gif'}') no-repeat scroll 0pt 50%; padding-left: 18px; width: 60%;" %>
-          </td>
-        <% else -%>
-          <td><%= identity_fields.object.identity_url %></td>
-          <td>
-            <%= identity_fields.label '_destroy', "Remove?" %>
-            <%= identity_fields.check_box '_destroy' %>
-          </td>
-        <% end -%>
-      </tr>
-    <% end -%>
-    <tr>
-    </tr>
-  </table>
-  
-  <%= f.submit "Update OpenIDs" %>
-<% end -%>
-
 <%= form_for(@person, :url => profile_path) do |f| %>
   <h2>Edit My Profile</h2>
 
