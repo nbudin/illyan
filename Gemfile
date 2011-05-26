@@ -17,10 +17,10 @@ gem 'fast_xs'
 gem 'castronaut', :git => "http://github.com/nbudin/castronaut.git", :branch => "dam5s-merge"
 
 gem 'will_paginate', '3.0.pre2'
+gem 'sqlite3', :groups => [:development, :test]
 
 group :development do
   gem 'ae_users_migrator'
-  gem 'sqlite3-ruby', :require => 'sqlite3'
 end
 
 group :test do
