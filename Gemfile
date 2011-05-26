@@ -30,4 +30,3 @@ group :test do
   gem 'cucumber-rails'
   gem 'launchy'
 end
-
