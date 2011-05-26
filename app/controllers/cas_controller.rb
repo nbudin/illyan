@@ -86,7 +86,13 @@ class CasController < ApplicationController
     resp.headers.each do |k, v|
       response.headers[k] = v
     end      
-    render :text => resp.body, :status => resp.status
+    body = case resp.body
+    when Array
+      resp.body.first
+    else
+      resp.body
+    end
+    render :text => body, :status => resp.status
   end
   
   def passthrough_response!
