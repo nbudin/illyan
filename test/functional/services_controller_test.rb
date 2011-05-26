@@ -4,6 +4,7 @@ class ServicesControllerTest < ActionController::TestCase
   setup do
     @service = Factory.create(:service)
     @person = Factory.create(:person, :admin => true)
+    @request.env["devise.mapping"] = Devise.mappings[:person]
     sign_in @person
   end
 
