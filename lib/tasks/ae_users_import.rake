@@ -10,12 +10,13 @@ namespace :ae_users do
         next
       end
       
-
       Person.transaction do
         illyan_person = Person.where(:email => email).includes([:open_id_identities, :groups]).first
         illyan_person ||= Person.new(:email => email)
       
-        if illyan_person.last_sign_in_at.nil?
+        if illyan_person.last_sign_in_at
+          puts "Skipping already imported person #{email}"
+        else
           if ae_person.account.nil?
             puts "Skipping person #{email} because they have no account info"
             next
@@ -24,11 +25,6 @@ namespace :ae_users do
           # we should overwrite this person since they've never signed into Illyan
           %w{firstname lastname gender birthdate}.each do |f|
             illyan_person.send("#{f}=", ae_person.send(f))
-          end
-        
-          ae_person.open_id_identities.each do |oid|
-            next if illyan_person.open_id_identities.any? {|id| id.identity_url == oid.identity_url }
-            illyan_person.open_id_identities << OpenIdIdentity.new(:identity_url => oid.identity_url, :person => illyan_person)
           end
         
           ae_person.roles.each do |role|

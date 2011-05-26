@@ -31,21 +31,6 @@ class Admin::PeopleController < ApplicationController
     @person.attributes = params[:person]
     set_protected_attributes!
     
-    @person.open_id_identities.each do |oid|
-      if oid.new_record?
-        puts "Before: #{@person.open_id_identities.inspect}"
-        @person.open_id_identities.delete(oid)
-        puts "After: #{@person.open_id_identities.inspect}"
-        params[:open_id_identity] = {:identity_url => oid.identity_url}
-        open_id_identity = warden.authenticate(:openid, :scope => :open_id_identity)
-        if open_id_identity
-          @person.open_id_identities << open_id_identity
-        elsif warden.result == :custom
-          throw :warden, :scope => :open_id_identity
-        end
-      end
-    end
-    
     if @person.save
       respond_to do |format|
         format.html { redirect_to admin_person_url(@person) }

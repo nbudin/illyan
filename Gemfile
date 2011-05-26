@@ -7,7 +7,6 @@ gem 'mail', '~> 2.2.15'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'devise', '~> 1.3.4'
-gem 'devise_openid_authenticatable', '1.0.0.beta2'
 gem 'devise_invitable', '0.4.2'
 gem 'cancan', '>= 1.1'
 gem 'xebec', '~> 2.6.1'

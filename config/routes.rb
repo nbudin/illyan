@@ -4,7 +4,7 @@ Castronaut::Application.set(:path, "/cas")
 Illyan::Application.routes.draw do
   resources :services
 
-  devise_for :people, :open_id_identities, :services
+  devise_for :people, :services
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

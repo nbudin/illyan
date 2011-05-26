@@ -1,5 +1,5 @@
 class Person < ActiveRecord::Base
-  devise :database_authenticatable, :encryptable, :openid_authenticatable, :legacy_md5_authenticatable,
+  devise :database_authenticatable, :encryptable, :legacy_md5_authenticatable,
     :rememberable, :confirmable, :recoverable, :trackable, :registerable, :validatable, :invitable
     
   cattr_reader :per_page
@@ -10,7 +10,7 @@ class Person < ActiveRecord::Base
   def password_required?
     return false if skip_password_required
     
-    if !legacy_password_md5.blank? || identity_url || invitation_token.present?
+    if !legacy_password_md5.blank? || invitation_token.present?
       false
     else
       super
@@ -19,10 +19,7 @@ class Person < ActiveRecord::Base
   
   public
 
-  has_many :open_id_identities
-  accepts_nested_attributes_for :open_id_identities, :allow_destroy => true
   validates_uniqueness_of :email, :allow_nil => true
-  validates_presence_of :email, :unless => :identity_url
   has_and_belongs_to_many :groups
   has_and_belongs_to_many :services, :foreign_key => :user_id, :join_table => "services_users"
   
@@ -36,31 +33,6 @@ class Person < ActiveRecord::Base
   def password=(password)
     super(password)
     delete_legacy_password!
-  end
-
-  def self.find_for_authentication(conditions)
-    joins = if conditions[:identity_url]
-      conditions["open_id_identities.identity_url"] = conditions.delete(:identity_url)
-      :open_id_identities
-    end
-    
-    find(:first, :conditions => conditions, :joins => joins)
-  end
-  
-  def self.find_by_identity_url(identity_url)
-    find(:first, :conditions => {:open_id_identities => {:identity_url => identity_url}}, :joins => :open_id_identities)
-  end
-
-  def valid_for_authentication?
-    if !identity_url.blank?
-      return true
-    end
-
-    super
-  end
-
-  def identity_url=(url)
-    # just pass
   end
   
   # All users are their own admins
@@ -122,10 +94,6 @@ class Person < ActiveRecord::Base
     end
     }
   end
-
-  def identity_url
-    open_id_identities.first.try(:identity_url)
-  end
     
   def current_age
     age_as_of Date.today
@@ -151,7 +119,7 @@ class Person < ActiveRecord::Base
   end
   
   def fallback_name
-    email || identity_url
+    email
   end
   
   def name

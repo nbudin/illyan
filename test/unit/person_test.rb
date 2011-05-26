@@ -3,18 +3,12 @@ require 'test_helper'
 class PersonTest < ActiveSupport::TestCase
   subject { Factory(:person) }
   
-  should have_many(:open_id_identities)
   should validate_uniqueness_of(:email)
   
   context "a person" do
     setup do
       assert @person = Factory.build(:person)
       assert @email = @person.email
-    end
-
-    should "allow any auth params containing an openid url" do
-      @person.identity_url = "http://openid.com"
-      assert @person.valid_for_authentication?
     end
 
     context "with a birthdate" do
@@ -35,28 +29,6 @@ class PersonTest < ActiveSupport::TestCase
       
       should "come up correctly in find_for_authentication calls" do
         assert @found = Person.find_for_authentication(:email => @email)
-        assert_equal @person, @found
-      end
-    end
-  end
-
-  context "a person with an OpenID" do
-    setup do
-      assert @person = Factory.build(:openid_person)
-      assert @identity_url = @person.open_id_identities.first.identity_url
-    end
-    
-    should "find its own OpenID url correctly" do
-      assert_equal @identity_url, @person.identity_url
-    end
-    
-    context "having been saved" do
-      setup do
-        assert @person.save
-      end
-      
-      should "come up correctly in find_for_authentication calls" do
-        assert @found = Person.find_for_authentication(:identity_url => @identity_url)
         assert_equal @person, @found
       end
     end
