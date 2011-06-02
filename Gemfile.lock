@@ -84,6 +84,7 @@ GEM
       rake (>= 0.8.7)
     gherkin (2.1.5)
       trollop (~> 1.16.2)
+    heroku_external_db (1.0.0)
     hoptoad_notifier (2.4.8)
       activesupport
       builder
@@ -101,6 +102,7 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.16)
+    mysql (2.8.1)
     nokogiri (1.4.3.1)
     open4 (0.9.6)
     orm_adapter (0.0.5)
@@ -168,10 +170,12 @@ DEPENDENCIES
   devise_invitable (= 0.4.2)
   factory_girl_rails (~> 1.0.1)
   fast_xs
+  heroku_external_db
   hoptoad_notifier
   jquery-rails
   launchy
   mail (~> 2.2.15)
+  mysql
   rails (~> 3.0.0)
   shoulda (>= 2.10.3)
   sqlite3
