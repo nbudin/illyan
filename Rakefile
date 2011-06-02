@@ -7,4 +7,11 @@ require 'rake'
 require 'rake/testtask'
 require 'rake/rdoctask'
 
+begin
+  require 'vlad'
+  Vlad.load :scm => :git
+rescue LoadError
+  # do nothing
+end
+
 Illyan::Application.load_tasks

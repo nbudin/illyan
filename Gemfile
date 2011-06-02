@@ -21,6 +21,8 @@ gem 'sqlite3', :groups => [:development, :test]
 
 group :development do
   gem 'ae_users_migrator'
+  gem 'vlad'
+  gem 'vlad-git'
 end
 
 group :test do
