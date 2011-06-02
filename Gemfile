@@ -19,6 +19,7 @@ gem 'castronaut', :git => "http://github.com/nbudin/castronaut.git", :branch => 
 
 gem 'will_paginate', '3.0.pre2'
 gem 'sqlite3', :groups => [:development, :test]
+gem 'mysql'
 
 group :development do
   gem 'ae_users_migrator'
