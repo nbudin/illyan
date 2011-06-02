@@ -12,6 +12,7 @@ gem 'cancan', '>= 1.1'
 gem 'xebec', '~> 2.6.1'
 gem 'jquery-rails'
 gem 'hoptoad_notifier'
+gem 'heroku_external_db'
 
 gem 'fast_xs'
 gem 'castronaut', :git => "http://github.com/nbudin/castronaut.git", :branch => "dam5s-merge"
