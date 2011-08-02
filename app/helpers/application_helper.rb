@@ -35,7 +35,7 @@ module ApplicationHelper
   end
   
   def site_banner
-    link_to root_url do
+    link_to root_path do
       if Illyan::Application.site_logo
         image_tag(Illyan::Application.site_logo, :alt => Illyan::Application.site_title)
       else
