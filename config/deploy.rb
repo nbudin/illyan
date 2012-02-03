@@ -26,6 +26,28 @@ namespace :vlad do
   end
 end
 
+namespace :foreman do
+  desc "Export the Procfile to Ubuntu's upstart scripts"
+  remote_task :export, :roles => :app do
+    run "cd #{release_path} && sudo bundle exec foreman export upstart /etc/init -a #{application} -u #{user} -l #{shared_path}/log"
+  end
+
+  desc "Start the application services"
+  remote_task :start, :roles => :app do
+    sudo "start #{application}"
+  end
+
+  desc "Stop the application services"
+  remote_task :stop, :roles => :app do
+    sudo "stop #{application}"
+  end
+
+  desc "Restart the application services"
+  remote_task :restart, :roles => :app do
+    run "sudo start #{application} || sudo restart #{application}"
+  end
+end
+
 task "vlad:deploy" => %w[
-  vlad:update vlad:bundle:install vlad:copy_config_files vlad:start_app vlad:cleanup
+  vlad:update vlad:bundle:install vlad:copy_config_files foreman:export foreman:restart vlad:cleanup
 ]

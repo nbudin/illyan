@@ -19,7 +19,9 @@ gem 'castronaut', :git => "http://github.com/nbudin/castronaut.git", :branch => 
 
 gem 'will_paginate', '3.0.pre2'
 gem 'sqlite3', :groups => [:development, :test]
-gem 'mysql'
+gem 'mysql2'
+
+gem 'foreman'
 
 group :development do
   gem 'ae_users_migrator'
@@ -36,5 +38,5 @@ group :test do
 end
 
 group :production do
-  gem 'thin'
+  gem 'unicorn'
 end
