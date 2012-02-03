@@ -1,7 +1,8 @@
 require "bundler/vlad"
 
 set :application, "illyan"
-set :domain, "www-data@popper.sugarpond.net"
+set :user, "www-data"
+set :domain, "#{user}@popper.sugarpond.net"
 set :repository, "git@github.com:nbudin/illyan.git"
 set :deploy_to, "/var/www/illyan"
 
