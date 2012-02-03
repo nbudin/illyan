@@ -19,7 +19,7 @@ gem 'castronaut', :git => "http://github.com/nbudin/castronaut.git", :branch => 
 
 gem 'will_paginate', '3.0.pre2'
 gem 'sqlite3', :groups => [:development, :test]
-gem 'mysql2'
+gem 'mysql2', '~> 0.2.0'
 
 gem 'foreman'
 
