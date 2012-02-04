@@ -5,6 +5,9 @@ set :user, "www-data"
 set :domain, "#{user}@spinoza.sugarpond.net"
 set :repository, "git://github.com/nbudin/illyan.git"
 set :deploy_to, "/var/www/illyan"
+set :bundle_cmd, [ "source /etc/profile.d/rvm.sh",
+                    "bundle"
+                  ].join(" && ")
 
 set :scm, :git
 # Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `perforce`, `subversion` or `none`
