@@ -22,6 +22,7 @@ gem 'sqlite3', :groups => [:development, :test]
 gem 'mysql2', '~> 0.2.0'
 
 gem 'foreman'
+gem 'unicorn'
 
 group :development do
   gem 'ae_users_migrator'
@@ -35,8 +36,4 @@ group :test do
   gem 'capybara'
   gem 'cucumber-rails'
   gem 'launchy'
-end
-
-group :production do
-  gem 'unicorn'
 end

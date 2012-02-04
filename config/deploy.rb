@@ -5,9 +5,8 @@ set :user, "www-data"
 set :domain, "#{user}@spinoza.sugarpond.net"
 set :repository, "git://github.com/nbudin/illyan.git"
 set :deploy_to, "/var/www/illyan"
-set :bundle_cmd, [ "source /etc/profile.d/rvm.sh",
-                    "bundle"
-                  ].join(" && ")
+set :rvm_cmd, "source /etc/profile.d/rvm.sh"
+set :bundle_cmd, [ rvm_cmd, "bundle" ].join(" && ")
 
 set :scm, :git
 # Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `perforce`, `subversion` or `none`
@@ -33,7 +32,7 @@ end
 namespace :foreman do
   desc "Export the Procfile to Ubuntu's upstart scripts"
   remote_task :export, :roles => :app do
-    run "cd #{release_path} && sudo bundle exec foreman export upstart /etc/init -a #{application} -u #{user} -l #{shared_path}/log"
+    run "cd #{release_path} && #{rvm_cmd} && sudo $(which bundle) exec foreman export upstart /etc/init -a #{application} -u #{user} -l #{shared_path}/log"
   end
 
   desc "Start the application services"
