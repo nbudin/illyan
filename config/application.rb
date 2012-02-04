@@ -9,6 +9,24 @@ Bundler.require(:default, Rails.env.to_sym) if defined?(Bundler)
 module Illyan
   class Application < Rails::Application
     cattr_accessor :site_title, :site_logo, :theme, :account_name
+  
+    def self.config_vars
+      @@config_vars ||= begin
+        config_file = File.expand_path("../illyan.yml", __FILE__)
+
+        if File.exist?(config_file)
+          YAML.load(File.open(config_file))
+        else
+          {}
+        end
+      end
+    end
+    
+    def self.init_from_config_vars!
+      %w{site_title site_logo theme account_name}.each do |var|
+        send("#{var}=", config_vars[var]) unless config_vars[var].blank?
+      end
+    end
     
     def self.castronaut
       @@castronaut ||= begin
