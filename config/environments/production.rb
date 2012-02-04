@@ -1,6 +1,7 @@
 Illyan::Application.configure do
   # Settings specified here will take precedence over those in config/environment.rb
   config.action_mailer.default_url_options = { :host => 'accounts.sugarpond.net' }
+  config.action_mailer.delivery_method = :sendmail
 
   # The production environment is meant for finished, "live" apps.
   # Code is not reloaded between requests
