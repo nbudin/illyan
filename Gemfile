@@ -22,7 +22,7 @@ gem 'sqlite3', :groups => [:development, :test]
 gem 'mysql2', '~> 0.2.0'
 
 gem 'foreman'
-gem 'unicorn'
+gem 'thin'
 
 group :development do
   gem 'ae_users_migrator'
