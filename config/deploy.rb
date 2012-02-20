@@ -27,6 +27,12 @@ namespace :vlad do
   remote_task :copy_config_files, :roles => :app do
     run "cp #{shared_path}/config/* #{current_path}/config/"
   end
+
+  namespace :airbrake do
+    remote_task :deploy, :roles => :app do
+      run "cd #{release_path} && #{bundle_cmd} rake airbrake:deploy"
+    end
+  end
 end
 
 namespace :foreman do

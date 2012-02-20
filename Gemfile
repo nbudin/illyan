@@ -11,7 +11,7 @@ gem 'devise_invitable', '0.4.2'
 gem 'cancan', '>= 1.1'
 gem 'xebec', '~> 2.6.1'
 gem 'jquery-rails'
-gem 'hoptoad_notifier'
+gem 'airbrake'
 gem 'heroku_external_db'
 
 gem 'fast_xs'
