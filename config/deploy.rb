@@ -30,7 +30,7 @@ namespace :vlad do
 
   namespace :airbrake do
     remote_task :deploy, :roles => :app do
-      run "cd #{release_path} && #{bundle_cmd} rake airbrake:deploy"
+      run "cd #{release_path} && #{bundle_cmd} exec rake airbrake:deploy"
     end
   end
 end
