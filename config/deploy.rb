@@ -38,7 +38,7 @@ end
 namespace :foreman do
   desc "Export the Procfile to Ubuntu's upstart scripts"
   remote_task :export, :roles => :app do
-    run "cd #{release_path} && #{rvm_cmd} && rvmsudo bundle exec foreman export upstart /etc/init -a #{application} -u #{user} -l #{shared_path}/log"
+    run "cd #{release_path} && sudo /var/www/update-foreman-conf '#{application}' '#{shared_path}'"
   end
 
   desc "Start the application services"
@@ -58,5 +58,5 @@ namespace :foreman do
 end
 
 task "vlad:deploy" => %w[
-  vlad:update vlad:bundle:install vlad:copy_config_files foreman:restart vlad:cleanup
+  vlad:update vlad:bundle:install vlad:copy_config_files foreman:export foreman:restart vlad:cleanup
 ]
