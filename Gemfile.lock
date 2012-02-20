@@ -43,6 +43,9 @@ GEM
     activesupport (3.0.7)
     ae_users_migrator (1.0.3)
       activerecord (>= 2.3)
+    airbrake (3.0.5)
+      activesupport
+      builder
     arel (2.0.10)
     bcrypt-ruby (2.1.4)
     builder (2.1.2)
@@ -87,9 +90,6 @@ GEM
     gherkin (2.1.5)
       trollop (~> 1.16.2)
     heroku_external_db (1.0.0)
-    hoptoad_notifier (2.4.8)
-      activesupport
-      builder
     i18n (0.5.0)
     jquery-rails (0.2.1)
       rails (~> 3.0.0)
@@ -169,6 +169,7 @@ PLATFORMS
 
 DEPENDENCIES
   ae_users_migrator
+  airbrake
   cancan (>= 1.1)
   capybara
   castronaut!
@@ -179,7 +180,6 @@ DEPENDENCIES
   fast_xs
   foreman
   heroku_external_db
-  hoptoad_notifier
   jquery-rails
   launchy
   mail (~> 2.2.15)

@@ -6,7 +6,7 @@ set :domain, "#{user}@spinoza.sugarpond.net"
 set :repository, "git://github.com/nbudin/illyan.git"
 set :deploy_to, "/var/www/illyan"
 set :rvm_cmd, "source /etc/profile.d/rvm.sh"
-set :bundle_cmd, [ rvm_cmd, "bundle" ].join(" && ")
+set :bundle_cmd, [ rvm_cmd, "env $(cat #{shared_path}/config/production.env) bundle" ].join(" && ")
 
 set :scm, :git
 # Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `perforce`, `subversion` or `none`
@@ -26,6 +26,12 @@ set :scm, :git
 namespace :vlad do
   remote_task :copy_config_files, :roles => :app do
     run "cp #{shared_path}/config/* #{current_path}/config/"
+  end
+
+  namespace :airbrake do
+    remote_task :deploy, :roles => :app do
+      run "cd #{release_path} && #{bundle_cmd} exec rake airbrake:deploy"
+    end
   end
 end
 
@@ -52,5 +58,5 @@ namespace :foreman do
 end
 
 task "vlad:deploy" => %w[
-  vlad:update vlad:bundle:install vlad:copy_config_files foreman:export foreman:restart vlad:cleanup
+  vlad:update vlad:bundle:install vlad:copy_config_files foreman:export foreman:restart vlad:airbrake:deploy vlad:cleanup
 ]
