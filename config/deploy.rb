@@ -58,5 +58,5 @@ namespace :foreman do
 end
 
 task "vlad:deploy" => %w[
-  vlad:update vlad:bundle:install vlad:copy_config_files foreman:export foreman:restart vlad:airbrake:deploy vlad:cleanup
+  vlad:update vlad:bundle:install vlad:copy_config_files foreman:export vlad:airbrake:deploy foreman:restart vlad:cleanup
 ]
