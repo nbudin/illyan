@@ -9,10 +9,10 @@
 
   <% if devise_mapping.rememberable? -%>
     <%= f.label :remember_me %>
-    <%= f.check_box :remember_me %> 
+    <%= f.check_box :remember_me, :tabindex => 3 %> 
   <% end -%>
   
-  <%= f.submit login_headline %>
+  <%= f.submit login_headline, :tabindex => 4 %>
 
 <% end -%>
 
