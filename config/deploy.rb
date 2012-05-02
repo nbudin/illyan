@@ -5,7 +5,7 @@ set :user, "www-data"
 set :domain, "#{user}@popper.sugarpond.net"
 set :repository, "git://github.com/nbudin/illyan.git"
 set :deploy_to, "/var/www/illyan"
-#set :rvm_cmd, "source /etc/profile.d/rvm.sh"
+set :rvm_cmd, nil #"source /etc/profile.d/rvm.sh"
 set :bundle_cmd, [ rvm_cmd, "env $(cat #{shared_path}/config/production.env) bundle" ].compact.join(" && ")
 
 set :scm, :git
