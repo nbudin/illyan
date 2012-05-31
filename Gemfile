@@ -1,7 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '~> 3.0.0'
-gem 'mail', '~> 2.2.15'
+gem 'rails', '3.0.13'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
