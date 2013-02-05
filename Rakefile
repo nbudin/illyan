@@ -9,7 +9,7 @@ require 'rdoc/task'
 
 begin
   require 'vlad'
-  Vlad.load :scm => :git
+  Vlad.load :app => :passenger, :scm => :git
 rescue LoadError
   # do nothing
 end
