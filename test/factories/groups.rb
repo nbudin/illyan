@@ -1,3 +1,3 @@
-Factory.define :group do |g|
-
+FactoryGirl.define do
+  factory :group
 end

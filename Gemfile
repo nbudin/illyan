@@ -7,9 +7,9 @@ gem 'rails', '3.2.12'
 
 gem 'devise'
 gem 'devise_invitable'
+gem 'devise-encryptable'
 gem 'cancan'
 gem 'xebec'
-gem 'jquery-rails'
 gem 'heroku_external_db'
 
 group :assets do

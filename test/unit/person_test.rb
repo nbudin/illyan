@@ -1,13 +1,13 @@
 require 'test_helper'
 
 class PersonTest < ActiveSupport::TestCase
-  subject { Factory(:person) }
+  subject { FactoryGirl.create(:person) }
   
   should validate_uniqueness_of(:email)
   
   context "a person" do
     setup do
-      assert @person = Factory.build(:person)
+      assert @person = FactoryGirl.build(:person)
       assert @email = @person.email
     end
 
@@ -36,7 +36,7 @@ class PersonTest < ActiveSupport::TestCase
   
   context "a person with a legacy md5 password" do
     setup do
-      @person = Factory.build(:legacy_person)
+      @person = FactoryGirl.build(:legacy_person)
       assert_equal Digest::MD5.hexdigest("password"), @person.legacy_password_md5
     end
     

@@ -1,2 +1,3 @@
-Factory.define :service do
+FactoryGirl.define do
+  factory :service
 end

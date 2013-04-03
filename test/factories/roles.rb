@@ -1,2 +1,3 @@
-Factory.define(:role) do |r|
+FactoryGirl.define do
+  factory :role
 end

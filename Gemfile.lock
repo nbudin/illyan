@@ -83,6 +83,8 @@ GEM
       orm_adapter (~> 0.1)
       railties (~> 3.1)
       warden (~> 1.2.1)
+    devise-encryptable (0.1.1)
+      devise (>= 2.1.0.rc)
     devise_invitable (1.1.7)
       actionmailer (~> 3.0)
       devise (>= 2.1.2)
@@ -222,6 +224,7 @@ DEPENDENCIES
   coffee-rails
   cucumber-rails
   devise
+  devise-encryptable
   devise_invitable
   factory_girl_rails
   fast_xs
