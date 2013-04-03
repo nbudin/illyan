@@ -42,4 +42,7 @@ group :test do
   gem 'capybara'
   gem 'cucumber-rails'
   gem 'launchy'
+  gem 'turn'
 end
+
+gem 'pry-rails', :groups => [:development, :test]
