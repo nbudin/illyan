@@ -80,6 +80,7 @@ GEM
       nokogiri (>= 1.5.0)
       rails (~> 3.0)
     daemons (1.1.9)
+    database_cleaner (0.9.1)
     devise (2.2.3)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
@@ -235,6 +236,7 @@ DEPENDENCIES
   castronaut!
   coffee-rails
   cucumber-rails
+  database_cleaner
   devise
   devise-encryptable
   devise_invitable

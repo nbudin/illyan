@@ -43,6 +43,7 @@ group :test do
   gem 'cucumber-rails'
   gem 'launchy'
   gem 'turn'
+  gem 'database_cleaner'
 end
 
 gem 'pry-rails', :groups => [:development, :test]

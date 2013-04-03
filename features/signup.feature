@@ -10,7 +10,7 @@ Feature: Signup
     
     Then I should be on the signup page
     When I fill in "Email" with "myemail@example.com"
-    And I fill in "Password" with "LetMeIn"
+    And I fill in "person[password]" with "LetMeIn"
     And I fill in "Password confirmation" with "LetMeIn"
     And I fill in "First name" with "Jonathan"
     And I fill in "Last name" with "Livingston"

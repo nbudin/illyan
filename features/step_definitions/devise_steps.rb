@@ -1,22 +1,22 @@
 Then /^I should be signed in as "([^\"]*)"$/ do |name|
-  Then "I should see \"My Profile\" within \"nav.application\""
+  step "I should see \"My Profile\" within \"nav.application\""
 end
 
 Then /^I sign in as "([^\"]*)" with password "([^\"]*)"$/ do |email, password|
-  When "I am on the login page"
-  And "I fill in \"Email address\" with \"#{email}\""
-  And "I fill in \"Password\" with \"#{password}\""
-  And "I press \"Log in\""
+  step "I am on the login page"
+  step "I fill in \"Email address\" with \"#{email}\""
+  step "I fill in \"Password\" with \"#{password}\""
+  step "I press \"Log in\""
 end
 
 Given /^I am signed in as the Joe User account$/ do
-  Given "the Joe User account"
-  And "I sign in as \"joe@user.com\" with password \"password\""
-  Then "I should be signed in as \"Joe User\""
+  step "the Joe User account"
+  step "I sign in as \"joe@user.com\" with password \"password\""
+  step "I should be signed in as \"Joe User\""
 end 
 
 Then /^I should not be signed in$/ do
-  Then "I should see \"Log In\" within \"nav.application\""
+  step "I should see \"Log In\" within \"nav.application\""
 end
 
 Then /^"([^\"]*)" should receive a confirmation email$/ do |email|
