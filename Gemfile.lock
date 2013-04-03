@@ -93,6 +93,7 @@ GEM
       devise (>= 2.1.2)
       railties (~> 3.0)
     diff-lcs (1.2.2)
+    dynamic_form (1.1.4)
     erubis (2.7.0)
     eventmachine (1.0.3)
     execjs (1.4.0)
@@ -240,6 +241,7 @@ DEPENDENCIES
   devise
   devise-encryptable
   devise_invitable
+  dynamic_form
   factory_girl_rails
   fast_xs
   foreman

@@ -11,6 +11,7 @@ gem 'devise-encryptable'
 gem 'cancan'
 gem 'xebec'
 gem 'heroku_external_db'
+gem 'dynamic_form'
 
 group :assets do
   gem 'sass-rails'
