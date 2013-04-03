@@ -4,7 +4,7 @@ class ServicesControllerTest < ActionController::TestCase
   setup do
     @service = FactoryGirl.create(:service)
     @person = FactoryGirl.create(:person, :admin => true)
-    @request.env["devise.mapping"] = Devise.mappings[:person]
+    @person.confirm!
     sign_in @person
   end
 
@@ -24,7 +24,7 @@ class ServicesControllerTest < ActionController::TestCase
       post :create, :service => @service.attributes
     end
 
-    assert_redirected_to service_path(assigns(:service))
+    assert_redirected_to services_path
   end
 
   test "should get edit" do
@@ -34,7 +34,7 @@ class ServicesControllerTest < ActionController::TestCase
 
   test "should update service" do
     put :update, :id => @service.to_param, :service => @service.attributes
-    assert_redirected_to service_path(assigns(:service))
+    assert_redirected_to services_path
   end
 
   test "should destroy service" do
