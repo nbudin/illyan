@@ -23,5 +23,5 @@ namespace :vlad do
 end
 
 task "vlad:deploy" => %w[
-  vlad:update vlad:bundle:install vlad:copy_config_files vlad:migrate vlad:airbrake:deploy vlad:start_app vlad:cleanup
+  vlad:update vlad:bundle:install vlad:copy_config_files vlad:assets:precompile vlad:migrate vlad:airbrake:deploy vlad:start_app vlad:cleanup
 ]
