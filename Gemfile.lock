@@ -44,6 +44,10 @@ GEM
     addressable (2.3.3)
     ae_users_migrator (1.0.5)
       activerecord (>= 2.3)
+    airbrake (3.1.8)
+      activesupport
+      builder
+      json
     ansi (1.4.3)
     arel (3.0.2)
     bcrypt-ruby (3.0.1)
@@ -231,6 +235,7 @@ PLATFORMS
 
 DEPENDENCIES
   ae_users_migrator
+  airbrake
   cancan
   capybara
   castronaut!
