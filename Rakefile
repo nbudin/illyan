@@ -9,9 +9,10 @@ require 'rdoc/task'
 
 begin
   require 'vlad'
+  require 'vlad/git'
   Vlad.load :app => :passenger, :scm => :git
 rescue LoadError
-  # do nothing
+  puts "Warning: couldn't load vlad and vlad-git.  #{$!}"
 end
 
 Illyan::Application.load_tasks

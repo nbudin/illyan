@@ -1,4 +1,5 @@
 require "bundler/vlad"
+require "vlad/assets"
 
 set :application, "illyan"
 set :user, "www-data"

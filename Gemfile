@@ -33,8 +33,9 @@ gem 'thin'
 
 group :development do
   gem 'ae_users_migrator'
-  gem 'vlad'
-  gem 'vlad-git'
+  gem 'vlad', :require => false
+  gem 'vlad-git', :require => false
+  gem 'vlad-extras', :require => false
 end
 
 group :test do
