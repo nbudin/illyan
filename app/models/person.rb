@@ -1,5 +1,5 @@
 class Person < ActiveRecord::Base
-  devise :database_authenticatable, :encryptable, :legacy_md5_authenticatable,
+  devise :database_authenticatable, :legacy_md5_authenticatable, :legacy_sha1_authenticatable,
     :rememberable, :confirmable, :recoverable, :trackable, :registerable, :validatable, :invitable
     
   cattr_reader :per_page

@@ -7,6 +7,9 @@ Devise.setup do |config|
   
   # Configure the e-mail address which will be shown in DeviseMailer.
   config.mailer_sender = "Nat Budin <nat@sugarpond.net>"
+  
+  # Configure the class responsible to send e-mails.
+  # config.mailer = "Devise::Mailer"
 
   # ==> Configuration for any authentication mechanism
   # Configure which keys are used when authenticating an user. By default is
@@ -26,19 +29,13 @@ Devise.setup do |config|
   # config.http_authentication_realm = "Application"
 
   # ==> Configuration for :database_authenticatable
-  # Invoke `rake secret` and use the printed value to setup a pepper to generate
-  # the encrypted password. By default no pepper is used.
-  # config.pepper = "rake secret output"
-
-  # Configure how many times you want the password is reencrypted. Default is 10.
-  # config.stretches = 10
-
-  # Define which will be the encryption algorithm. Supported algorithms are :sha1
-  # (default), :sha512 and :bcrypt. Devise also supports encryptors from others
-  # authentication tools as :clearance_sha1, :authlogic_sha512 (then you should set
-  # stretches above to 20 for default behavior) and :restful_authentication_sha1
-  # (then you should set stretches to 10, and copy REST_AUTH_SITE_KEY to pepper)
-  config.encryptor = :sha1
+  # For bcrypt, this is the cost for hashing the password and defaults to 10. If
+  # using other encryptors, it sets how many times you want the password re-encrypted.
+  #
+  # Limiting the stretches to just one in testing will increase the performance of
+  # your test suite dramatically. However, it is STRONGLY RECOMMENDED to not use
+  # a value less than 10 in other environments.
+  config.stretches = Rails.env.test? ? 1 : 10
 
   # ==> Configuration for :confirmable
   # The time you want give to your user to confirm his account. During this time

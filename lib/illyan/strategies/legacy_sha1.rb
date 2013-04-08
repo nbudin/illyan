@@ -1,11 +1,11 @@
 module Devise
   module Models
-    module LegacyMd5Authenticatable 
+    module LegacySha1Authenticatable 
     end
   end
   
   module Strategies
-    class LegacyMD5Authenticatable < Devise::Strategies::Base
+    class LegacySha1Authenticatable < Devise::Strategies::Base
       def valid?
         params[scope] && params[scope]["email"] && params[scope]["password"]
       end
@@ -13,14 +13,15 @@ module Devise
       def authenticate!
         p = mapping.to.find_for_authentication(:email => params[scope]["email"])
 
-        if p.nil? or p.legacy_password_md5.blank?
+        if p.nil? or p.legacy_password_sha1.blank?
           pass
         else
-          if Digest::MD5.hexdigest(params[scope]["password"]) == p.legacy_password_md5
+          sha1_digest = Devise::Encryptable::Encryptors::Sha1.digest(params[scope]["password"], 10, p.legacy_password_sha1_salt, mapping.to.pepper)
+          if sha1_digest == p.legacy_password_sha1
             
             # save password as non-legacy version for next time
             p.password = params[scope]["password"]
-            p.legacy_password_md5 = nil
+            p.legacy_password_sha1 = ""
             unless p.save
               Rails.logger.warn "Couldn't save non-legacy password for #{p.name}: #{p.errors.full_messages.join(", ")}"
             end
@@ -35,5 +36,5 @@ module Devise
   end
 end
 
-Warden::Strategies.add(:legacy_md5_authenticatable, Devise::Strategies::LegacyMD5Authenticatable)
-Devise.add_module(:legacy_md5_authenticatable, :strategy => true)
+Warden::Strategies.add(:legacy_sha1_authenticatable, Devise::Strategies::LegacySha1Authenticatable)
+Devise.add_module(:legacy_sha1_authenticatable, :strategy => true)
