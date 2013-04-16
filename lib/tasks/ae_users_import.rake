@@ -33,7 +33,7 @@ namespace :ae_users do
             illyan_person.groups << group
           end
         
-          if illyan_person.encrypted_password.blank? and illyan_person.legacy_password_md5.blank?
+          if illyan_person.encrypted_password.blank? && illyan_person.legacy_password_sha1.blank?
             puts "Setting legacy password for #{email}"
             illyan_person.legacy_password_md5 = ae_person.account.password
           end
