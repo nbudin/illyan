@@ -24,6 +24,7 @@ Illyan::Application.configure do
   config.action_mailer.raise_delivery_errors = false
   
   config.action_mailer.default_url_options = { :host => 'localhost:4001' }
+  config.action_mailer.delivery_method = :file
 end
 
 Illyan::Application.site_title = "Sugar Pond Account Central"
