@@ -11,7 +11,7 @@ namespace :ae_users do
       end
       
       Person.transaction do
-        illyan_person = Person.where(:email => email).includes([:open_id_identities, :groups]).first
+        illyan_person = Person.where(:email => email).includes([:groups]).first
         illyan_person ||= Person.new(:email => email)
       
         if illyan_person.last_sign_in_at

@@ -30,9 +30,9 @@ gem 'mysql2'
 
 gem 'foreman'
 gem 'thin'
+gem 'ae_users_migrator'
 
 group :development do
-  gem 'ae_users_migrator'
   gem 'vlad', :require => false
   gem 'vlad-git', :require => false
   gem 'vlad-extras', :require => false
