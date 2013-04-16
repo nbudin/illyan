@@ -41,6 +41,8 @@ namespace :ae_users do
           if ae_person.account.try(:active) && !illyan_person.confirmed?
             illyan_person.skip_confirmation!
             puts "Confirmed person #{email}"
+          else
+            illyan_person.skip_confirmation_notification!
           end
 
           if illyan_person.save

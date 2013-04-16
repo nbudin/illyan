@@ -5,7 +5,7 @@ gem 'rails', '3.2.12'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'devise'
+gem 'devise', :github => "plataformatec/devise"
 gem 'devise_invitable'
 gem 'devise-encryptable'
 gem 'cancan'
@@ -22,7 +22,7 @@ end
 gem 'jquery-rails'
 
 gem 'fast_xs'
-gem 'castronaut', :git => "http://github.com/nbudin/castronaut.git", :branch => "dam5s-merge"
+gem 'castronaut', :github => "nbudin/castronaut", :branch => "dam5s-merge"
 
 gem 'will_paginate'
 gem 'sqlite3', :groups => [:development, :test]
