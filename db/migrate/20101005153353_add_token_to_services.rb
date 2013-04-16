@@ -1,7 +1,8 @@
 class AddTokenToServices < ActiveRecord::Migration
   def self.up
     change_table :services do |t|
-      t.token_authenticatable
+      # Token authenticatable
+      t.string :authentication_token
     end
     
     Service.all.map(&:ensure_authentication_token!)
