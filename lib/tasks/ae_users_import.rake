@@ -38,12 +38,13 @@ namespace :ae_users do
             illyan_person.legacy_password_md5 = ae_person.account.password
           end
         
+          if ae_person.account.try(:active) && !illyan_person.confirmed?
+            illyan_person.skip_confirmation!
+            puts "Confirmed person #{email}"
+          end
+
           if illyan_person.save
             puts "Imported person #{email}"
-            if ae_person.account.try(:active) && !illyan_person.confirmed?
-              illyan_person.confirm!
-              puts "Confirmed person #{email}"
-            end
           else
             puts "Couldn't import person #{email}: #{illyan_person.errors.full_messages.join(", ")}"
           end
