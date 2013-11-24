@@ -33,9 +33,9 @@ gem 'thin'
 gem 'ae_users_migrator'
 
 group :development do
-  gem 'vlad', :require => false
-  gem 'vlad-git', :require => false
-  gem 'vlad-extras', :require => false
+  gem 'capistrano', '~> 2.15', :require => false
+  gem 'capistrano-chef', :require => false
+  gem 'capistrano-rbenv', :require => false
 end
 
 group :test do
