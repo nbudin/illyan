@@ -45,7 +45,6 @@ class PersonTest < ActiveSupport::TestCase
       
       assert_nil @person.legacy_password_md5
       assert_not_equal Digest::MD5.hexdigest("password"), @person.encrypted_password
-      assert !@person.password_salt.blank?
     end
     
     should "delete the legacy password correctly" do

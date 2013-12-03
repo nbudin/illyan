@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.12'
+gem 'rails', '3.2.16'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -31,12 +31,6 @@ gem 'mysql2'
 gem 'foreman'
 gem 'thin'
 gem 'ae_users_migrator'
-
-group :development do
-  gem 'capistrano', '~> 2.15', :require => false
-  gem 'capistrano-chef', :require => false
-  gem 'capistrano-rbenv', :require => false
-end
 
 group :test do
   gem 'factory_girl_rails'
