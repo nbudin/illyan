@@ -79,6 +79,13 @@ form input[type=submit] {
 	margin-top: 1em;
 }
 
+form input.inline {
+  clear: none;
+  float: none;
+  margin: 0;
+  display: inline-block;
+}
+
 form .input, .card dd {
 	margin: 0;
 }

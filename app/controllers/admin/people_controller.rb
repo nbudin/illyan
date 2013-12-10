@@ -3,7 +3,22 @@ class Admin::PeopleController < ApplicationController
     
   def index
     authorize! :list, Person
-    @people = Person.paginate(:page => params[:page], :order => "lower(lastname), lower(firstname), lower(email)")
+    query_string = params[:q]
+    page_number = params[:page] || 1
+    
+    @people = Person.search(page: params[:page] || 1, per_page: 20, load: true) do
+      if query_string.present?
+        query do
+          match [:firstname_ngrams, :lastname_ngrams, :email_ngrams], query_string
+        end
+      else      
+        sort do
+          by :lastname
+          by :firstname
+          by :email
+        end
+      end
+    end
   end
   
   def new

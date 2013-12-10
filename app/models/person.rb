@@ -1,9 +1,55 @@
 class Person < ActiveRecord::Base
+  include Tire::Model::Search
+  include Tire::Model::Callbacks
+  
   devise :database_authenticatable, :legacy_md5_authenticatable, :legacy_sha1_authenticatable,
     :rememberable, :confirmable, :recoverable, :trackable, :registerable, :validatable, :invitable
     
   cattr_reader :per_page
   @@per_page = 20
+  
+  settings :analysis => {
+    :filter => {
+       :ngrams  => {
+         "type"     => "nGram",
+         "max_gram" => 10,
+         "min_gram" => 1 
+       }
+     },
+     :analyzer => {
+       :substring => {
+         :tokenizer => "keyword",
+         :filter => ["lowercase", "ngrams"],
+         :type => "custom"
+       },
+       :email_substring => {
+         :tokenizer => "uax_url_email",
+         :filter => ["lowercase", "ngrams"],
+         :type => "custom"
+       },
+       :lowercase => {
+         :tokenizer => "standard",
+         :filter => ["lowercase"],
+         :type => "custom"
+       },
+       :email_lowercase => {
+         :tokenizer => "uax_url_email",
+         :filter => ["lowercase"],
+         :type => "custom"
+       }
+     }
+  }
+  
+  tire.mapping do
+    indexes :id, :type => 'string', :index => :not_analyzed
+    indexes :firstname, :type => 'string'
+    indexes :lastname, :type => 'string'
+    indexes :email, :type => 'string'
+    
+    indexes :firstname_ngrams, :type => 'string', :index_analyzer => 'substring', :search_analyzer => 'lowercase'
+    indexes :lastname_ngrams, :type => 'string', :index_analyzer => 'substring', :search_analyzer => 'lowercase'
+    indexes :email_ngrams, :type => 'string', :index_analyzer => 'email_substring', :search_analyzer => 'email_lowercase'
+  end
   
   # override Devise's password validations to allow password to be blank if legacy_password_md5 set
   protected
@@ -156,5 +202,18 @@ class Person < ActiveRecord::Base
     else
       {}
     end
+  end
+  
+  def to_indexed_json
+    {
+      firstname: firstname,
+      lastname: lastname,
+      email: email,
+      birthdate: birthdate,
+      gender: gender,
+      firstname_ngrams: firstname,
+      lastname_ngrams: lastname,
+      email: email
+    }.to_json
   end
 end

@@ -1,3 +1,11 @@
+<%= form_tag admin_people_path, method: 'get' do %>
+  <%= text_field_tag :q, params[:q] %>
+  <%= submit_tag "Search", class: "inline" %>
+  <% if params[:q].present? -%>
+    <%= link_to "Clear search", admin_people_path %>
+  <% end -%>
+<% end %>
+
 <table>
   <thead>
 	  <tr>
