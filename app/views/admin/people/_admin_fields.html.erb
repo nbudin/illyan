@@ -1,26 +1,6 @@
 <%= f.label :confirmed_at_ymdhms, "Confirmed at" %>
 <%= f.text_field :confirmed_at_ymdhms %>
-<%= button_to_function("Confirm now", nil) do |page|
-  page << %{
-    function zeroPad(n) {
-      if (n < 10)
-        return "0" + n;
-      else
-        return n.toString();
-    }
-    
-    var now = new Date();
-    var ymdhms = now.getUTCFullYear().toString() + "-";
-    ymdhms += zeroPad(now.getUTCMonth() + 1) + "-";
-    ymdhms += zeroPad(now.getUTCDate()) + " ";
-    ymdhms += zeroPad(now.getUTCHours()) + ":";
-    ymdhms += zeroPad(now.getUTCMinutes()) + ":";
-    ymdhms += zeroPad(now.getUTCSeconds());
-    
-    $('#person_confirmed_at_ymdhms').val(ymdhms);
-  }
-
-end %>
+<button data-set-current-time="<%= f.object_name + "[confirmed_at_ymdhms]" %>">Confirm now</button>
 
 <%= f.label :admin, "Administrator?" %>
 <span class="input">
