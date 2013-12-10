@@ -1,5 +1,5 @@
-require "bundler/capistrano"
 require "capistrano/chef"
+require "bundler/capistrano"
 require "capistrano-rbenv"
 require "airbrake/capistrano"
 
