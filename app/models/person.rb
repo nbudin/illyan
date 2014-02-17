@@ -80,67 +80,7 @@ class Person < ActiveRecord::Base
     super(password)
     delete_legacy_password!
   end
-  
-  # All users are their own admins
-  #def has_role_with_self_admin?(role_name, object=nil)
-  #  if role_name.to_s == "admin" && object == self
-  #    true
-  #  else
-  #    has_role_without_self_admin?(role_name, object)
-  #  end
-  #end
-  #alias_method_chain :has_role?, :self_admin
-  
-  # Add groups support to acl9's stock methods
-  #def has_role_with_groups?(role_name, object=nil)
-  #  has_role_without_groups?(role_name, object) or groups.any? {|group| group.has_role?(role_name, object)}
-  #end
-  #alias_method_chain :has_role?, :groups
-  
-  #def has_roles_for_with_groups?(object)
-  #  has_roles_for_without_groups?(object) or groups.any? {|group| group.has_roles_for?(object)}
-  #end
-  #alias_method_chain :has_roles_for?, :groups
-  
-  #def roles_for_with_groups(object)
-  #  roles = roles_for_without_groups(object)
-  #  groups.each do |group|
-  #    roles += group.roles_for(object)
-  #  end
-  #  return roles
-  #end
-  #alias_method_chain :roles_for, :groups
-
-  def self.sreg_map  
-    {:fullname => Proc.new do |fullname|
-      if fullname =~ /^([^ ]+) +(.*)$/
-        {:firstname => $1, :lastname => $2}
-      else
-        {:firstname => fullname}
-      end
-    end, 
-    :dob => Proc.new do |dob|
-      if dob =~ /^([0-9]{4})-([0-9]{2})-([0-9]{2})$/
-        {:birthdate => Time.local($1, $2, $3)}
-      else
-        {}
-      end
-    end,
-    :gender => Proc.new do |gender|
-      if gender == 'M'
-        {:gender => 'male'}
-      elsif gender == 'F'
-        {:gender => 'female'}
-      else
-        {}
-      end
-    end,
-    :email => Proc.new do |email|
-      {:email => email}
-    end
-    }
-  end
-    
+      
   def current_age
     age_as_of Date.today
   end
