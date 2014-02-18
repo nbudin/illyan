@@ -6,6 +6,7 @@ require "airbrake/capistrano"
 load "deploy/assets"
 
 chef_role [:web, :app], 'roles:app_server AND chef_environment:production'
+chef_role :db, 'roles:mysql_server AND chef_environment:production', primary: true
 set :user, 'deploy'
 
 #role :web, 'localhost'
