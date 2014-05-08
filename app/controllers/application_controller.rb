@@ -17,6 +17,7 @@ class ApplicationController < ActionController::Base
   def current_service
     @_current_service ||= begin
       service_token = ActionController::HttpAuthentication::Token.token_and_options(request).presence.try(:first)
+      service_token ||= ActionController::HttpAuthentication::Basic::user_name_and_password(request).first if request.authorization.present?
       service_token ||= params[:service_token].presence
       service_token && Service.find_by_authentication_token(service_token.to_s)
     end
