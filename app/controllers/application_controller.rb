@@ -1,5 +1,4 @@
 class ApplicationController < ActionController::Base
-  before_filter :set_current_service
   protect_from_forgery :unless => :current_service
   layout 'application'
   
@@ -14,6 +13,13 @@ class ApplicationController < ActionController::Base
     Illyan::Application.account_name || "Profile"
   end
   helper_method :profile_name
+  
+  def current_service
+    @_current_service ||= begin
+      service_token = params[:service_token].presence
+      service_token && Service.find_by_authentication_token(service_token.to_s)
+    end
+  end
 
   nav_bar :application do |nb|
     if person_signed_in?
@@ -46,19 +52,5 @@ class ApplicationController < ActionController::Base
   def cleanup_login_service!
     session[:person_return_to] = nil
     session[:login_service] = nil
-  end
-  
-  # https://gist.github.com/josevalim/fb706b1e933ef01e4fb6
-  def set_current_service
-    service_token = params[:service_token].presence
-    service = service_token && Service.find_by_authentication_token(service_token.to_s)
-
-    if service
-      # Notice we are passing store false, so the user is not
-      # actually stored in the session and a token is needed
-      # for every request. If you want the token to work as a
-      # sign in token, you can simply remove store: false.
-      sign_in service, store: false
-    end
   end
 end
