@@ -11,7 +11,7 @@
     address, please follow the link below.</p>
 <% end -%>
 
-<p><%= link_to 'Confirm my account', confirmation_url(@resource, :confirmation_token => @resource.confirmation_token) %></p>
+<p><%= link_to 'Confirm my account', confirmation_url(@resource, :confirmation_token => @token) %></p>
 
 <p>If you believe you've received this message in error, please ignore this email.<br />
 It won't be possible to log into your account until you click the link above.</p>

@@ -1,11 +1,11 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.17'
+gem 'rails', '3.2.18'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'devise', :github => "plataformatec/devise"
+gem 'devise', '~> 3.1.0'
 gem 'devise_invitable'
 gem 'devise-encryptable'
 gem 'cancan'
