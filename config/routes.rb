@@ -3,7 +3,7 @@ Castronaut::Application.set(:path, "/cas")
 
 Illyan::Application.routes.draw do
   resources :services
-  devise_for :people, :services
+  devise_for :people
   
   resource :profile do
     get :change_password

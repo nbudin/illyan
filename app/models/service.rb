@@ -1,5 +1,4 @@
 class Service < ActiveRecord::Base
-  devise :token_authenticatable, :token_authentication_key => :service_token
   has_and_belongs_to_many :users, :class_name => "Person", :join_table => "services_users", :association_foreign_key => "user_id"
   before_create :ensure_authentication_token
   
@@ -11,5 +10,20 @@ class Service < ActiveRecord::Base
   
   def self.service_for_ticket(st)
     service_for_url(st.service)
+  end
+   
+  def ensure_authentication_token
+    if authentication_token.blank?
+      self.authentication_token = generate_authentication_token
+    end
+  end
+ 
+  private
+  
+  def generate_authentication_token
+    loop do
+      token = Devise.friendly_token
+      break token unless User.where(authentication_token: token).first
+    end
   end
 end
