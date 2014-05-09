@@ -21,8 +21,7 @@ end
  
 gem 'jquery-rails'
 
-gem 'fast_xs'
-gem 'castronaut', :github => "nbudin/castronaut", :branch => "dam5s-merge"
+gem 'cassy'
 
 gem 'will_paginate'
 gem 'sqlite3', :groups => [:development, :test]
