@@ -5,7 +5,7 @@ gem 'rails', '3.2.18'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'devise', '~> 3.1.0'
+gem 'devise'
 gem 'devise_invitable'
 gem 'devise-encryptable'
 gem 'cancan'
