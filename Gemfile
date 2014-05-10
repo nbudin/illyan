@@ -21,7 +21,7 @@ end
  
 gem 'jquery-rails'
 
-gem 'cassy'
+gem 'cassy', github: 'reInteractive/cassy'
 
 gem 'will_paginate'
 gem 'sqlite3', :groups => [:development, :test]
