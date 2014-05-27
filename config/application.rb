@@ -8,7 +8,7 @@ Bundler.require(:default, Rails.env.to_sym) if defined?(Bundler)
 
 module Illyan
   class Application < Rails::Application
-    cattr_accessor :site_title, :site_logo, :theme, :account_name
+    cattr_accessor :site_title, :site_logo, :theme, :account_name, :extra_login_page_html
   
     def self.config_vars
       @@config_vars ||= begin
@@ -23,7 +23,7 @@ module Illyan
     end
     
     def self.init_from_config_vars!
-      %w{site_title site_logo theme account_name}.each do |var|
+      %w{site_title site_logo theme account_name extra_login_page_html}.each do |var|
         send("#{var}=", config_vars[var]) unless config_vars[var].blank?
       end
     end

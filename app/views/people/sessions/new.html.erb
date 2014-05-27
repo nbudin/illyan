@@ -1,6 +1,10 @@
 <%= form_for(resource, :as => resource_name, :url => session_path(resource_name) ) do |f| -%>
   <h2><%= login_headline_with_account %></h2>
   
+  <% if Illyan::Application.extra_login_page_html.present? -%>
+    <%=raw Illyan::Application.extra_login_page_html %>
+  <% end -%>
+  
   <%= f.label :email, "Email address", :class => "block" %>
   <%= f.text_field :email, :tabindex => 1 %>
 
