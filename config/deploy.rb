@@ -1,12 +1,14 @@
-require "capistrano/chef"
 require "bundler/capistrano"
 require "capistrano-rbenv"
 require "airbrake/capistrano"
 
 load "deploy/assets"
 
-chef_role [:web, :app], 'roles:app_server AND chef_environment:production'
-chef_role :db, 'roles:mysql_server AND chef_environment:production', primary: true
+role :web, 'hempel.sugarpond.net', primary: true
+role :app, 'hempel.sugarpond.net', primary: true
+role :db, 'hempel.sugarpond.net', primary: true
+#chef_role [:web, :app], 'roles:app_server AND chef_environment:production'
+#chef_role :db, 'roles:mysql_server AND chef_environment:production', primary: true
 set :user, 'deploy'
 
 #role :web, 'localhost'
@@ -17,7 +19,7 @@ set :rbenv_path, "/opt/rbenv"
 set :rbenv_setup_shell, false
 set :rbenv_setup_default_environment, false
 set :rbenv_setup_global_version, false
-set :rbenv_ruby_version, "1.9.3-p484"
+set :rbenv_ruby_version, "2.1.2"
 
 set :application, "illyan"
 set :repository, "git://github.com/nbudin/illyan.git"
