@@ -11,7 +11,7 @@ gem 'devise-encryptable'
 gem 'cancan'
 gem 'xebec'
 gem 'dynamic_form'
-gem 'airbrake'
+gem 'rollbar'
 
 group :assets do
   gem 'sass-rails'

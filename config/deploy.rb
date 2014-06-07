@@ -1,6 +1,5 @@
 require "bundler/capistrano"
 require "capistrano-rbenv"
-require "airbrake/capistrano"
 
 load "deploy/assets"
 
@@ -41,5 +40,16 @@ namespace(:deploy) do
   end
 end
 
+task :notify_rollbar, :roles => :app do
+  config_file = File.expand_path("../illyan.yml", __FILE__)
+  
+  set :revision, `git log -n 1 --pretty=format:"%H"`
+  set :local_user, `whoami`
+  set :rollbar_token, YAML.load(File.open(config_file))['rollbar_access_token']
+  rails_env = fetch(:rails_env, 'production')
+  run "curl https://api.rollbar.com/api/1/deploy/ -F access_token=#{rollbar_token} -F environment=#{rails_env} -F revision=#{revision} -F local_username=#{local_user} >/dev/null 2>&1", :once => true
+end
+
 before "deploy:finalize_update", "deploy:symlink_config"
 after "deploy", "deploy:cleanup"
+after "deploy", "notify_rollbar"
