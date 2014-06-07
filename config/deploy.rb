@@ -41,13 +41,10 @@ namespace(:deploy) do
 end
 
 task :notify_rollbar, :roles => :app do
-  config_file = File.expand_path("../illyan.yml", __FILE__)
-  
   set :revision, `git log -n 1 --pretty=format:"%H"`
   set :local_user, `whoami`
-  set :rollbar_token, YAML.load(File.open(config_file))['rollbar_access_token']
   rails_env = fetch(:rails_env, 'production')
-  run "curl https://api.rollbar.com/api/1/deploy/ -F access_token=#{rollbar_token} -F environment=#{rails_env} -F revision=#{revision} -F local_username=#{local_user} >/dev/null 2>&1", :once => true
+  run "curl https://api.rollbar.com/api/1/deploy/ -F access_token=$(cat #{release_path}/config/illyan.yml |grep '^rollbar_access_token:' |cut -d ' ' -f 2) -F environment=#{rails_env} -F revision=#{revision} -F local_username=#{local_user} >/dev/null 2>&1", :once => true
 end
 
 before "deploy:finalize_update", "deploy:symlink_config"
