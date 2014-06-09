@@ -2,14 +2,14 @@
 
 html {
     background-color: #383838;
-    background-image: url(/images/account-central/20.gif);
+    background-image: image-url("account-central/20.gif");
     height: 100%;
 }
 
 body {
 	font-family: Liberation Serif, Georgia, serif;
 	margin: 0;
-    background-image: url(/images/account-central/body-border.png);
+    background-image: image-url("account-central/body-border.png");
     background-repeat: repeat-y;
     background-position: 50% 50%;
     height: 100%;

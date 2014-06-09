@@ -13,11 +13,9 @@ gem 'xebec'
 gem 'dynamic_form'
 gem 'rollbar'
 
-group :assets do
-  gem 'sass-rails'
-  gem 'coffee-rails'
-  gem 'uglifier'
-end
+gem 'sass-rails'
+gem 'coffee-rails'
+gem 'uglifier'
  
 gem 'jquery-rails'
 
