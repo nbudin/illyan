@@ -12,6 +12,7 @@ gem 'cancan'
 gem 'xebec'
 gem 'dynamic_form'
 gem 'rollbar'
+gem 'breach-mitigation-rails'
 
 gem 'sass-rails'
 gem 'coffee-rails'
