@@ -1,4 +1,14 @@
 GIT
+  remote: git://github.com/guilleiguaran/sass-rails.git
+  revision: 0393d9e1a6e4a776e61f16fb75f97971b9f4abd2
+  branch: backport
+  specs:
+    sass-rails (4.0.1)
+      railties (>= 3.2.0, < 5.0)
+      sass (>= 3.2.0)
+      sprockets-rails (~> 2.0.0.backport1)
+
+GIT
   remote: git://github.com/nbudin/castronaut.git
   revision: 3dd7532e5fbb409f4e0499fada9e9f5ec6687623
   branch: dam5s-merge
@@ -46,7 +56,11 @@ GEM
       activerecord (>= 2.3)
     ansi (1.4.3)
     arel (3.0.3)
+    autoprefixer-rails (2.1.0.20140628)
+      execjs
     bcrypt (3.1.7)
+    bootstrap-sass (3.2.0.0)
+      sass (~> 3.2)
     bourne (1.4.0)
       mocha (~> 0.13.2)
     breach-mitigation-rails (0.2.2)
@@ -112,6 +126,8 @@ GEM
       thor (>= 0.13.6)
     gherkin (2.11.6)
       json (>= 1.7.6)
+    haml (4.0.5)
+      tilt
     hashr (0.0.22)
     hike (1.2.3)
     i18n (0.6.9)
@@ -130,7 +146,7 @@ GEM
     mime-types (1.25.1)
     mocha (0.13.3)
       metaclass (~> 0.0.1)
-    multi_json (1.10.0)
+    multi_json (1.10.1)
     mysql2 (0.3.11)
     nokogiri (1.5.9)
     orm_adapter (0.5.0)
@@ -174,10 +190,6 @@ GEM
       multi_json (~> 1.3)
     rubyzip (0.9.9)
     sass (3.2.6)
-    sass-rails (3.2.6)
-      railties (~> 3.2.0)
-      sass (>= 3.1.10)
-      tilt (~> 1.3)
     selenium-webdriver (2.31.0)
       childprocess (>= 0.2.5)
       multi_json (~> 1.0)
@@ -195,11 +207,15 @@ GEM
       rack-protection (~> 1.3)
       tilt (~> 1.3, >= 1.3.3)
     slop (3.3.3)
-    sprockets (2.2.2)
+    sprockets (2.2.2.backport2)
       hike (~> 1.2)
       multi_json (~> 1.0)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
+    sprockets-rails (2.0.0.backport1)
+      actionpack (>= 3.0)
+      activesupport (>= 3.0)
+      sprockets (~> 2.2.2.backport2)
     sqlite3 (1.3.7)
     thin (1.5.1)
       daemons (>= 1.0.9)
@@ -229,7 +245,6 @@ GEM
       rack (>= 1.0)
     websocket (1.0.7)
     will_paginate (3.0.4)
-    xebec (2.7.0)
     xpath (1.0.0)
       nokogiri (~> 1.3)
 
@@ -238,6 +253,8 @@ PLATFORMS
 
 DEPENDENCIES
   ae_users_migrator
+  autoprefixer-rails
+  bootstrap-sass (~> 3.2.0)
   breach-mitigation-rails
   cancan
   capybara
@@ -252,18 +269,20 @@ DEPENDENCIES
   factory_girl_rails
   fast_xs
   foreman
+  haml
   jquery-rails
   launchy
   mysql2
   pry-rails
   rails (= 3.2.18)
   rollbar
-  sass-rails
+  sass-rails!
   shoulda
+  sprockets (= 2.2.2.backport2)
+  sprockets-rails (= 2.0.0.backport1)
   sqlite3
   thin
   tire
   turn
   uglifier
   will_paginate
-  xebec

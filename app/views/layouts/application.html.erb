@@ -8,7 +8,7 @@
   <%= csrf_meta_tag %>
 </head>
 <body>
-  <div id="top">  
+  <nav class="navbar navbar-default" role="navigation">  
   	<% if flash[:notice] %>
   	  <div class="notice">
   	    <%= flash[:notice] %>
@@ -21,12 +21,11 @@
       </div>
     <% end %>
 
-    <%= nav_bar :application %>
-
-    <div id="banner">
-      <%= site_banner%>
+    <div class="container-fluid">
+      <%= site_banner %>
+      <%= render :partial => "shared/nav_bar" %>
     </div>
-  </div>
+  </nav>
 
   <div id="content">
     <%= yield %>

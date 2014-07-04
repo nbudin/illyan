@@ -2,9 +2,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery :unless => :current_service
   layout 'application'
   
-  include Xebec::ControllerSupport
-  helper Xebec::NavBarHelper
-  
   def current_ability
     @current_ability ||= Ability.new(current_person || current_service)
   end
@@ -20,17 +17,6 @@ class ApplicationController < ActionController::Base
       service_token ||= ActionController::HttpAuthentication::Basic::user_name_and_password(request).first if request.authorization.present?
       service_token ||= params[:service_token].presence
       service_token && Service.find_by_authentication_token(service_token.to_s)
-    end
-  end
-
-  nav_bar :application do |nb|
-    if person_signed_in?
-      nb.nav_item "My #{profile_name}", profile_path
-      nb.nav_item :people, admin_people_path if can? :list, Person
-      nb.nav_item :services, services_path if can? :list, Service
-      nb.nav_item "Log out", destroy_person_session_path
-    else
-      nb.nav_item "Log in", new_person_session_path
     end
   end
   

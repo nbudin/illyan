@@ -1,0 +1,81 @@
+/*= require liberation-serif/stylesheet */
+
+$body-bg: transparent;
+$font-family-serif: "Liberation Serif", Georgia, serif;
+$font-family-base: $font-family-serif;
+$navbar-border-radius: 0;
+$navbar-default-border: none;
+
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+html {
+    background-color: #383838;
+    background-image: image-url("account-central/20.gif");
+    height: 100%;
+}
+
+body {
+  background-image: image-url("account-central/body-border.png");
+  background-repeat: repeat-y;
+  background-position: 50% 50%;
+  height: 100%;
+}
+
+.navbar-default {
+	background-image: -webkit-gradient(
+      linear,
+      left top,
+      left bottom,
+      color-stop(0.0, rgba(16,135,224,0.2)),
+      color-stop(1.0, rgba(16,135,224,0))
+  );
+  background-image: -moz-linear-gradient(
+      center top,
+      rgba(16,135,224,0.2) 0%,
+      rgba(16,135,224,0) 100%
+  );
+  
+  .navbar-brand {
+    padding-top: 6px;
+  }
+    
+  .navbar-nav > li {
+  	background-color: transparent;
+  	padding: 0;
+  	margin: 0;
+  	margin-left: 2px;
+  	max-width: 90px;
+  	text-align: center;
+  	border-radius: 0;
+  	-webkit-border-radius: 0;
+  	-moz-border-radius: 0;
+    
+    &.current {
+    	color: #666;
+    	background-color: #fff;
+    	border-top: 2px #666 solid;
+    	height: $navbar-height - 2px;
+      display: inline-block;
+      padding-left: 5px;
+      padding-right: 5px;
+      padding-top: 5px;
+    }
+    
+    & > a {
+    	color: #e4f3ff;
+    	background-color: #1087e0;
+    	height: $navbar-height - 2px;
+      border-top: 2px white solid;
+      display: inline-block;
+      padding-left: 5px;
+      padding-right: 5px;
+      padding-top: 5px;
+      
+      &:hover {
+        background-color: white;
+        color: #1087e0;
+      }
+    }
+  }
+}
