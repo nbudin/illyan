@@ -1,10 +1,21 @@
-<%= f.label :confirmed_at_ymdhms, "Confirmed at" %>
-<%= f.text_field :confirmed_at_ymdhms %>
-<button data-set-current-time="<%= f.object_name + "[confirmed_at_ymdhms]" %>">Confirm now</button>
+<div class="form-group">
+  <%= f.label :confirmed_at_ymdhms, "Confirmed at", :class => "col-md-2" %>
+  <div class="col-md-8 col-sm-10">
+    <%= f.text_field :confirmed_at_ymdhms, :class => "form-control" %>
+  </div>
+  <div class="col-sm-2">
+    <button data-set-current-time="<%= f.object_name + "[confirmed_at_ymdhms]" %>" class="btn btn-default">Confirm now</button>
+  </div>
+</div>
 
-<%= f.label :admin, "Administrator?" %>
-<span class="input">
-  <%= f.radio_button :admin, "" %> <%= f.label :admin, "Unprivileged", :value => "" %>
-  &nbsp;&nbsp;&nbsp;
-  <%= f.radio_button :admin, true %> <%= f.label :admin, "Administrator", :value => true %>
-</span>
+<div class="form-group">
+  <%= f.label :admin, "Administrator?", :class => "col-md-2" %>
+  <div class="col-md-10">
+    <label class="radio-inline">
+      <%= f.radio_button :admin, "" %> Unprivileged
+    </label>
+    <label class="radio-inline">
+      <%= f.radio_button :admin, true %> Administrator
+    </label>
+  </div>
+</div>

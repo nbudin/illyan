@@ -1,176 +1,52 @@
 @import "bootstrap-custom";
 
-table {
-	width: 100%;
-	border-collapse: collapse;
+/*table {
+  width: 100%;
+  border-collapse: collapse;
 }
 
 thead {
-	color: white;
-	background-color: #900;
-	border-bottom: 1px black solid;
+  color: white;
+  background-color: #900;
+  border-bottom: 1px black solid;
 }
 
 th, td {
-	border-right: 1px #666 dotted;
+  border-right: 1px #666 dotted;
 }
 
 th:last-child, td:last-child {
-	border-right: none;
+  border-right: none;
 }
 
 tbody tr:nth-child(even) {
-	background-color: #fbb;
+  background-color: #fbb;
 }
 
 tbody tr:nth-child(odd) {
-	background-color: #fdd;
-}
+  background-color: #fdd;
+}*/
 
-.card, form {
-	padding: 10px;
-	margin-top: 1em;
-	margin-bottom: 1em;
-	border: none;
-	background-color: #ddd;
-	border-radius: 5px;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	clear: both;
-	overflow: hidden;
-}
-
-.card h2, form h2 {
-	margin-top: 0;
-}
-
-.card h3, form h3 {
-	margin-left: 150px;
-	text-decoration: underline;
-}
-
-.card dl {
-	float: left;
-	margin: 0;
-}
-
-.card dt, form > label {
-	clear: left;
-	float: left;
-	width: 140px;
-	margin-bottom: 2px;
-	text-align: right;
-	padding-right: 10px;
-	font-weight: bold;
-}
-
-form input, form .input, .card dd, form > select, form textarea {
-	float: left;
-	display: block;
-	margin-bottom: 2px;
-}
-
-form input[type=submit] {
-	clear: left;
-	margin-left: 150px;
-	margin-top: 1em;
-}
-
-form input.inline {
-  clear: none;
-  float: none;
-  margin: 0;
+/*nav ul li, .navbar ul li {
   display: inline-block;
-}
-
-form .input, .card dd {
-	margin: 0;
-}
-
-form .input input {
-    float: none;
-    display: inline;
-}
-
-form h1, h2, h3, h4, h5, h6 {
-    padding-top: 12pt;
-    clear: both;
-}
-
-.card ul {
-	clear: both;
-	list-style-type: none;
-	padding-top: 12pt;
-	margin-left: 150px;
-	padding-left: 0;
-}
-
-.card ul li {
-	margin-left: 0;
-	padding-left: 0;
-}
-
-#top {
-	position: absolute;
-	top: 0px;
-	width: 99%;
-	padding: 0;
-	margin: 0;
-	border-bottom: 1px black solid;
-	height: 2.5em;
-}
-
-#banner {
-	font-size: 2.5em;
-	font-weight: bold;
-}
-
-#banner a img {
-    border: 0;
-}
-
-nav.application, .navbar.application, .notice, .alert {
-	border: 2px #666 solid;
-	border-top: none;
-	padding: 3px;
-	border-bottom-left-radius: 3px;
-	border-bottom-right-radius: 3px;
-	font-size: 13px;
-	float: right;
-	margin-right: 5px;
-}
-
-nav.application, .navbar.application {
-	background-color: #ccf;
-	left: auto;
-}
-
-nav ul, .navbar ul {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-}
-
-nav ul li, .navbar ul li {
-	display: inline-block;
-	margin: 2px;
-	padding: 3px;
-	background-color: rgba(255, 255, 255, 0.5);
-	border-radius: 3px;
+  margin: 2px;
+  padding: 3px;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 3px;
 }
 
 nav ul li:hover, .navbar ul li:hover {
-	background-color: white;
+  background-color: white;
 }
 
 nav ul li.current, .navbar ul li.current, nav ul li.current:hover, .navbar ul li.current:hover {
-	background-color: white;
+  background-color: white;
 }
 
 nav ul li a, .navbar ul li a {
-	color: black;
-	text-decoration: none;
-}
+  color: black;
+  text-decoration: none;
+}*/
 
 .notice {
 	background-color: #ffc;
@@ -179,56 +55,3 @@ nav ul li a, .navbar ul li a {
 .alert {
 	background-color: #fcc;
 }
-
-ul.services {
-    padding-left: 0;
-    margin-left: 0;
-}
-
-ul.services li {
-    list-style-type: none;
-    display: inline;
-    display: inline-block;
-    width: 250px;
-    min-height: 50px;
-    border: 2px #ddd solid;
-    vertical-align: top;
-    padding: 5px;
-    border-radius: 5px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    font-size: 10pt;
-}
-
-ul.services li a:first-child {
-    font-size: 40px;
-    font-weight: bold;
-    color: black;
-    text-decoration: none;
-}
-
-.pagination {
-    text-align: center;
-    margin-top: 12pt;
-    margin-bottom: 12pt;
-    color: #666;
-}
-
-.pagination em, .pagination a {
-    padding-left: 4pt;
-    padding-right: 4pt;
-    font-weight: bold;
-    text-decoration: none;
-    font-style: normal;
-    /*color: #e0107b;*/
-}
-
-.pagination a:hover {
-    text-decoration: underline;
-}
-
-.pagination em {
-    color: black;
-    border: none;
-}
-

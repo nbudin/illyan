@@ -1,9 +1,0 @@
-<h1><%= @person.name%></h1>
-
-<%= form_for @person do |f| %>
-  <h2>Account Administration</h2>
-  
-  <%= render :partial => 'admin_fields', :locals => {:f => f} %>
-  
-  <%= f.submit "Save changes" %>
-<% end %>

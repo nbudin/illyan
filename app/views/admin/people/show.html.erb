@@ -1,55 +1,62 @@
 <h1><%= @person.name%></h1>
 
-<div class="card">
-  <h2>Profile</h2>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h2 class="panel-title">Profile</h2>
+  </div>
 
-  <%= render :partial => "profiles/profile" %>
+  <div class="panel-body">
+    <%= render :partial => "profiles/profile" %>
   
-  <ul>
-    <li><%= link_to "Edit profile", edit_admin_person_path(@person) %></li>
-    <li><%= link_to "Change password", change_password_admin_person_path(@person) %></li>
-  </ul>
+    <div>
+      <%= link_to "Edit profile", edit_admin_person_path(@person), class: "btn btn-default" %>
+      <%= link_to "Change password", change_password_admin_person_path(@person), class: "btn btn-default" %>
+    </div>
+  </div>
 </div>
 
 
-<div class="card">
-  <h2>Account Data</h2>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h2 class="panel-title">Account Data</h2>
+  </div>
 
-  <dl>
+  <div class="panel-body">
+    <dl class="dl-horizontal">
+      <dt>Access level</dt>
+      <dd><%= @person.admin? ? "Administrator" : "Unprivileged" %></dd>
     
-    <dt>Access level</dt>
-    <dd><%= @person.admin? ? "Administrator" : "Unprivileged" %></dd>
+      <dt>Created</dt>
+      <dd><%= @person.created_at %></dd>
+
+      <dt>Last updated</dt>
+      <dd><%= @person.updated_at %></dd>
+
+      <dt>Logged in</dt>
+      <dd><%= @person.current_sign_in_at %> from <%= @person.current_sign_in_ip%></dd>
+
+      <dt>Last logged in</dt>
+      <dd><%= @person.last_sign_in_at %> from <%= @person.last_sign_in_ip%></dd>
+
+      <dt>Has logged in</dt>
+      <dd><%= pluralize(@person.sign_in_count, "time") %></dd>  
     
-    <dt>Created</dt>
-    <dd><%= @person.created_at %></dd>
-
-    <dt>Last updated</dt>
-    <dd><%= @person.updated_at %></dd>
-
-    <dt>Logged in</dt>
-    <dd><%= @person.current_sign_in_at %> from <%= @person.current_sign_in_ip%></dd>
-
-    <dt>Last logged in</dt>
-    <dd><%= @person.last_sign_in_at %> from <%= @person.last_sign_in_ip%></dd>
-
-    <dt>Has logged in</dt>
-    <dd><%= pluralize(@person.sign_in_count, "time") %></dd>  
-    
-    <dt>Invitation token</dt>
-    <dd>
-      <% if @person.invitation_token %>
-        <%= @person.invitation_token %> (sent at <%= @person.invitation_sent_at%>)
-      <% end -%>
-    </dd>
+      <dt>Invitation token</dt>
+      <dd>
+        <% if @person.invitation_token %>
+          <%= @person.invitation_token %> (sent at <%= @person.invitation_sent_at%>)
+        <% end -%>
+      </dd>
   
-    <dt>Confirmation sent</dt>
-    <dd><%= @person.confirmation_sent_at %></dd>
+      <dt>Confirmation sent</dt>
+      <dd><%= @person.confirmation_sent_at %></dd>
   
-    <dt>Confirmed</dt>
-    <dd><%= @person.confirmed_at %></dd>
-  </dl>
+      <dt>Confirmed</dt>
+      <dd><%= @person.confirmed_at %></dd>
+    </dl>
 
-  <ul>
-    <li><%= link_to "Edit account data", edit_account_admin_person_path(@person) %></li>
-  </ul>
+    <div>
+      <%= link_to "Edit account data", edit_account_admin_person_path(@person), :class => "btn btn-default" %>
+    </div>
+  </div>
 </div>

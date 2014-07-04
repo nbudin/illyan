@@ -1,5 +1,11 @@
-<%= form_for @person, :url => admin_person_path(@person) do |f| -%>
-  <h2>Edit <%= @person.name %>'s Profile</h2>
-
-  <%= render :partial => 'profiles/edit', :locals => { :f => f } %>
-<% end %>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h2 class="panel-title">Edit <%= @person.name %>'s Profile</h2>
+  </div>
+  
+  <div class="panel-body">
+    <%= form_for @person, :url => admin_person_path(@person), :html => { :class => "form-horizontal" } do |f| -%>
+      <%= render :partial => 'profiles/edit', :locals => { :f => f } %>
+    <% end %>
+  </div>
+</div>

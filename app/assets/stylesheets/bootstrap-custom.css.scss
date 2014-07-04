@@ -1,10 +1,17 @@
 /*= require liberation-serif/stylesheet */
 
-$body-bg: transparent;
+$body-bg: #fff;
 $font-family-serif: "Liberation Serif", Georgia, serif;
 $font-family-base: $font-family-serif;
 $navbar-border-radius: 0;
 $navbar-default-border: none;
+
+$brand-primary: #9aa60f;
+$input-bg: #9aa60f;
+$input-color: white;
+
+$navbar-default-link-active-bg: white;
+$navbar-default-link-active-color: #1087e0;
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
@@ -12,14 +19,14 @@ $navbar-default-border: none;
 html {
     background-color: #383838;
     background-image: image-url("account-central/20.gif");
-    height: 100%;
+    min-height: 100%;
 }
 
 body {
-  background-image: image-url("account-central/body-border.png");
-  background-repeat: repeat-y;
-  background-position: 50% 50%;
-  height: 100%;
+  min-height: 100%;
+  max-width: 992px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .navbar-default {
@@ -41,36 +48,30 @@ body {
   }
     
   .navbar-nav > li {
+    display: inline-block;
   	background-color: transparent;
   	padding: 0;
   	margin: 0;
   	margin-left: 2px;
+    margin-top: 2px;
   	max-width: 90px;
   	text-align: center;
   	border-radius: 0;
   	-webkit-border-radius: 0;
   	-moz-border-radius: 0;
     
-    &.current {
-    	color: #666;
-    	background-color: #fff;
-    	border-top: 2px #666 solid;
-    	height: $navbar-height - 2px;
-      display: inline-block;
-      padding-left: 5px;
-      padding-right: 5px;
-      padding-top: 5px;
-    }
-    
     & > a {
     	color: #e4f3ff;
     	background-color: #1087e0;
-    	height: $navbar-height - 2px;
+    	height: $navbar-height - 4px;
+      line-height: 1.2;
       border-top: 2px white solid;
       display: inline-block;
       padding-left: 5px;
       padding-right: 5px;
       padding-top: 5px;
+      padding-bottom: 0;
+      overflow: hidden;
       
       &:hover {
         background-color: white;
@@ -78,4 +79,13 @@ body {
       }
     }
   }
+}
+
+.panel-primary {
+  $panel-primary-bgcolor: desaturate($brand-primary, 30%);
+  @include gradient-vertical(lighten($panel-primary-bgcolor, 30%), lighten($panel-primary-bgcolor, 80%));
+}
+
+.form-control:focus {
+  background-color: #ef6600;
 }

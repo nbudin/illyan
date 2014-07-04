@@ -1,10 +1,14 @@
-<div class="card">
-  <h2>My <%= profile_name %></h2>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h2 class="panel-title">My <%= profile_name %></h2>
+  </div>
 
-  <%= render :partial => 'profile' %>
+  <div class="panel-body">
+    <%= render :partial => 'profile' %>
 
-  <ul>
-    <li><%= link_to "Edit profile", edit_profile_path %></li>
-    <li><%= link_to "Change password", change_password_profile_path %>
-  </ul>
+    <div>
+      <%= link_to "Edit profile", edit_profile_path, class: "btn btn-default" %>
+      <%= link_to "Change password", change_password_profile_path, class: "btn btn-default" %>
+    </div>
+  </div>
 </div>

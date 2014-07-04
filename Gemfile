@@ -29,6 +29,7 @@ gem 'fast_xs'
 gem 'castronaut', :github => "nbudin/castronaut", :branch => "dam5s-merge"
 
 gem 'will_paginate'
+gem 'will_paginate-bootstrap'
 gem 'sqlite3', :groups => [:development, :test]
 gem 'mysql2'
 gem 'tire'

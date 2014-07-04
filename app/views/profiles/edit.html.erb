@@ -2,8 +2,13 @@
 
 <%= error_messages_for :person %>
 
-<%= form_for(@person, :url => profile_path) do |f| %>
-  <h2>Edit My Profile</h2>
-
-  <%= render :partial => 'edit', :locals => { :f => f } %>
-<% end %>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h2 class="panel-title">Edit My Profile</h2>
+  </div>
+  <div class="panel-body">
+    <%= form_for(@person, :url => profile_path, :html => {:class => "form-horizontal", :role => "form"}) do |f| %>
+      <%= render :partial => 'edit', :locals => { :f => f } %>
+    <% end %>
+  </div>
+</div>
