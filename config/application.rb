@@ -6,6 +6,8 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(:default, Rails.env.to_sym) if defined?(Bundler)
 
+require 'elasticsearch/rails/instrumentation'
+
 module Illyan
   class Application < Rails::Application
     cattr_accessor :site_title, :site_logo, :account_name, :extra_login_page_html

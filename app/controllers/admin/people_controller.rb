@@ -6,19 +6,23 @@ class Admin::PeopleController < ApplicationController
     query_string = params[:q]
     page_number = params[:page] || 1
     
-    @people = Person.search(page: params[:page] || 1, per_page: 20, load: true) do
-      if query_string.present?
-        query do
-          match [:firstname_ngrams, :lastname_ngrams, :email_ngrams], query_string
-        end
-      else      
-        sort do
-          by :lastname
-          by :firstname
-          by :email
-        end
-      end
+    query = {
+      size: 20
+    }
+    
+    if query_string.present?
+      query[:query] = { 
+        multi_match: {
+          query: query_string,
+          fields: [:firstname_ngrams, :lastname_ngrams, :email_ngrams]
+        }
+      }
+    else
+      query[:query] = { match_all: {} }
+      query[:sort] = ["lastname", "firstname", "email"]
     end
+    
+    @people = Person.search(query).page(params[:page] || 1).records
   end
   
   def new

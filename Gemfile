@@ -32,7 +32,8 @@ gem 'will_paginate'
 gem 'will_paginate-bootstrap'
 gem 'sqlite3', :groups => [:development, :test]
 gem 'mysql2'
-gem 'tire'
+gem 'elasticsearch-model'
+gem 'elasticsearch-rails'
 
 gem 'foreman'
 gem 'thin'
