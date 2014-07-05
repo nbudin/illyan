@@ -29,7 +29,6 @@ end
 
 Illyan::Application.site_title = "Sugar Pond Account Central"
 Illyan::Application.site_logo = "account-central.png"
-Illyan::Application.theme = "account-central"
 Illyan::Application.account_name = "Sugar Pond account"
 Illyan::Application.extra_login_page_html = <<-EOF
 <script type="text/javascript">

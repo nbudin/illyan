@@ -33,10 +33,4 @@ module ApplicationHelper
     
     return title
   end
-  
-  def theme_stylesheet_link_tag
-    if Illyan::Application.theme
-      stylesheet_link_tag Illyan::Application.theme
-    end
-  end
 end
