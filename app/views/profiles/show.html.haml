@@ -1,0 +1,9 @@
+.panel.panel-primary
+  .panel-heading
+    %h2.panel-title
+      My #{profile_name}
+  .panel-body
+    = render :partial => 'profile'
+    %div
+      = link_to "Edit profile", edit_profile_path, class: "btn btn-default"
+      = link_to "Change password", change_password_profile_path, class: "btn btn-default"

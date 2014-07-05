@@ -1,0 +1,7 @@
+.panel.panel-primary
+  .panel-heading
+    %h2.panel-title
+      Edit #{@person.name}'s Profile
+  .panel-body
+    = form_for @person, :url => admin_person_path(@person), :html => { :class => "form-horizontal" } do |f|
+      = render :partial => 'profiles/edit', :locals => { :f => f }

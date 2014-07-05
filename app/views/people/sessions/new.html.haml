@@ -1,0 +1,24 @@
+.panel.panel-primary
+  .panel-heading
+    %h2.panel-title= login_headline_with_account
+  .panel-body
+    = form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {:class => "form-horizontal"} ) do |f|
+      - if Illyan::Application.extra_login_page_html.present?
+        = raw Illyan::Application.extra_login_page_html
+      .form-group
+        = f.label :email, "Email address", :class => "col-md-2"
+        .col-md-10
+          = f.email_field :email, :tabindex => 1, :class => "form-control"
+      .form-group
+        = f.label "password", :class => "col-md-2"
+        .col-md-10
+          = f.password_field "password", :tabindex => 2, :class => "form-control"
+      - if devise_mapping.rememberable?
+        .form-group
+          = f.label :remember_me, :class => "col-md-2"
+          .col-md-10
+            = f.check_box :remember_me, :tabindex => 3
+      .form-group
+        .col-md-2
+        .col-md-10= f.submit login_headline, :tabindex => 4, :class => "btn btn-primary btn-lg"
+    = render :partial => "devise/shared/links"

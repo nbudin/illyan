@@ -1,0 +1,17 @@
+%p
+  Hello #{@resource.email}!
+- if @resource.services.size == 1
+  %p
+    You've been invited to #{link_to @resource.services.first.name, @resource.services.first.url}!  This site uses
+    \#{link_to Illyan::Application.site_title, root_url} for user account management, so you will need to create a
+    \#{Illyan::Application.account_name || "profile"} there.
+  %p To accept the invitation, please follow the link below.
+- else
+  %p
+    You've been invited to #{link_to Illyan::Application.site_title, root_url}!  To accept the invitation, please follow
+    the link below.
+%p= link_to 'Accept invitation', accept_invitation_url(@resource, :invitation_token => @token)
+%p
+  If you don't want to accept the invitation, please ignore this email.
+  %br/
+  Your account won't be created until you access the link above and set your password.

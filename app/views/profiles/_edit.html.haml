@@ -1,0 +1,8 @@
+.form-group
+  = f.label :email, class: "col-md-2"
+  .col-md-10
+    = f.text_field :email, class: "form-control"
+= render :partial => 'profiles/personal_info', :locals => {:f => f}
+.row
+  .col-md-2
+  .col-md-10= f.submit "Save changes", class: "btn btn-lg btn-primary"

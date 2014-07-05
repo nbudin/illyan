@@ -1,0 +1,12 @@
+%dl.dl-horizontal
+  %dt Name
+  %dd= @person.name
+  %dt Gender
+  %dd= @person.gender
+  %dt Age
+  %dd
+    - if @person.current_age
+      = @person.current_age
+      (born #{@person.birthdate.strftime("%Y-%m-%d")})
+  %dt Email
+  %dd= mail_to @person.email

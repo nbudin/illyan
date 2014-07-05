@@ -1,0 +1,16 @@
+= error_messages_for :person
+.panel.panel-primary
+  .panel-heading
+    %h2.panel-title New Person
+  .panel-body
+    = form_for(@person, :url => admin_people_path, :html => {:class => "form-horizontal"}) do |f|
+      .form-group
+        = f.label :email, :class => "col-md-2"
+        .col-md-10
+          = f.email_field :email, :class => "form-control"
+      = render :partial => 'profiles/personal_info', :locals => {:f => f}
+      %h3 Account Data
+      = render :partial => 'admin_fields', :locals => {:f => f}
+      .form-group
+        .col-md-2
+        .col-md-10= f.submit "Create", :class => "btn btn-primary btn-lg"

@@ -1,0 +1,21 @@
+%h1
+  Welcome to #{Illyan::Application.site_title}
+- if @services.size == 0
+  %p
+    Coming soon, #{Illyan::Application.site_title} will provide a single login for all our sites.  Stay tuned!
+- else
+  %p One login for all these sites:
+  .row
+    - @services.each do |service|
+      .col-xs-12.col-sm-4
+        .panel.panel-default
+          .panel-heading
+            %h3.panel-title
+              = link_to service.url do
+                - if !service.logo_url.blank?
+                  = image_tag service.logo_url, :alt => service.name
+                - else
+                  = service.name
+          .panel-body
+            - if !service.description.blank?
+              %p= simple_format service.description

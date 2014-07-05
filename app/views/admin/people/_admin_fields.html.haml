@@ -1,0 +1,15 @@
+.form-group
+  = f.label :confirmed_at_ymdhms, "Confirmed at", :class => "col-md-2"
+  .col-md-8.col-sm-10
+    = f.text_field :confirmed_at_ymdhms, :class => "form-control"
+  .col-sm-2
+    %button.btn.btn-default{"data-set-current-time" => f.object_name + "[confirmed_at_ymdhms]"} Confirm now
+.form-group
+  = f.label :admin, "Administrator?", :class => "col-md-2"
+  .col-md-10
+    %label.radio-inline
+      = f.radio_button :admin, ""
+      Unprivileged
+    %label.radio-inline
+      = f.radio_button :admin, true
+      Administrator

@@ -1,0 +1,10 @@
+.panel.panel-primary
+  .panel-heading
+    %h2.panel-title
+      Edit #{@person.name}'s Account
+  .panel-body
+    = form_for @person, :url => admin_person_path(@person), :html => { :class => "form-horizontal" } do |f|
+      = render :partial => "admin_fields", :locals => { :f => f }
+      .form-group
+        .col-md-2
+        .col-md-10= f.submit "Update account settings", :class => "btn btn-primary btn-lg"
