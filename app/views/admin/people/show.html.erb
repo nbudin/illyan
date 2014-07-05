@@ -1,4 +1,4 @@
-<h1><%= @person.name%></h1>
+<h1 style="word-wrap: break-word"><%= @person.name%></h1>
 
 <div class="panel panel-primary">
   <div class="panel-heading">
@@ -42,7 +42,7 @@
       <dd><%= pluralize(@person.sign_in_count, "time") %></dd>  
     
       <dt>Invitation token</dt>
-      <dd>
+      <dd style="word-wrap: break-word">
         <% if @person.invitation_token %>
           <%= @person.invitation_token %> (sent at <%= @person.invitation_sent_at%>)
         <% end -%>
