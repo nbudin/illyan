@@ -1,57 +1,24 @@
 @import "bootstrap-custom";
 
-/*table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-thead {
-  color: white;
-  background-color: #900;
-  border-bottom: 1px black solid;
-}
-
-th, td {
-  border-right: 1px #666 dotted;
-}
-
-th:last-child, td:last-child {
-  border-right: none;
-}
-
-tbody tr:nth-child(even) {
-  background-color: #fbb;
-}
-
-tbody tr:nth-child(odd) {
-  background-color: #fdd;
-}*/
-
-/*nav ul li, .navbar ul li {
-  display: inline-block;
-  margin: 2px;
-  padding: 3px;
-  background-color: rgba(255, 255, 255, 0.5);
-  border-radius: 3px;
-}
-
-nav ul li:hover, .navbar ul li:hover {
-  background-color: white;
-}
-
-nav ul li.current, .navbar ul li.current, nav ul li.current:hover, .navbar ul li.current:hover {
-  background-color: white;
-}
-
-nav ul li a, .navbar ul li a {
-  color: black;
-  text-decoration: none;
-}*/
-
 .notice {
 	background-color: #ffc;
 }
 
 .alert {
 	background-color: #fcc;
+}
+
+.notice, .alert {
+	border: 0;
+	padding-top: 0;
+	padding-bottom: 0;
+	border-radius: 0;
+	margin: 0;
+
+  float: none;
+  clear: both;
+  width: 100%;
+  height: auto;
+  border-bottom: 1px black solid;
+  text-align: center;
 }
