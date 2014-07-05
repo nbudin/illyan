@@ -8,6 +8,8 @@ class Person < ActiveRecord::Base
   cattr_reader :per_page
   @@per_page = 20
   
+  index_name Illyan::Application.index_name
+  
   settings :analysis => {
     :filter => {
        :ngrams  => {

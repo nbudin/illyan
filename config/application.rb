@@ -37,6 +37,10 @@ module Illyan
       end
     end
     
+    def self.index_name
+      "illyan_#{Rails.env}"
+    end
+    
     config.assets.enabled = true
     config.assets.version = '1.0'
     config.assets.precompile += ["account-central.css", /\A\/liberation-serif\//]
