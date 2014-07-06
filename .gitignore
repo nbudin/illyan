@@ -12,3 +12,4 @@ test/rails_app/db/*.sqlite3
 db/*.sqlite3
 tmp/*
 .rvmrc
+.sass-cache
