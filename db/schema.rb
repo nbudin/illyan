@@ -128,11 +128,4 @@ ActiveRecord::Schema.define(:version => 20140704213915) do
     t.datetime "updated_at"
   end
 
-  create_table "ticket_granting_tickets", :force => true do |t|
-    t.string   "ticket",          :null => false
-    t.string   "client_hostname", :null => false
-    t.string   "username",        :null => false
-    t.datetime "created_at",      :null => false
-  end
-
 end
