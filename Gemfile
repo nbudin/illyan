@@ -25,7 +25,7 @@ gem 'autoprefixer-rails'
  
 gem 'jquery-rails'
 
-gem 'cassy', github: 'reInteractive/cassy'
+gem 'cassy', github: 'nbudin/cassy'
 
 gem 'will_paginate'
 gem 'will_paginate-bootstrap'

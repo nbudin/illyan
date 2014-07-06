@@ -1,10 +1,4 @@
-module ApplicationHelper
-  #include Acl9Helpers
-  
-  #access_control :admin? do
-  #  allow :admin
-  #end
-  
+module ApplicationHelper  
   def login_headline(extra_text = nil)
     headline = if current_login_service
       "Log into #{current_login_service.name}"

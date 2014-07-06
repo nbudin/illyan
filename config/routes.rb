@@ -15,7 +15,7 @@ Illyan::Application.routes.draw do
     end
   end
   
-  cassy
+  cassy controllers: { sessions: "sessions" }
   
   root :to => "home#index"
 end
