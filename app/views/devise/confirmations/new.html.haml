@@ -1,0 +1,14 @@
+.panel.panel-primary
+  .panel-heading
+    %h2.panel-title Resend confirmation instructions
+  .panel-body
+    = form_for(resource, :as => resource_name, :url => confirmation_path(resource_name), :html => { :method => :post, :class => "form-horizontal" }) do |f|
+      = devise_error_messages!
+      .form-group
+        = f.label :email, :class => "col-md-2"
+        .col-md-10
+          = f.email_field :email, :autofocus => true, :class => "form-control"
+      .form-group
+        .col-md-2
+        .col-md-10= f.submit "Resend confirmation instructions", class: "btn btn-primary btn-lg"
+    = render "devise/shared/links"

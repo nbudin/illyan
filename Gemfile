@@ -5,28 +5,34 @@ gem 'rails', '3.2.18'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'devise', '~> 3.1.0'
+gem 'devise'
 gem 'devise_invitable'
 gem 'devise-encryptable'
 gem 'cancan'
-gem 'xebec'
 gem 'dynamic_form'
-gem 'airbrake'
+gem 'rollbar'
+gem 'breach-mitigation-rails'
 
-group :assets do
-  gem 'sass-rails'
-  gem 'coffee-rails'
-  gem 'uglifier'
-end
+gem 'haml'
+
+gem 'sprockets-rails', '=2.0.0.backport1'
+gem 'sprockets', '=2.2.2.backport2'
+gem 'sass-rails', github: 'guilleiguaran/sass-rails', branch: 'backport'
+gem 'coffee-rails'
+gem 'uglifier'
+gem 'bootstrap-sass', '~> 3.2.0'
+gem 'autoprefixer-rails'
  
 gem 'jquery-rails'
 
 gem 'cassy', github: 'reInteractive/cassy'
 
 gem 'will_paginate'
+gem 'will_paginate-bootstrap'
 gem 'sqlite3', :groups => [:development, :test]
 gem 'mysql2'
-gem 'tire'
+gem 'elasticsearch-model'
+gem 'elasticsearch-rails'
 
 gem 'foreman'
 gem 'thin'

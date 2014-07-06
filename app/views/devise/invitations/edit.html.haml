@@ -1,0 +1,26 @@
+.panel.panel-primary
+  .panel-heading
+    %h2.panel-title
+      Welcome to your new #{profile_name}
+  .panel-body
+    = form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => { :method => :put, :class => "form-horizontal" } do |f|
+      = devise_error_messages!
+      = f.hidden_field :invitation_token
+      %h2 Set a password
+      %p
+        You'll need to set a password so you can log into your #{profile_name}.  Please enter a password below, then again for
+        confirmation.
+      .form-group
+        = f.label :password, :class => "col-md-2"
+        .col-md-10
+          = f.password_field :password, :class => "form-control"
+      .form-group
+        = f.label :password_confirmation, "Confirm password", class: "col-md-2"
+        .col-md-10
+          = f.password_field :password_confirmation, :class => "form-control"
+      %h2 Personal Info
+      %p You can set your personal information below.  (You don't have to enter all of this now if you don't want to.)
+      = render :partial => "profiles/personal_info", :locals => { :f => f }
+      .form-group
+        .col-md-2
+        .col-md-10= f.submit "Set up my #{profile_name}", :class => "btn btn-primary btn-lg"

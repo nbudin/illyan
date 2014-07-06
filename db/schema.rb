@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140509040503) do
+ActiveRecord::Schema.define(:version => 20140704213915) do
 
   create_table "casserver_lt", :force => true do |t|
     t.string   "ticket",          :null => false
@@ -93,6 +93,7 @@ ActiveRecord::Schema.define(:version => 20140509040503) do
     t.datetime "invitation_accepted_at"
     t.string   "encrypted_password",                       :default => "", :null => false
     t.datetime "reset_password_sent_at"
+    t.datetime "invitation_created_at"
   end
 
   add_index "people", ["email"], :name => "index_people_on_email"
@@ -125,6 +126,13 @@ ActiveRecord::Schema.define(:version => 20140509040503) do
     t.text     "extra_attributes"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "ticket_granting_tickets", :force => true do |t|
+    t.string   "ticket",          :null => false
+    t.string   "client_hostname", :null => false
+    t.string   "username",        :null => false
+    t.datetime "created_at",      :null => false
   end
 
 end

@@ -1,0 +1,24 @@
+@import "bootstrap-custom";
+
+.notice {
+	background-color: #ffc;
+}
+
+.alert {
+	background-color: #fcc;
+}
+
+.notice, .alert {
+	border: 0;
+	padding-top: 0;
+	padding-bottom: 0;
+	border-radius: 0;
+	margin: 0;
+
+  float: none;
+  clear: both;
+  width: 100%;
+  height: auto;
+  border-bottom: 1px black solid;
+  text-align: center;
+}

@@ -1,7 +1,0 @@
-<%= form_for @person, :url => admin_person_path(@person) do |f| -%>
-  <h2>Edit <%= @person.name %>'s Account</h2>
-
-  <%= render :partial => "admin_fields", :locals => { :f => f } %>
-  
-  <%= f.submit "Update account settings" %>
-<% end %>

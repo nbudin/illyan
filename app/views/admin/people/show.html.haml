@@ -1,0 +1,41 @@
+%h1{:style => "word-wrap: break-word"}= @person.name
+.panel.panel-primary
+  .panel-heading
+    %h2.panel-title Profile
+  .panel-body
+    = render :partial => "profiles/profile"
+    %div
+      = link_to "Edit profile", edit_admin_person_path(@person), class: "btn btn-default"
+      = link_to "Change password", change_password_admin_person_path(@person), class: "btn btn-default"
+.panel.panel-primary
+  .panel-heading
+    %h2.panel-title Account Data
+  .panel-body
+    %dl.dl-horizontal
+      %dt Access level
+      %dd= @person.admin? ? "Administrator" : "Unprivileged"
+      %dt Created
+      %dd= @person.created_at
+      %dt Last updated
+      %dd= @person.updated_at
+      %dt Logged in
+      %dd
+        = @person.current_sign_in_at
+        from #{@person.current_sign_in_ip}
+      %dt Last logged in
+      %dd
+        = @person.last_sign_in_at
+        from #{@person.last_sign_in_ip}
+      %dt Has logged in
+      %dd= pluralize(@person.sign_in_count, "time")
+      %dt Invitation token
+      %dd{:style => "word-wrap: break-word"}
+        - if @person.invitation_token
+          = @person.invitation_token
+          (sent at #{@person.invitation_sent_at})
+      %dt Confirmation sent
+      %dd= @person.confirmation_sent_at
+      %dt Confirmed
+      %dd= @person.confirmed_at
+    %div
+      = link_to "Edit account data", edit_account_admin_person_path(@person), :class => "btn btn-default"

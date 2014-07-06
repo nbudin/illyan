@@ -8,5 +8,7 @@ class HomeController < ApplicationController
       @services += current_person.services
       @services.uniq!
     end
+    
+    @services.sort_by!(&:name)
   end
 end

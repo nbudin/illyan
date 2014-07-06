@@ -1,12 +1,14 @@
 class Person < ActiveRecord::Base
-  include Tire::Model::Search
-  include Tire::Model::Callbacks
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
   
   devise :database_authenticatable, :legacy_md5_authenticatable, :legacy_sha1_authenticatable,
     :rememberable, :confirmable, :recoverable, :trackable, :registerable, :validatable, :invitable
     
   cattr_reader :per_page
   @@per_page = 20
+  
+  index_name Illyan::Application.index_name
   
   settings :analysis => {
     :filter => {
@@ -40,7 +42,7 @@ class Person < ActiveRecord::Base
      }
   }
   
-  tire.mapping do
+  mapping do
     indexes :id, :type => 'string', :index => :not_analyzed
     indexes :firstname, :type => 'string'
     indexes :lastname, :type => 'string'
@@ -144,7 +146,7 @@ class Person < ActiveRecord::Base
     end
   end
   
-  def to_indexed_json
+  def as_indexed_json(options={})
     {
       firstname: firstname,
       lastname: lastname,
@@ -154,6 +156,6 @@ class Person < ActiveRecord::Base
       firstname_ngrams: firstname,
       lastname_ngrams: lastname,
       email: email
-    }.to_json
+    }.as_json
   end
 end

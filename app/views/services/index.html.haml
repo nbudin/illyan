@@ -1,0 +1,27 @@
+.panel.panel-default
+  .panel-heading
+    %h3.panel-title Services
+  .table-responsive
+    %table.table.table-striped.table-condensed.table-responsive
+      %thead
+        %tr
+          %th Name
+          %th Url
+          %th Logo
+          %th Description
+          %th Illyan API key
+          %th
+          %th
+      %tbody
+        - @services.each do |service|
+          %tr
+            %td= service.name
+            %td= service.url
+            %td= image_tag service.logo_url unless service.logo_url.blank?
+            %td= truncate service.description
+            %td= service.authentication_token
+            %td= link_to 'Edit', edit_service_path(service), :class => "btn btn-default btn-sm"
+            %td= link_to 'Destroy', service, :method => :delete, :confirm => 'Are you sure?', :class => "btn btn-danger btn-sm"
+  .panel-body
+    %div
+      = link_to 'New Service', new_service_path, :class => "btn btn-primary"

@@ -1,0 +1,86 @@
+/*= require liberation-serif/stylesheet */
+
+$body-bg: #fff;
+$font-family-serif: "Liberation Serif", Georgia, serif;
+$font-family-base: $font-family-serif;
+$navbar-border-radius: 0;
+$navbar-default-border: none;
+
+$brand-primary: #9aa60f;
+$input-bg: #9aa60f;
+$input-color: white;
+
+$navbar-default-link-active-bg: white;
+$navbar-default-link-active-color: #1087e0;
+
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+html {
+    background-color: #383838;
+    background-image: image-url("account-central/20.gif");
+    min-height: 100%;
+}
+
+body {
+  min-height: 100%;
+  max-width: 992px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.navbar-default {
+	background-image: -webkit-gradient(
+      linear,
+      left top,
+      left bottom,
+      color-stop(0.0, rgba(16,135,224,0.2)),
+      color-stop(1.0, rgba(16,135,224,0))
+  );
+  background-image: -moz-linear-gradient(
+      center top,
+      rgba(16,135,224,0.2) 0%,
+      rgba(16,135,224,0) 100%
+  );
+  
+  .navbar-brand {
+    padding-top: 6px;
+    padding-bottom: 6px;
+  }
+    
+  .navbar-nav > li {
+    display: inline-block;
+  	background-color: transparent;
+  	padding: 0;
+  	margin: 0;
+    margin-left: 2px;
+    margin-top: 2px;
+  	max-width: 90px;
+    vertical-align: bottom;
+  	text-align: center;
+    
+    & > a {
+    	color: #e4f3ff;
+    	background-color: #1087e0;
+    	height: $navbar-height - 4px;
+      line-height: 1.2;
+      border-top: 2px white solid;
+      padding: 5px;
+      overflow: hidden;
+      
+      &:hover {
+        background-color: white;
+        color: #1087e0;
+      }
+    }
+  }
+}
+
+.panel-primary {
+  $panel-primary-bgcolor: desaturate($brand-primary, 30%);
+  @include gradient-vertical(lighten($panel-primary-bgcolor, 30%), lighten($panel-primary-bgcolor, 80%));
+}
+
+.form-control:focus {
+  background-color: #ef6600;
+}

@@ -1,5 +1,0 @@
-<%= form_for @person, :url => admin_person_path(@person) do |f| -%>
-  <h2>Edit <%= @person.name %>'s Profile</h2>
-
-  <%= render :partial => 'profiles/edit', :locals => { :f => f } %>
-<% end %>

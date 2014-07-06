@@ -1,0 +1,27 @@
+.panel.panel-default
+  .panel-heading
+    .row
+      .col-sm-6
+        %h3.panel-title People
+      .col-sm-6
+        .pull-right
+          = form_tag admin_people_path, method: 'get', class: "form-inline" do
+            .form-group
+              = text_field_tag :q, params[:q], class: "form-control input-sm"
+            = submit_tag "Search", class: "btn btn-default btn-sm"
+            - if params[:q].present?
+              = link_to "Clear search", admin_people_path, class: "btn btn-link"
+  .table-responsive
+    %table.table.table-striped.table-condensed
+      %thead
+        %tr
+          %th Name
+          %th Email
+      %tbody
+        - @people.each do |person|
+          %tr
+            %td= link_to person.inverted_name, admin_person_path(person)
+            %td= person.email
+  .panel-body
+    = will_paginate @people, renderer: BootstrapPagination::Rails
+    %p= link_to "Create new person", new_admin_person_path, class: "btn btn-primary"

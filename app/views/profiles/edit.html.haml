@@ -1,0 +1,8 @@
+%h1= @person.name
+= error_messages_for :person
+.panel.panel-primary
+  .panel-heading
+    %h2.panel-title Edit My Profile
+  .panel-body
+    = form_for(@person, :url => profile_path, :html => {:class => "form-horizontal", :role => "form"}) do |f|
+      = render :partial => 'edit', :locals => { :f => f }
