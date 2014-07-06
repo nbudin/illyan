@@ -4,7 +4,7 @@ class ServicesController < ApplicationController
   # GET /services
   # GET /services.xml
   def index
-    @services = Service.all
+    @services = Service.order(:name)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -15,8 +15,6 @@ class ServicesController < ApplicationController
   # GET /services/new
   # GET /services/new.xml
   def new
-    @service = Service.new
-
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @service }
@@ -25,14 +23,11 @@ class ServicesController < ApplicationController
 
   # GET /services/1/edit
   def edit
-    @service = Service.find(params[:id])
   end
 
   # POST /services
   # POST /services.xml
   def create
-    @service = Service.new(params[:service])
-
     respond_to do |format|
       if @service.save
         format.html { redirect_to(services_path, :notice => 'Service was successfully created.') }
@@ -47,8 +42,6 @@ class ServicesController < ApplicationController
   # PUT /services/1
   # PUT /services/1.xml
   def update
-    @service = Service.find(params[:id])
-
     respond_to do |format|
       if @service.update_attributes(params[:service])
         format.html { redirect_to(services_path, :notice => 'Service was successfully updated.') }
@@ -63,7 +56,6 @@ class ServicesController < ApplicationController
   # DELETE /services/1
   # DELETE /services/1.xml
   def destroy
-    @service = Service.find(params[:id])
     @service.destroy
 
     respond_to do |format|

@@ -26,7 +26,6 @@ class Admin::PeopleController < ApplicationController
   end
   
   def new
-    @person = Person.new(params[:person])
   end
   
   def show
@@ -92,10 +91,6 @@ class Admin::PeopleController < ApplicationController
   end
   
   private
-  def get_person
-    @person = Person.find(params[:id])
-  end
-  
   def set_protected_attributes!
     %w{admin confirmed_at_ymdhms}.each do |attr|
       @person.send("#{attr}=", params[:person][attr])
