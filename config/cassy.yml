@@ -8,4 +8,10 @@ username_field: email
 loosely_match_services: true
 
 authenticator:
-  class: Illyan::DeviseSessionAuthenticator
+  class: Illyan::DeviseSessionAuthenticator  
+  extra_attributes:
+    - email
+    - firstname
+    - lastname
+    - gender
+    - birthdate
