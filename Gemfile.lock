@@ -160,7 +160,12 @@ GEM
     mysql2 (0.3.11)
     nokogiri (1.5.9)
     orm_adapter (0.5.0)
+    pg (0.17.1)
+    pg_array_parser (0.0.9)
     polyglot (0.3.5)
+    postgres_ext (1.0.0)
+      activerecord (~> 3.2.0)
+      pg_array_parser (~> 0.0.9)
     pry (0.9.10)
       coderay (~> 1.0.5)
       method_source (~> 0.8)
@@ -270,6 +275,8 @@ DEPENDENCIES
   jquery-rails
   launchy
   mysql2
+  pg
+  postgres_ext
   pry-rails
   rails (= 3.2.18)
   rollbar
