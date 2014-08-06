@@ -16,7 +16,7 @@
         - @services.each do |service|
           %tr
             %td= service.name
-            %td= truncate(service.urls.try(:join, ", ") || "", separator: " ")
+            %td= truncate(service.urls.try(:join, ", ") || "", separator: ", ", length: 100)
             %td= image_tag service.logo_url unless service.logo_url.blank?
             %td= truncate service.description
             %td= service.authentication_token
