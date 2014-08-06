@@ -1,4 +1,6 @@
 class SessionsController < Cassy::SessionsController
+  before_filter :require_ticketing_service, only: [:new]
+  
   def new
     if person_signed_in?
       create
@@ -26,5 +28,15 @@ class SessionsController < Cassy::SessionsController
   def after_sign_in_path_for(resource_or_scope)
     return resource_or_scope if resource_or_scope.kind_of?(String)
     super
+  end
+  
+  private
+  def require_ticketing_service
+    detect_ticketing_service(params[:service])
+    
+    unless @ticketing_service
+      Rollbar.report_message("Unknown service for URL #{params[:service]}", 'warning')
+      render text: "Unknown service for URL #{params[:service]}", status: :forbidden
+    end
   end
 end
