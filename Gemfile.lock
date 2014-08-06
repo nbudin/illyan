@@ -1,4 +1,11 @@
 GIT
+  remote: git://github.com/capistrano/maintenance.git
+  revision: ab52adf89de1cda02118754e9a2952d19d8f214e
+  specs:
+    capistrano-maintenance (0.0.1)
+      capistrano (>= 3.0)
+
+GIT
   remote: git://github.com/guilleiguaran/sass-rails.git
   revision: 0393d9e1a6e4a776e61f16fb75f97971b9f4abd2
   branch: backport
@@ -281,6 +288,7 @@ DEPENDENCIES
   cancancan
   capistrano (~> 3.0)
   capistrano-bundler (~> 1.1)
+  capistrano-maintenance!
   capistrano-rails (~> 1.1)
   capistrano-rbenv (~> 2.0)
   capybara
