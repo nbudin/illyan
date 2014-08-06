@@ -2,7 +2,7 @@
   Hello #{@resource.email}!
 - if @resource.services.size == 1
   %p
-    You've just signed up for #{link_to @resource.services.first.name, @resource.services.first.url}!  This site uses
+    You've just signed up for #{link_to @resource.services.first.name, @resource.services.first.urls.first}!  This site uses
     \#{link_to Illyan::Application.site_title, root_url} for user account management.  You'll be able to use your
     \#{Illyan::Application.account_name || "profile"} to log in, but first, you need to confirm your email address.
   %p To confirm that this is your email address, please follow the link below.

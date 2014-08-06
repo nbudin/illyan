@@ -9,7 +9,7 @@ class SessionsController < Cassy::SessionsController
       
       unless response.redirect_url.present?
         session[:person_return_to] = request.url
-        session[:login_service] = Service.find_by_url(@ticketing_service).id if @ticketing_service
+        session[:login_service] = Service.where.any(urls: @ticketing_service).first.id if @ticketing_service
         redirect_to new_person_session_path
       end
     end
@@ -21,7 +21,7 @@ class SessionsController < Cassy::SessionsController
   end
   
   def valid_services
-    Service.pluck(:url)
+    Service.pluck(:urls).flatten
   end
   
   # Work around cassy's weird use of after_sign_in_path_for

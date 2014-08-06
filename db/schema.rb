@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140704213915) do
+ActiveRecord::Schema.define(:version => 20140806180548) do
 
   create_table "casserver_lt", :force => true do |t|
     t.string   "ticket",          :null => false
@@ -101,13 +101,13 @@ ActiveRecord::Schema.define(:version => 20140704213915) do
 
   create_table "services", :force => true do |t|
     t.string   "name"
-    t.string   "url"
     t.string   "logo_url"
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "public"
     t.string   "authentication_token"
+    t.string   "urls",                 :array => true
   end
 
   add_index "services", ["public"], :name => "index_services_on_public"

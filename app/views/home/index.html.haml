@@ -11,7 +11,7 @@
         .panel.panel-default
           .panel-heading
             %h3.panel-title
-              = link_to service.url do
+              = link_to service.urls.first do
                 - if !service.logo_url.blank?
                   = image_tag service.logo_url, :alt => service.name
                 - else

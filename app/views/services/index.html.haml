@@ -6,7 +6,7 @@
       %thead
         %tr
           %th Name
-          %th Url
+          %th URLs
           %th Logo
           %th Description
           %th Illyan API key
@@ -16,7 +16,7 @@
         - @services.each do |service|
           %tr
             %td= service.name
-            %td= service.url
+            %td= service.urls.try(:join, ", ")
             %td= image_tag service.logo_url unless service.logo_url.blank?
             %td= truncate service.description
             %td= service.authentication_token

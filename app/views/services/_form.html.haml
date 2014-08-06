@@ -16,9 +16,9 @@
     .col-md-10
       = f.check_box :public
   .form-group
-    = f.label :url, class: "col-md-2"
+    = f.label :urls_delimited, class: "col-md-2"
     .col-md-10
-      = f.text_field :url, class: "form-control"
+      = f.text_area :urls_delimited, class: "form-control"
   .form-group
     = f.label :logo_url, class: "col-md-2"
     .col-md-10
