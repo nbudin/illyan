@@ -21,7 +21,7 @@ class ServicesControllerTest < ActionController::TestCase
 
   test "should create service" do
     assert_difference('Service.count') do
-      post :create, :service => @service.attributes.slice(:name, :urls, :urls_delimited, :logo_url, :description, :public)
+      post :create, :service => { name: "My new service" }
     end
 
     assert_redirected_to services_path

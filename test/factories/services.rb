@@ -1,3 +1,5 @@
 FactoryGirl.define do
-  factory :service
+  factory :service do
+    sequence(:name) { |i| "Service #{i}" }
+  end
 end
