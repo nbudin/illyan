@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.18'
+gem 'rails', '4.2.4'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -15,12 +15,12 @@ gem 'breach-mitigation-rails'
 
 gem 'haml'
 
-gem 'sprockets-rails', '=2.0.0.backport1'
-gem 'sprockets', '=2.2.2.backport2'
-gem 'sass-rails', github: 'guilleiguaran/sass-rails', branch: 'backport'
+gem 'sprockets-rails'
+gem 'sprockets'
+gem 'sass-rails'
 gem 'coffee-rails'
 gem 'uglifier'
-gem 'bootstrap-sass', '~> 3.2.0'
+gem 'bootstrap-sass'
 gem 'autoprefixer-rails'
  
 gem 'jquery-rails'
