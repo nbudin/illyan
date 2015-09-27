@@ -12,6 +12,3 @@ test: &test
   adapter: postgresql
   username: postgres
   database: illyan_test
-
-cucumber:
-  <<: *test

@@ -52,7 +52,6 @@ group :test do
   gem 'minitest'
   gem 'minitest-spec-rails'
   gem 'capybara'
-  gem 'cucumber-rails'
   gem 'launchy'
   gem 'database_cleaner'
 end
