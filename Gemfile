@@ -49,11 +49,11 @@ end
 
 group :test do
   gem 'factory_girl_rails'
+  gem 'minitest'
   gem 'minitest-spec-rails'
   gem 'capybara'
   gem 'cucumber-rails'
   gem 'launchy'
-  gem 'turn'
   gem 'database_cleaner'
 end
 

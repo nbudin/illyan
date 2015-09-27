@@ -1,5 +1,6 @@
 class Admin::PeopleController < ApplicationController
   load_and_authorize_resource
+  before_action :require_admin!
     
   def index
     authorize! :list, Person
@@ -65,7 +66,7 @@ class Admin::PeopleController < ApplicationController
   end
   
   def create
-    @person = Person.find_by_email(params[:person][:email])
+    @person = Person.find_by(email: params[:person][:email])
     if @person.nil?
       attrs = params[:person]
       attrs[:confirmed_at] = Time.now
@@ -91,9 +92,11 @@ class Admin::PeopleController < ApplicationController
   end
   
   private
-  def set_protected_attributes!
-    %w{admin confirmed_at_ymdhms}.each do |attr|
-      @person.send("#{attr}=", params[:person][attr])
-    end
+  def require_admin!
+    authorize! :admin, :site
+  end
+  
+  def person_attributes
+    params.require(:person).permit(:firstname, :lastname, :gender, :birthdate, :email, :password, :confirmed_at_ymdhms, :admin)
   end
 end

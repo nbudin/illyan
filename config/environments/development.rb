@@ -23,6 +23,8 @@ Illyan::Application.configure do
   # Don't care if the mailer can't send
   config.action_mailer.raise_delivery_errors = false
   
+  config.active_record.raise_in_transactional_callbacks = true
+  
   config.action_mailer.default_url_options = { :host => 'localhost:4001' }
   config.action_mailer.delivery_method = :file
 end

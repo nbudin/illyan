@@ -62,6 +62,8 @@ Illyan::Application.configure do
     :port => 25,
     :enable_starttls_auto => false
   }
+  
+  config.active_record.raise_in_transactional_callbacks = true
 
   # Enable threaded mode
   # config.threadsafe!

@@ -9,7 +9,12 @@ class SessionsController < Cassy::SessionsController
       
       unless response.redirect_url.present?
         session[:person_return_to] = request.url
-        session[:login_service] = Service.where.any(urls: @ticketing_service).first.id if @ticketing_service
+        
+        if login_service
+          session[:login_service] = login_service
+          person.services << login_service
+        end
+        
         redirect_to new_person_session_path
       end
     end
@@ -38,5 +43,9 @@ class SessionsController < Cassy::SessionsController
       Rollbar.report_message("Unknown service for URL #{params[:service]}", 'warning')
       render text: "Unknown service for URL #{params[:service]}", status: :forbidden
     end
+  end
+  
+  def login_service
+    @login_service ||= Service.where.any(urls: @ticketing_service).first if @ticketing_service
   end
 end

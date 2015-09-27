@@ -71,7 +71,6 @@ class Person < ActiveRecord::Base
   has_and_belongs_to_many :groups
   has_and_belongs_to_many :services, :foreign_key => :user_id, :join_table => "services_users"
   
-  attr_accessible :firstname, :lastname, :gender, :birthdate, :email, :password, :service_ids, :services, :confirmed_at
   attr_accessor :skip_password_required
   
   def delete_legacy_password!

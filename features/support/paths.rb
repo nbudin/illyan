@@ -17,18 +17,22 @@ module NavigationHelpers
     when /the signup page/
       new_person_registration_path
     
-    when /the confirmation path/
-      person = Person.find_by_email($1)
-      person_confirmation_path
+    when /the confirmation path( for \"([^\"]+)\")?/
+      person = Person.find_by(email: $2)
+
+      if person
+        # Generate new raw/encrypted confirmation token pair and update database.
+        # This lets us visit the new "raw" path to confirm the user.
+        raw_confirmation_token, db_confirmation_token = 
+          Devise.token_generator.generate(Person, :confirmation_token)
+        person.update_attribute(:confirmation_token, db_confirmation_token)
+        person_confirmation_path(confirmation_token: raw_confirmation_token)
+      else
+        person_confirmation_path
+      end
     
     when /the profile page/
       edit_profile_path
-    
-    # Add more mappings here.
-    # Here is an example that pulls values out of the Regexp:
-    #
-    #   when /^(.*)'s profile page$/i
-    #     user_profile_path(User.find_by_login($1))
 
     else
       raise "Can't find mapping from \"#{page_name}\" to a path.\n" +

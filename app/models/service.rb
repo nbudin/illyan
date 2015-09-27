@@ -2,8 +2,6 @@ class Service < ActiveRecord::Base
   has_and_belongs_to_many :users, :class_name => "Person", :join_table => "services_users", :association_foreign_key => "user_id"
   before_create :ensure_authentication_token
   
-  attr_accessible :name, :urls, :urls_delimited, :logo_url, :description, :public
-   
   def ensure_authentication_token
     if authentication_token.blank?
       self.authentication_token = generate_authentication_token

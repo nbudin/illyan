@@ -47,7 +47,6 @@ GEM
     addressable (2.3.8)
     ae_users_migrator (1.0.6)
       activerecord (>= 2.3)
-    ansi (1.5.0)
     arel (6.0.3)
     autoprefixer-rails (6.0.3)
       execjs
@@ -250,8 +249,6 @@ GEM
     thor (0.19.1)
     thread_safe (0.3.5)
     tilt (2.0.1)
-    turn (0.9.6)
-      ansi
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     uglifier (2.7.2)
@@ -295,6 +292,7 @@ DEPENDENCIES
   haml
   jquery-rails
   launchy
+  minitest
   minitest-spec-rails
   pg
   postgres_ext
@@ -305,7 +303,6 @@ DEPENDENCIES
   sprockets
   sprockets-rails
   thin
-  turn
   uglifier
   will_paginate
   will_paginate-bootstrap

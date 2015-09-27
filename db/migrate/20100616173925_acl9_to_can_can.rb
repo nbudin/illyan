@@ -14,7 +14,7 @@ class Acl9ToCanCan < ActiveRecord::Migration
       t.column :owner_id, :integer
     end
     
-    Role.find_all_by_name('admin').each do |role|
+    Role.where(name: 'admin').find_each do |role|
       role.people.each do |p|
         say "Granting admin rights to #{p.name}"
         p.admin = true
@@ -55,7 +55,7 @@ class Acl9ToCanCan < ActiveRecord::Migration
     end
     
     admin_role = Role.create :name => "admin"
-    Person.find_all_by_admin(true).each do |p|
+    Person.where(admin: true).find_each do |p|
       say "Giving admin role to #{p.name}"
       admin_role.people << p
     end

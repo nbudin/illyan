@@ -9,6 +9,7 @@ class Ability
     case principal
     when Person
       if principal.admin?
+        can :admin, :site
         can [:list, :read, :create, :update, :destroy], Person
         can [:list, :read, :create, :update, :destroy], Service
       else

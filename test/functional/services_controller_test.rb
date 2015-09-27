@@ -4,7 +4,7 @@ class ServicesControllerTest < ActionController::TestCase
   setup do
     @service = FactoryGirl.create(:service)
     @person = FactoryGirl.create(:person, :admin => true)
-    @person.confirm!
+    @person.confirm
     sign_in @person
   end
 
@@ -21,7 +21,7 @@ class ServicesControllerTest < ActionController::TestCase
 
   test "should create service" do
     assert_difference('Service.count') do
-      post :create, :service => @service.attributes
+      post :create, :service => @service.attributes.slice(:name, :urls, :urls_delimited, :logo_url, :description, :public)
     end
 
     assert_redirected_to services_path

@@ -20,7 +20,7 @@ FactoryGirl.define do
       lastname "User"
   
       after(:create) do |joe|
-        joe.confirm!
+        joe.confirm
       end
     end
 
