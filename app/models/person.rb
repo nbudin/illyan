@@ -153,8 +153,7 @@ class Person < ActiveRecord::Base
       birthdate: birthdate,
       gender: gender,
       firstname_ngrams: firstname,
-      lastname_ngrams: lastname,
-      email: email
+      lastname_ngrams: lastname
     }.as_json
   end
 end

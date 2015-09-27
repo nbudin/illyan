@@ -30,13 +30,6 @@ module Illyan
       end
     end
     
-    def self.castronaut
-      @@castronaut ||= begin
-        require 'castronaut/application'
-        Castronaut::Application.new
-      end
-    end
-    
     def self.index_name
       "illyan_#{Rails.env}"
     end
