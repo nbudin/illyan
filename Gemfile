@@ -49,7 +49,7 @@ end
 
 group :test do
   gem 'factory_girl_rails'
-  gem 'shoulda'
+  gem 'minitest-spec-rails'
   gem 'capybara'
   gem 'cucumber-rails'
   gem 'launchy'
