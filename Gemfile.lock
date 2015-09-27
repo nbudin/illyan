@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/nbudin/cassy.git
-  revision: bc5d60a42aca07f8c6ffd3c1ae6cb0a15026547a
+  revision: 6b9d443aaf5a5717665ec89babe0fe833a2923c1
   specs:
     cassy (2.0.3)
       crypt-isaac

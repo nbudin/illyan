@@ -3,17 +3,16 @@ class SessionsController < Cassy::SessionsController
   
   def new
     if person_signed_in?
+      if session[:login_service_id]
+        current_person.services << Service.find(session[:login_service_id])
+      end
       create
     else
       super
       
       unless response.redirect_url.present?
-        session[:person_return_to] = request.url
-        
-        if login_service
-          session[:login_service] = login_service
-          person.services << login_service
-        end
+        session[:person_return_to] = request.url        
+        session[:login_service_id] = login_service.id
         
         redirect_to new_person_session_path
       end

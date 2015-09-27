@@ -43,7 +43,7 @@ class ServicesController < ApplicationController
   # PUT /services/1.xml
   def update
     respond_to do |format|
-      if @service.update_attributes(service_attributes)
+      if @service.update_attributes(service_params)
         format.html { redirect_to(services_path, :notice => 'Service was successfully updated.') }
         format.xml  { head :ok }
       else
@@ -65,7 +65,7 @@ class ServicesController < ApplicationController
   end
   
   private
-  def service_attributes
+  def service_params
     params.require(:service).permit(:name, :urls, :urls_delimited, :logo_url, :description, :public)
   end
 end

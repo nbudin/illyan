@@ -47,10 +47,7 @@ class Admin::PeopleController < ApplicationController
   end
   
   def update
-    @person.attributes = params[:person]
-    set_protected_attributes!
-    
-    if @person.save
+    if @person.update(person_params)
       respond_to do |format|
         format.html { redirect_to admin_person_url(@person) }
         format.xml  { head :ok }
@@ -68,7 +65,7 @@ class Admin::PeopleController < ApplicationController
   def create
     @person = Person.find_by(email: params[:person][:email])
     if @person.nil?
-      attrs = params[:person]
+      attrs = person_params
       attrs[:confirmed_at] = Time.now
       attrs[:services] = [current_service] if current_service
       @person = Person.invite!(attrs)
@@ -96,7 +93,7 @@ class Admin::PeopleController < ApplicationController
     authorize! :admin, :site
   end
   
-  def person_attributes
+  def person_params
     params.require(:person).permit(:firstname, :lastname, :gender, :birthdate, :email, :password, :confirmed_at_ymdhms, :admin)
   end
 end

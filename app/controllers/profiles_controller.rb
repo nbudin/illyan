@@ -13,7 +13,7 @@ class ProfilesController < ApplicationController
   end
   
   def update
-    @person.attributes = person_attributes
+    @person.attributes = person_params
     
     if @person.save
       respond_to do |format|
@@ -35,7 +35,7 @@ class ProfilesController < ApplicationController
     @person = current_person
   end
   
-  def person_attributes
+  def person_params
     params.require(:person).allow(:firstname, :lastname, :gender, :birthdate, :email, :password, :password_confirmation)
   end
 end
