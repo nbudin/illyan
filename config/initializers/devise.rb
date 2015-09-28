@@ -11,7 +11,7 @@ Devise.setup do |config|
   # Configure the class responsible to send e-mails.
   # config.mailer = "Devise::Mailer"
   
-  config.secret_key = config.secret_key = Illyan::Application.config_vars['devise_token'] || 'aa8e21c98a9a68501e42e88cc5e1959a0794c421465fc637a31613acccc5c4cc0f9744ee5f9fe3264f9f43e1ea4b305ffeb8bcb636c340ba64f1896e4e3cc1e6'
+  config.secret_key = config.secret_key = ENV['DEVISE_TOKEN'] || 'aa8e21c98a9a68501e42e88cc5e1959a0794c421465fc637a31613acccc5c4cc0f9744ee5f9fe3264f9f43e1ea4b305ffeb8bcb636c340ba64f1896e4e3cc1e6'
 
   # ==> Configuration for any authentication mechanism
   # Configure which keys are used when authenticating an user. By default is

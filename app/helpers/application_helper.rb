@@ -14,15 +14,15 @@ module ApplicationHelper
   end
   
   def login_headline_with_account
-    if Illyan::Application.account_name
-      login_headline "with your #{Illyan::Application.account_name}"
+    if ENV['ILLYAN_ACCOUNT_NAME']
+      login_headline "with your #{ENV['ILLYAN_ACCOUNT_NAME']}"
     else
       login_headline
     end
   end
   
   def page_title
-    title = "#{Illyan::Application.site_title}"
+    title = "#{ENV['ILLYAN_SITE_TITLE']}"
     title << " - #{@page_title}" unless @page_title.blank?
     
     return title

@@ -10,26 +10,6 @@ require 'elasticsearch/rails/instrumentation'
 
 module Illyan
   class Application < Rails::Application
-    cattr_accessor :site_title, :site_logo, :account_name, :extra_login_page_html
-  
-    def self.config_vars
-      @@config_vars ||= begin
-        config_file = File.expand_path("../illyan.yml", __FILE__)
-
-        if File.exist?(config_file)
-          YAML.load(File.open(config_file))
-        else
-          {}
-        end
-      end
-    end
-    
-    def self.init_from_config_vars!
-      %w{site_title site_logo account_name extra_login_page_html}.each do |var|
-        send("#{var}=", config_vars[var]) unless config_vars[var].blank?
-      end
-    end
-    
     def self.index_name
       "illyan_#{Rails.env}"
     end

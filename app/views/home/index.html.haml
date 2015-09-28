@@ -1,8 +1,8 @@
 %h1
-  Welcome to #{Illyan::Application.site_title}
+  Welcome to #{ENV['ILLYAN_SITE_TITLE']}
 - if @services.size == 0
   %p
-    Coming soon, #{Illyan::Application.site_title} will provide a single login for all our sites.  Stay tuned!
+    Coming soon, #{ENV['ILLYAN_SITE_TITLE']} will provide a single login for all our sites.  Stay tuned!
 - else
   %p One login for all these sites:
   .row

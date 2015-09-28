@@ -3,12 +3,12 @@
 - if @resource.services.size == 1
   %p
     You've just signed up for #{link_to @resource.services.first.name, @resource.services.first.urls.first}!  This site uses
-    \#{link_to Illyan::Application.site_title, root_url} for user account management.  You'll be able to use your
-    \#{Illyan::Application.account_name || "profile"} to log in, but first, you need to confirm your email address.
+    \#{link_to ENV['ILLYAN_SITE_TITLE'], root_url} for user account management.  You'll be able to use your
+    \#{ENV['ILLYAN_ACCOUNT_NAME'] || "profile"} to log in, but first, you need to confirm your email address.
   %p To confirm that this is your email address, please follow the link below.
 - else
   %p
-    You've just signed up for an account at #{link_to Illyan::Application.site_title, root_url}!  To confirm that this is your email
+    You've just signed up for an account at #{link_to ENV['ILLYAN_SITE_TITLE'], root_url}!  To confirm that this is your email
     address, please follow the link below.
 %p= link_to 'Confirm my account', confirmation_url(@resource, :confirmation_token => @token)
 %p

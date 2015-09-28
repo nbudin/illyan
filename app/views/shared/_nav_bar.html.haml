@@ -1,9 +1,9 @@
 .navbar-header
   = link_to root_path, class: "navbar-brand", style: "max-width: 75%;" do
-    - if Illyan::Application.site_logo
-      = image_tag(Illyan::Application.site_logo, :alt => Illyan::Application.site_title, :class => "img-responsive")
+    - if ENV['ILLYAN_SITE_LOGO']
+      = image_tag(ENV['ILLYAN_SITE_LOGO'], :alt => ENV['ILLYAN_SITE_TITLE'], :class => "img-responsive")
     - else
-      = Illyan::Application.site_title
+      = ENV['ILLYAN_SITE_TITLE']
 
   %button{type: "button", class: "btn btn-default navbar-toggle", data: {toggle: "collapse", target: "#main-nav"}}
     %span.sr-only Toggle navigation

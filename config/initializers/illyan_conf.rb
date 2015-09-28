@@ -1,1 +1,0 @@
-Illyan::Application.init_from_config_vars!

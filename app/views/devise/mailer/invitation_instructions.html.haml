@@ -3,12 +3,12 @@
 - if @resource.services.size == 1
   %p
     You've been invited to #{link_to @resource.services.first.name, @resource.services.first.urls.first}!  This site uses
-    \#{link_to Illyan::Application.site_title, root_url} for user account management, so you will need to create a
-    \#{Illyan::Application.account_name || "profile"} there.
+    \#{link_to ENV['ILLYAN_SITE_TITLE'], root_url} for user account management, so you will need to create a
+    \#{ENV['ILLYAN_ACCOUNT_NAME'] || "profile"} there.
   %p To accept the invitation, please follow the link below.
 - else
   %p
-    You've been invited to #{link_to Illyan::Application.site_title, root_url}!  To accept the invitation, please follow
+    You've been invited to #{link_to ENV['ILLYAN_SITE_TITLE'], root_url}!  To accept the invitation, please follow
     the link below.
 %p= link_to 'Accept invitation', accept_invitation_url(@resource, :invitation_token => @token)
 %p

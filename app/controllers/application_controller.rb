@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   end
   
   def profile_name
-    Illyan::Application.account_name || "Profile"
+    ENV['ILLYAN_ACCOUNT_NAME'] || "Profile"
   end
   helper_method :profile_name
   

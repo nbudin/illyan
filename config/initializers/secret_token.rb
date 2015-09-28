@@ -7,7 +7,6 @@
 Rails.application.config
 Rails.application.config.secret_token = (
   ENV['SECRET_TOKEN'] ||
-  Illyan::Application.config_vars['secret_token'] ||
   'e7a133181a26379f49ca370a74fb9d9dfa4423d905abcae378ba6d5c45a584ba8819f1e824248504211b8faa060f95dbab47b3094163d25f259ad84b645c33cb'
   )
 Rails.application.config.secret_key_base = (

@@ -3,8 +3,8 @@
     %h2.panel-title= login_headline_with_account
   .panel-body
     = form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {:class => "form-horizontal"} ) do |f|
-      - if Illyan::Application.extra_login_page_html.present?
-        = raw Illyan::Application.extra_login_page_html
+      - if ENV['ILLYAN_EXTRA_LOGIN_PAGE_HTML'].present?
+        = raw ENV['ILLYAN_EXTRA_LOGIN_PAGE_HTML']
       .form-group
         = f.label :email, "Email address", :class => "col-md-2"
         .col-md-10

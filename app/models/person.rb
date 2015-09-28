@@ -137,7 +137,7 @@ class Person < ActiveRecord::Base
       { :subject => if services.size == 1
         "#{services.first.name} Invitation"
         else
-          "#{Illyan::Application.site_title} Invitation"
+          "#{ENV['ILLYAN_SITE_TITLE']} Invitation"
         end
       }
     else

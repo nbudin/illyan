@@ -37,6 +37,7 @@ gem 'elasticsearch-rails'
 gem 'foreman'
 gem 'thin'
 gem 'ae_users_migrator'
+gem 'figaro'
 
 gem 'capistrano', '~> 3.0', require: false, group: :development
 
