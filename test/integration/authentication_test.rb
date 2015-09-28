@@ -14,7 +14,7 @@ class AuthenticationTest < ActionDispatch::IntegrationTest
     end
     
     within "nav.navbar-default" do
-      assert has_content?("My Profile")
+      assert has_content?("My Sugar Pond account")
     end
   end
   
@@ -26,7 +26,7 @@ class AuthenticationTest < ActionDispatch::IntegrationTest
     end
     
     within "nav.navbar-default" do
-      assert has_no_content?("My Profile")
+      assert has_no_content?("My Sugar Pond account")
     end
   end
 end

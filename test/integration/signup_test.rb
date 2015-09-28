@@ -29,7 +29,7 @@ class SignupTest < ActionDispatch::IntegrationTest
   
   it "should not sign me in" do
     visit "/"
-    assert has_no_content?("My Profile")
+    assert has_no_content?("My Sugar Pond account")
   end
   
   it "should not let me sign in without confirming" do
@@ -42,7 +42,7 @@ class SignupTest < ActionDispatch::IntegrationTest
       click_on "Log in"
     end
     
-    assert has_no_content?("My Profile")
+    assert has_no_content?("My Sugar Pond account")
   end
 
   describe "after confirming" do
@@ -68,15 +68,7 @@ class SignupTest < ActionDispatch::IntegrationTest
         click_on "Log in"
       end
     
-      assert has_content?("My Profile")
+      assert has_content?("My Sugar Pond account")
     end
   end
-
-  #   When I go to the confirmation path for "myemail@example.com"
-  #   Then I should see "Your email address has been successfully confirmed."
-  #
-  #   When I fill in "Email address" with "myemail@example.com"
-  #   And I fill in "Password" with "LetMeIn"
-  #   And I press "Log in"
-  #   Then I should be signed in as "Jonathan Livingston"
 end
