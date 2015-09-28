@@ -1,4 +1,5 @@
 Illyan::Application.routes.draw do
+  use_doorkeeper
   resources :services
   devise_for :people
   

@@ -1,5 +1,7 @@
 class Service < ActiveRecord::Base
   has_and_belongs_to_many :users, :class_name => "Person", :join_table => "services_users", :association_foreign_key => "user_id"
+  has_and_belongs_to_many :doorkeeper_applications, :class_name => "Doorkeeper::Application", 
+    :join_table => "services_oauth_applications", :association_foreign_key => "oauth_application_id"
   before_create :ensure_authentication_token
   
   def ensure_authentication_token

@@ -3,8 +3,8 @@ class SessionsController < Cassy::SessionsController
   
   def new
     if person_signed_in?
-      if session[:login_service_id]
-        current_person.services << Service.find(session[:login_service_id])
+      if current_login_service
+        current_person.services << current_login_service
       end
       create
     else

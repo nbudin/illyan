@@ -3,13 +3,17 @@ class ApplicationController < ActionController::Base
   layout 'application'
   
   def current_ability
-    @current_ability ||= Ability.new(current_person || current_service)
+    @current_ability ||= Ability.new(current_resource_owner || current_person || current_service)
   end
   
   def profile_name
     ENV['ILLYAN_ACCOUNT_NAME'] || "Profile"
   end
   helper_method :profile_name
+  
+  def current_resource_owner
+    @current_resource_owner ||= doorkeeper_token && Person.find(doorkeeper_token.resource_owner_id)
+  end
   
   def current_service
     @_current_service ||= begin
@@ -33,7 +37,7 @@ class ApplicationController < ActionController::Base
   
   protected
   def current_login_service
-    @current_login_service ||= session[:login_service] && Service.find(session[:login_service])
+    @current_login_service ||= session[:login_service_id] && Service.find(session[:login_service_id])
   end
   helper_method :current_login_service
   
