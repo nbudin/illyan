@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '4.2.4'
+gem 'rails', '4.2.5.1'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -22,7 +22,7 @@ gem 'coffee-rails'
 gem 'uglifier'
 gem 'bootstrap-sass'
 gem 'autoprefixer-rails'
- 
+
 gem 'jquery-rails'
 
 gem 'cassy', github: 'nbudin/cassy'
