@@ -2,9 +2,6 @@ source 'http://rubygems.org'
 
 gem 'rails', '4.2.5.1'
 
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
-
 gem 'devise'
 gem 'devise_invitable'
 gem 'devise-encryptable'
@@ -40,6 +37,8 @@ gem 'ae_users_migrator'
 gem 'figaro'
 
 gem 'capistrano', '~> 3.0', require: false, group: :development
+
+gem 'rails_12factor'
 
 group :development do
   gem 'capistrano-rails',   '~> 1.1', require: false
