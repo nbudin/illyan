@@ -39,7 +39,7 @@ gem 'thin'
 gem 'ae_users_migrator'
 gem 'figaro'
 
-gem 'capistrano', '~> 3.0', require: false, group: :development
+gem 'capistrano', '~> 3.9', require: false, group: :development
 
 group :development do
   gem 'capistrano-rails',   '~> 1.1', require: false
