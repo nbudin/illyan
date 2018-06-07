@@ -1,14 +1,14 @@
 # Times are in seconds.
 maximum_unused_login_ticket_lifetime: 300
 maximum_unused_service_ticket_lifetime: 300
-maximum_session_lifetime: 300
+maximum_session_lifetime: 7200
 
 client_app_user_field: email
 username_field: email
 loosely_match_services: true
 
 authenticator:
-  class: Illyan::DeviseSessionAuthenticator  
+  class: Illyan::DeviseSessionAuthenticator
   extra_attributes:
     - email
     - firstname

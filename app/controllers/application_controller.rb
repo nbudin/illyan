@@ -1,11 +1,13 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery :unless => :current_service
   layout 'application'
-  
+
+  before_action :configure_permitted_parameters, if: :devise_controller?
+
   def current_ability
     @current_ability ||= Ability.new(current_resource_owner || current_person || current_service)
   end
-  
+
   def profile_name
     ENV['ILLYAN_ACCOUNT_NAME'] || "Profile"
   end
@@ -23,7 +25,7 @@ class ApplicationController < ActionController::Base
       service_token && Service.find_by(authentication_token: service_token.to_s)
     end
   end
-  
+
   rescue_from CanCan::AccessDenied do
     if current_person
       render 'shared/access_denied'
@@ -34,15 +36,21 @@ class ApplicationController < ActionController::Base
       redirect_to new_person_session_path
     end
   end
-  
+
   protected
   def current_login_service
     @current_login_service ||= session[:login_service_id] && Service.find(session[:login_service_id])
   end
   helper_method :current_login_service
-  
+
   def cleanup_login_service!
     session[:person_return_to] = nil
     session[:login_service] = nil
+  end
+
+  def configure_permitted_parameters
+    [:firstname, :lastname, :birthdate, :gender].each do |param|
+      devise_parameter_sanitizer.for(:sign_up) << param
+    end
   end
 end
