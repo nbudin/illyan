@@ -1,16 +1,14 @@
-default: &default
-  adapter: postgresql
-  encoding: unicode
-  host: db
-  username: postgres
-  password:
-  pool: 5
-
+# SQLite version 3.x
+#   gem install sqlite3-ruby (not necessary on OS X Leopard)
 development:
-  <<: *default
+  adapter: postgresql
+  username: postgres
   database: illyan_development
 
-
-test:
-  <<: *default
+# Warning: The database defined as "test" will be erased and
+# re-generated from your development database when you run "rake".
+# Do not set this db to the same as development or production.
+test: &test
+  adapter: postgresql
+  username: postgres
   database: illyan_test

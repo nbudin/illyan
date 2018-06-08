@@ -6,3 +6,4 @@ COPY Gemfile /app/Gemfile
 COPY Gemfile.lock /app/Gemfile.lock
 RUN bundle install
 COPY . /app
+RUN cp /app/config/database.yml.docker /app/config/database.yml
