@@ -6,6 +6,6 @@ namespace :elasticsearch do
       model.__elasticsearch__.create_index!
     end
   end
-  
+
   task :create_and_import => [:create_index, "import:all"]
 end

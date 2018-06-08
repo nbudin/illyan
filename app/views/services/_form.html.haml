@@ -32,6 +32,12 @@
     .col-md-10
       = f.text_field :authentication_token, class: "form-control"
   .form-group
+    = f.label :oauth_uid, 'OAuth UID', class: 'col-md-2'
+    .form-control-static= f.object.oauth_application.try(:uid)
+  .form-group
+    = f.label :oauth_secret, 'OAuth secret', class: 'col-md-2'
+    .form-control-static= f.object.oauth_application.try(:secret)
+  .form-group
     .col-md-2
     .col-md-10
       = f.submit class: "btn btn-primary btn-lg"

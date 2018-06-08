@@ -46,24 +46,15 @@ class CreateDoorkeeperTables < ActiveRecord::Migration
     add_index :oauth_access_tokens, :token, unique: true
     add_index :oauth_access_tokens, :resource_owner_id
     add_index :oauth_access_tokens, :refresh_token, unique: true
-    
-    create_table :services_oauth_applications, id: false do |t|
-      t.references :service, foreign_key: true
-      t.references :oauth_application, foreign_key: true
-    end
-    
-    add_index :services_oauth_applications, [:service_id, :oauth_application_id], name: "services_oauth_applications_idx", unique: true
-    
+
+    add_reference :services, :oauth_application, foreign_key: true
+
     reversible do |dir|
       dir.up do
         Service.find_each do |service|
-          if service.urls.size == 1
-            service.doorkeeper_applications.create!(name: service.name, redirect_uri: service.urls.first)
-          else
-            service.urls.each do |url|
-              service.doorkeeper_applications.create!(name: "#{service.name} (#{url})", redirect_uri: url)
-            end
-          end
+          say "Creating OAuth application for #{service.name}"
+          service.create_oauth_application!(name: service.name, redirect_uri: service.urls)
+          service.save!
         end
       end
     end

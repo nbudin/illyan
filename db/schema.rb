@@ -148,17 +148,11 @@ ActiveRecord::Schema.define(version: 20150928124229) do
     t.boolean  "public"
     t.string   "authentication_token"
     t.string   "urls",                 array: true
+    t.integer  "oauth_application_id"
   end
 
   add_index "services", ["authentication_token"], name: "index_services_on_authentication_token", unique: true, using: :btree
   add_index "services", ["public"], name: "index_services_on_public", using: :btree
-
-  create_table "services_oauth_applications", id: false, force: :cascade do |t|
-    t.integer "service_id"
-    t.integer "oauth_application_id"
-  end
-
-  add_index "services_oauth_applications", ["service_id", "oauth_application_id"], name: "services_oauth_applications_idx", unique: true, using: :btree
 
   create_table "services_users", id: false, force: :cascade do |t|
     t.integer "service_id", null: false
@@ -167,6 +161,5 @@ ActiveRecord::Schema.define(version: 20150928124229) do
 
   add_index "services_users", ["user_id"], name: "index_services_users_on_user_id", using: :btree
 
-  add_foreign_key "services_oauth_applications", "oauth_applications"
-  add_foreign_key "services_oauth_applications", "services"
+  add_foreign_key "services", "oauth_applications"
 end
