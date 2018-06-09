@@ -1,0 +1,25 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title= page_title
+    = stylesheet_link_tag 'application'
+    = javascript_include_tag "application"
+    = csrf_meta_tag
+    %meta{:content => "width=device-width", :name => "viewport"}/
+  %body
+    %nav.navbar.navbar-default{:role => "navigation"}
+      - if flash[:notice]
+        .notice
+          = flash[:notice]
+      - if flash[:alert]
+        .alert
+          = flash[:alert]
+      .navbar-header
+        .navbar-brand{style: "max-width: 75%;"}
+          - if ENV['ILLYAN_SITE_LOGO']
+            = image_tag(ENV['ILLYAN_SITE_LOGO'], :alt => ENV['ILLYAN_SITE_TITLE'], :class => "img-responsive")
+          - else
+            = ENV['ILLYAN_SITE_TITLE']
+    .container-fluid
+      = yield

@@ -10,11 +10,11 @@
     %span.icon-bar
     %span.icon-bar
     %span.icon-bar
-    
+
 %div#main-nav.collapse.navbar-collapse
   %ul.nav.navbar-nav.pull-right
     - if person_signed_in?
-      %li{class: params[:controller] == "profiles" ? "active" : ""}= link_to "My #{profile_name}", profile_path
+      %li{class: params[:controller] == "profiles" ? "active" : ""}= link_to "My account", profile_path
       - if can? :list, Person
         %li{class: params[:controller] == "admin/people" ? "active" : ""}= link_to "People", admin_people_path
       - if can? :list, Service
