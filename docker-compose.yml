@@ -16,6 +16,7 @@ services:
     ports:
       - "8000:3000"
     environment:
+      DATABASE_URL: postgresql://postgres@db/illyan_development
       ELASTICSEARCH_URL: http://elasticsearch:9200
     depends_on:
       - db
