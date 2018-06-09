@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150928124229) do
+ActiveRecord::Schema.define(version: 20180609172149) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -147,8 +147,9 @@ ActiveRecord::Schema.define(version: 20150928124229) do
     t.datetime "updated_at"
     t.boolean  "public"
     t.string   "authentication_token"
-    t.string   "urls",                 array: true
+    t.string   "urls",                                              array: true
     t.integer  "oauth_application_id"
+    t.boolean  "auto_authorize",       default: false, null: false
   end
 
   add_index "services", ["authentication_token"], name: "index_services_on_authentication_token", unique: true, using: :btree

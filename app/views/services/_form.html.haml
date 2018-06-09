@@ -33,10 +33,16 @@
       = f.text_field :authentication_token, class: "form-control"
   .form-group
     = f.label :oauth_uid, 'OAuth UID', class: 'col-md-2'
-    .form-control-static= f.object.oauth_application.try(:uid)
+    .col-md-10
+      .form-control-static= f.object.oauth_application.try(:uid)
   .form-group
     = f.label :oauth_secret, 'OAuth secret', class: 'col-md-2'
-    .form-control-static= f.object.oauth_application.try(:secret)
+    .col-md-10
+      .form-control-static= f.object.oauth_application.try(:secret)
+  .form-group
+    = f.label :auto_authorize, 'Skip OAuth authorization screen?', class: 'col-md-2'
+    .col-md-10
+      = f.check_box :auto_authorize
   .form-group
     .col-md-2
     .col-md-10
