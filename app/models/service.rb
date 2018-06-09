@@ -28,7 +28,13 @@ class Service < ActiveRecord::Base
   end
 
   def sync_oauth_application
-    create_oauth_application! unless oauth_application
-    oauth_application.update!(name: name, redirect_uri: urls)
+    oauth_application_attributes = { name: name, redirect_uri: urls.select { |url| url.start_with? 'https:' } }
+    return unless oauth_application_attributes[:redirect_uri].any?
+
+    if oauth_application
+      oauth_application.update! oauth_application_attributes
+    else
+      create_oauth_application! oauth_application_attributes
+    end
   end
 end
