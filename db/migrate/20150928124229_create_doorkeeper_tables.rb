@@ -6,6 +6,7 @@ class CreateDoorkeeperTables < ActiveRecord::Migration
       t.string  :secret,       null: false
       t.text    :redirect_uri, null: false
       t.string  :scopes,       null: false, default: ''
+      t.boolean :confidential, null: false, default: true
       t.timestamps
     end
 
@@ -53,7 +54,7 @@ class CreateDoorkeeperTables < ActiveRecord::Migration
       dir.up do
         Service.find_each do |service|
           say "Creating OAuth application for #{service.name}"
-          service.create_oauth_application!(name: service.name, redirect_uri: service.urls)
+          service.send(:sync_oauth_application)
           service.save!
         end
       end
