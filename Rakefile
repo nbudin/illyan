@@ -8,3 +8,7 @@ require 'rake/testtask'
 require 'rdoc/task'
 
 Illyan::Application.load_tasks
+
+require 'doorkeeper'
+require 'doorkeeper/rake'
+Doorkeeper::Rake.load_tasks

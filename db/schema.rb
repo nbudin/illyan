@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140806180548) do
+ActiveRecord::Schema.define(version: 20180612173519) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,6 +65,47 @@ ActiveRecord::Schema.define(version: 20140806180548) do
     t.integer "group_id",  null: false
   end
 
+  create_table "oauth_access_grants", force: :cascade do |t|
+    t.integer  "resource_owner_id", null: false
+    t.integer  "application_id",    null: false
+    t.string   "token",             null: false
+    t.integer  "expires_in",        null: false
+    t.text     "redirect_uri",      null: false
+    t.datetime "created_at",        null: false
+    t.datetime "revoked_at"
+    t.string   "scopes"
+  end
+
+  add_index "oauth_access_grants", ["token"], name: "index_oauth_access_grants_on_token", unique: true, using: :btree
+
+  create_table "oauth_access_tokens", force: :cascade do |t|
+    t.integer  "resource_owner_id"
+    t.integer  "application_id"
+    t.string   "token",             null: false
+    t.string   "refresh_token"
+    t.integer  "expires_in"
+    t.datetime "revoked_at"
+    t.datetime "created_at",        null: false
+    t.string   "scopes"
+  end
+
+  add_index "oauth_access_tokens", ["refresh_token"], name: "index_oauth_access_tokens_on_refresh_token", unique: true, using: :btree
+  add_index "oauth_access_tokens", ["resource_owner_id"], name: "index_oauth_access_tokens_on_resource_owner_id", using: :btree
+  add_index "oauth_access_tokens", ["token"], name: "index_oauth_access_tokens_on_token", unique: true, using: :btree
+
+  create_table "oauth_applications", force: :cascade do |t|
+    t.string   "name",                        null: false
+    t.string   "uid",                         null: false
+    t.string   "secret",                      null: false
+    t.text     "redirect_uri",                null: false
+    t.string   "scopes",       default: "",   null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "confidential", default: true, null: false
+  end
+
+  add_index "oauth_applications", ["uid"], name: "index_oauth_applications_on_uid", unique: true, using: :btree
+
   create_table "people", force: :cascade do |t|
     t.string   "firstname"
     t.string   "lastname"
@@ -107,7 +148,9 @@ ActiveRecord::Schema.define(version: 20140806180548) do
     t.datetime "updated_at"
     t.boolean  "public"
     t.string   "authentication_token"
-    t.string   "urls",                 array: true
+    t.string   "urls",                                              array: true
+    t.integer  "oauth_application_id"
+    t.boolean  "auto_authorize",       default: false, null: false
   end
 
   add_index "services", ["authentication_token"], name: "index_services_on_authentication_token", unique: true, using: :btree
@@ -120,4 +163,5 @@ ActiveRecord::Schema.define(version: 20140806180548) do
 
   add_index "services_users", ["user_id"], name: "index_services_users_on_user_id", using: :btree
 
+  add_foreign_key "services", "oauth_applications"
 end

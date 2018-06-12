@@ -63,9 +63,9 @@ class ServicesController < ApplicationController
       format.xml  { head :ok }
     end
   end
-  
+
   private
   def service_params
-    params.require(:service).permit(:name, :urls, :urls_delimited, :logo_url, :description, :public)
+    params.require(:service).permit(:name, :urls, :urls_delimited, :logo_url, :description, :public, :auto_authorize)
   end
 end

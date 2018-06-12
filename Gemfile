@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '4.2.5.1'
+gem 'rails', '4.2.10'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -26,6 +26,7 @@ gem 'autoprefixer-rails'
 gem 'jquery-rails'
 
 gem 'cassy', github: 'nbudin/cassy'
+gem 'doorkeeper', '5.0.0.rc1'
 
 gem 'will_paginate'
 gem 'will_paginate-bootstrap'

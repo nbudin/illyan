@@ -7,3 +7,12 @@
     %div
       = link_to "Edit profile", edit_profile_path, class: "btn btn-default"
       = link_to "Change password", change_password_profile_path, class: "btn btn-default"
+
+.panel.panel-primary
+  .panel-heading
+    %h2.panel-title
+      Authorized applications
+  .panel-body
+    = pluralize(Doorkeeper::Application.authorized_for(current_person).count, 'authorized application')
+    %br
+    = link_to "Edit", oauth_authorized_applications_path, class: 'btn btn-default'
