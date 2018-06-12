@@ -26,7 +26,7 @@ gem 'autoprefixer-rails'
 gem 'jquery-rails'
 
 gem 'cassy', github: 'nbudin/cassy'
-gem 'doorkeeper'
+gem 'doorkeeper', '5.0.0.rc1'
 
 gem 'will_paginate'
 gem 'will_paginate-bootstrap'
