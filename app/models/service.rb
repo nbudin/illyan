@@ -30,7 +30,7 @@ class Service < ActiveRecord::Base
   def sync_oauth_application
     oauth_application_attributes = {
       name: name,
-      redirect_uri: urls.select { |url| url.start_with?('https:') || url.start_with?('http://localhost') } 
+      redirect_uri: urls.select { |url| url.start_with?('https:') || url.start_with?('http://localhost') }
     }
     return unless oauth_application_attributes[:redirect_uri].any?
 
@@ -38,6 +38,7 @@ class Service < ActiveRecord::Base
       oauth_application.update! oauth_application_attributes
     else
       create_oauth_application! oauth_application_attributes
+      save!
     end
   end
 end
