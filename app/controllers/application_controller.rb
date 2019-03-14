@@ -12,11 +12,11 @@ class ApplicationController < ActionController::Base
     ENV['ILLYAN_ACCOUNT_NAME'] || "Profile"
   end
   helper_method :profile_name
-  
+
   def current_resource_owner
     @current_resource_owner ||= doorkeeper_token && Person.find(doorkeeper_token.resource_owner_id)
   end
-  
+
   def current_service
     @_current_service ||= begin
       service_token = ActionController::HttpAuthentication::Token.token_and_options(request).presence.try(:first)
@@ -49,8 +49,6 @@ class ApplicationController < ActionController::Base
   end
 
   def configure_permitted_parameters
-    [:firstname, :lastname, :birthdate, :gender].each do |param|
-      devise_parameter_sanitizer.for(:sign_up) << param
-    end
+    devise_parameter_sanitizer.permit(:sign_up, keys: %i[firstname lastname birthdate gender])
   end
 end
