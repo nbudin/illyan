@@ -1,11 +1,12 @@
 source 'http://rubygems.org'
 
-gem 'rails', '4.2.10'
+ruby '2.6.2'
+gem 'rails', '4.2.11.1'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'devise'
+gem 'devise', '~> 3.5.4'
 gem 'devise_invitable'
 gem 'devise-encryptable'
 gem 'cancancan'
@@ -20,7 +21,7 @@ gem 'sprockets'
 gem 'sass-rails'
 gem 'coffee-rails'
 gem 'uglifier'
-gem 'bootstrap-sass'
+gem 'bootstrap-sass', '~> 3.4.1'
 gem 'autoprefixer-rails'
 
 gem 'jquery-rails'
