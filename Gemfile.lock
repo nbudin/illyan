@@ -261,7 +261,7 @@ GEM
       json (>= 1.8.0)
     warden (1.2.7)
       rack (>= 1.0)
-    will_paginate (3.0.7)
+    will_paginate (3.1.6)
     will_paginate-bootstrap (1.0.1)
       will_paginate (>= 3.0.3)
     xpath (2.0.0)
