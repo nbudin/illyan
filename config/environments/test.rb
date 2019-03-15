@@ -7,7 +7,7 @@ Illyan::Application.configure do
   # and recreated between test runs.  Don't rely on the data there!
   config.cache_classes = true
   config.eager_load = false
-  
+
   config.active_support.test_order = :random
 
   # Log error messages when you accidentally call methods on nil.
@@ -28,13 +28,14 @@ Illyan::Application.configure do
   # The :test delivery method accumulates sent emails in the
   # ActionMailer::Base.deliveries array.
   config.action_mailer.delivery_method = :test
-  
+  config.action_mailer.perform_deliveries = true
+
   config.action_mailer.default_url_options = { :host => 'localhost:4001' }
-  
+
   # Configure static asset server for tests with Cache-Control for performance
   config.serve_static_files = true
   config.static_cache_control = "public, max-age=3600"
-  
+
   config.active_record.raise_in_transactional_callbacks = true
 
   # Use SQL instead of Active Record's schema dumper when creating the test database.
