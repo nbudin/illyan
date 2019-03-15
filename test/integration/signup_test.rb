@@ -22,8 +22,10 @@ class SignupTest < ActionDispatch::IntegrationTest
 
   it "should send a confirmation email" do
     msg = ActionMailer::Base.deliveries.last
-    msg.to[0].must_equal "myemail@example.com"
-    msg.body.to_s.must_match /myemail@example.com/
+    assert msg
+
+    msg.to.must_equal ["myemail@example.com"]
+    msg.body.to_s.must_match(/myemail@example.com/)
     msg.body.to_s.must_include person_confirmation_path
   end
 
