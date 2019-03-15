@@ -2,15 +2,15 @@ require 'illyan/strategies'
 
 # Use this hook to configure devise mailer, warden hooks and so forth. The first
 # four configuration values can also be set straight in your models.
-Devise.setup do |config|      
+Devise.setup do |config|
   config.scoped_views = true
-  
+
   # Configure the e-mail address which will be shown in DeviseMailer.
   config.mailer_sender = "Nat Budin <nat@sugarpond.net>"
-  
+
   # Configure the class responsible to send e-mails.
   # config.mailer = "Devise::Mailer"
-  
+
   config.secret_key = config.secret_key = ENV['DEVISE_TOKEN'] || 'aa8e21c98a9a68501e42e88cc5e1959a0794c421465fc637a31613acccc5c4cc0f9744ee5f9fe3264f9f43e1ea4b305ffeb8bcb636c340ba64f1896e4e3cc1e6'
 
   # ==> Configuration for any authentication mechanism
@@ -43,6 +43,12 @@ Devise.setup do |config|
   # The time you want give to your user to confirm his account. During this time
   # he will be able to access your application without confirming. Default is nil.
   # config.confirm_within = 2.days
+
+  # If true, requires any email changes to be confirmed (exactly the same way as
+  # initial account confirmation) to be applied. Requires additional unconfirmed_email
+  # db field (see migrations). Until confirmed, new email is stored in
+  # unconfirmed_email column, and copied to email column on successful confirmation.
+  config.reconfirmable = false
 
   # ==> Configuration for :rememberable
   # The time the user will be remembered without asking for credentials again.
