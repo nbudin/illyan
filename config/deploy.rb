@@ -1,5 +1,5 @@
 # config valid only for Capistrano 3.1
-lock '3.4.0'
+lock '3.11.2'
 
 set :rbenv_ruby, '2.6.2'
 set :rbenv_custom_path, "/opt/rbenv"
