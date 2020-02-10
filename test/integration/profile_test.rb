@@ -7,7 +7,7 @@ class ProfileTest < ActionDispatch::IntegrationTest
 
   it "should view my profile" do
     visit edit_profile_path
-    find_field('First name').value.must_equal "Joe"
-    find_field('Last name').value.must_equal "User"
+    assert_equal 'Joe', find_field('First name').value
+    assert_equal 'User', find_field('Last name').value
   end
 end

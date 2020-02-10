@@ -1,4 +1,4 @@
-class DestroyOpenIdTables < ActiveRecord::Migration
+class DestroyOpenIdTables < ActiveRecord::Migration[4.2]
   def self.up
     drop_table "open_id_identities"
   end

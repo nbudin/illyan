@@ -1,4 +1,4 @@
-class AddAutoAuthorizeToServices < ActiveRecord::Migration
+class AddAutoAuthorizeToServices < ActiveRecord::Migration[4.2]
   def change
     add_column :services, :auto_authorize, :boolean, null: false, default: false
   end

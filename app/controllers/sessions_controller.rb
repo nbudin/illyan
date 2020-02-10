@@ -40,7 +40,7 @@ class SessionsController < Cassy::SessionsController
 
     unless @ticketing_service
       Rollbar.report_message("Unknown service for URL #{params[:service]}", 'warning')
-      render text: "Unknown service for URL #{params[:service]}", status: :forbidden
+      render plain: "Unknown service for URL #{params[:service]}", status: :forbidden
     end
   end
 
