@@ -10,4 +10,4 @@ services:
 addons:
   chrome: stable
 before_script:
-  - "bin/rake db:create db:schema:load"
+  - "bin/rake db:create db:migrate"

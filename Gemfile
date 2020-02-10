@@ -1,10 +1,7 @@
 source 'http://rubygems.org'
 
 ruby '2.6.2'
-gem 'rails', '4.2.11.1'
-
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
+gem 'rails', '5.0.7.2'
 
 gem 'devise', '~> 4.7.1'
 gem 'devise_invitable', '~> 1.7.5'
@@ -32,12 +29,12 @@ gem 'doorkeeper', '5.0.0.rc1'
 gem 'will_paginate'
 gem 'will_paginate-bootstrap'
 gem 'pg'
-gem 'postgres_ext'
-gem 'elasticsearch-model'
-gem 'elasticsearch-rails'
+# gem 'postgres_ext'
+gem 'elasticsearch-model', '0.1.9'
+gem 'elasticsearch-rails', '0.1.9'
 
-gem 'foreman'
-gem 'thin'
+# gem 'foreman'
+gem 'puma'
 gem 'ae_users_migrator'
 gem 'figaro'
 
