@@ -18,6 +18,7 @@ gem 'sass-rails'
 gem 'uglifier'
 gem 'bootstrap-sass', '~> 3.4.1'
 gem 'autoprefixer-rails'
+gem 'coffee-rails'
 
 gem 'jquery-rails'
 
@@ -41,6 +42,7 @@ group :development do
   gem 'capistrano-bundler', '~> 1.1', require: false
   gem 'capistrano-rbenv', '~> 2.0', require: false
   gem 'capistrano-maintenance', '~> 1.0', require: false
+  gem 'listen'
 end
 
 group :test do

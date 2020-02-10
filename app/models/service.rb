@@ -1,4 +1,4 @@
-class Service < ActiveRecord::Base
+class Service < ApplicationRecord
   has_and_belongs_to_many :users, :class_name => "Person", :join_table => "services_users", :association_foreign_key => "user_id"
   belongs_to :oauth_application, class_name: "Doorkeeper::Application", dependent: :destroy, optional: true
   before_create :ensure_authentication_token

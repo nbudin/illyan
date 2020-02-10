@@ -1,4 +1,4 @@
-class Person < ActiveRecord::Base
+class Person < ApplicationRecord
   include PgSearch::Model
 
   devise :database_authenticatable, :legacy_md5_authenticatable, :legacy_sha1_authenticatable,

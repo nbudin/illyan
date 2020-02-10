@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
     if current_person
       render 'shared/access_denied'
     elsif current_service
-      render :text => "Access denied for #{current_service.name} service", :status => :forbidden
+      render plain: "Access denied for #{current_service.name} service", status: :forbidden
     else
       flash[:alert] = "Please log in to access that page."
       redirect_to new_person_session_path
