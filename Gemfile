@@ -9,7 +9,6 @@ gem 'devise-encryptable'
 gem 'cancancan'
 gem 'dynamic_form'
 gem 'rollbar'
-gem 'breach-mitigation-rails'
 
 gem 'haml'
 
@@ -29,9 +28,7 @@ gem 'doorkeeper', '5.0.0.rc1'
 gem 'will_paginate'
 gem 'will_paginate-bootstrap'
 gem 'pg'
-# gem 'postgres_ext'
-gem 'elasticsearch-model', '0.1.9'
-gem 'elasticsearch-rails', '0.1.9'
+gem 'pg_search'
 
 # gem 'foreman'
 gem 'puma'
@@ -48,14 +45,15 @@ group :development do
 end
 
 group :test do
-  gem 'factory_girl_rails'
-  gem 'minitest'
+  gem 'factory_bot_rails'
+  gem 'minitest', '5.10.3'  # TODO upgrade once we upgrade rails to 5.1+
   gem 'minitest-spec-rails'
   gem 'capybara'
   gem 'launchy'
   gem 'database_cleaner'
   gem 'webdrivers', require: 'webdrivers/chromedriver'
   gem 'selenium-webdriver'
+  gem 'rails-controller-testing'
 end
 
 gem 'pry-rails', :groups => [:development, :test]

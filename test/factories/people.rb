@@ -1,34 +1,34 @@
-FactoryGirl.define do
+FactoryBot.define do
   sequence :email do |n|
     "test#{n}@example.com"
   end
 
   factory :person do
-    email { FactoryGirl.generate :email }
-    password "password"
-    
+    email { FactoryBot.generate :email }
+    password { "password" }
+
     factory :legacy_person do
       after(:build) do |person|
         person.legacy_password_md5 = Digest::MD5.hexdigest("password")
       end
     end
-    
+
     factory :joe_user do
-      email "joe@user.com"
-      password "password"
-      firstname "Joe"
-      lastname "User"
-  
+      email { "joe@user.com" }
+      password { "password" }
+      firstname { "Joe" }
+      lastname { "User" }
+
       after(:create) do |joe|
         joe.confirm
       end
     end
 
     factory :group_administered_person do
-      firstname "Group-administered"
-      lastname "Person"
+      firstname { "Group-administered" }
+      lastname { "Person" }
       after(:create) do |person|
-        group = FactoryGirl.create(:group, :name => "Red Team")
+        group = FactoryBot.create(:group, :name => "Red Team")
         group.has_role!("admin", person)
       end
     end
@@ -41,7 +41,7 @@ FactoryGirl.define do
 
     factory :staffer do
       after(:create) do |person|
-        person.groups << FactoryGirl.create(:group, :name => "Staff")
+        person.groups << FactoryBot.create(:group, :name => "Staff")
       end
     end
   end

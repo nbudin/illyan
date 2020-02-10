@@ -1,34 +1,22 @@
 class Admin::PeopleController < ApplicationController
   load_and_authorize_resource
   before_action :require_admin!
-    
+
   def index
     authorize! :list, Person
-    query_string = params[:q]
-    page_number = params[:page] || 1
-    
-    query = {
-      size: 20
-    }
-    
-    if query_string.present?
-      query[:query] = { 
-        multi_match: {
-          query: query_string,
-          fields: [:firstname_ngrams, :lastname_ngrams, :email_ngrams]
-        }
-      }
+
+    scope = if params[:q].present?
+      Person.search(params[:q])
     else
-      query[:query] = { match_all: {} }
-      query[:sort] = ["lastname", "firstname", "email"]
+      Person.order('lower(lastname)', 'lower(firstname)', 'lower(email)')
     end
-    
-    @people = Person.search(query).page(params[:page] || 1).records
+
+    @people = scope.paginate(page: params[:page] || 1)
   end
-  
+
   def new
   end
-  
+
   def show
     respond_to do |format|
       format.html {}
@@ -36,16 +24,16 @@ class Admin::PeopleController < ApplicationController
       format.json { render :json => @person.to_json }
     end
   end
-  
+
   def edit
   end
-  
+
   def edit_account
   end
-  
+
   def change_password
   end
-  
+
   def update
     if @person.update(person_params)
       respond_to do |format|
@@ -61,7 +49,7 @@ class Admin::PeopleController < ApplicationController
       end
     end
   end
-  
+
   def create
     @person = Person.find_by(email: params[:person][:email])
     if @person.nil?
@@ -72,7 +60,7 @@ class Admin::PeopleController < ApplicationController
     elsif current_service
       @person.services << current_service unless @person.services.include?(current_service)
     end
-    
+
     if @person.save
       respond_to do |format|
         format.html { redirect_to admin_person_url(@person) }
@@ -87,12 +75,12 @@ class Admin::PeopleController < ApplicationController
       end
     end
   end
-  
+
   private
   def require_admin!
     authorize! :admin, :site
   end
-  
+
   def person_params
     params.require(:person).permit(:firstname, :lastname, :gender, :birthdate, :email, :password, :confirmed_at_ymdhms, :admin)
   end

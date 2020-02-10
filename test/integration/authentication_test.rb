@@ -2,7 +2,7 @@ require 'test_helper'
 
 class AuthenticationTest < ActionDispatch::IntegrationTest
   setup do
-    FactoryGirl.create :joe_user
+    FactoryBot.create :joe_user
     visit new_person_session_path
   end
 

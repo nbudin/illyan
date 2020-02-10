@@ -6,8 +6,6 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-require 'elasticsearch/rails/instrumentation'
-
 module Illyan
   class Application < Rails::Application
     def self.index_name
@@ -16,7 +14,7 @@ module Illyan
 
     config.assets.enabled = true
     config.assets.version = '1.0'
-    config.assets.precompile += ["account-central.css", /\A\/liberation-serif\//]
+    # config.assets.precompile += ["account-central.css", /\A\/liberation-serif\//]
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
