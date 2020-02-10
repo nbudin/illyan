@@ -45,6 +45,6 @@ class SessionsController < Cassy::SessionsController
   end
 
   def login_service
-    @login_service ||= Service.where.any(urls: @ticketing_service).first if @ticketing_service
+    @login_service ||= Service.where('urls @> ARRAY[?::varchar]', @ticketing_service).first if @ticketing_service
   end
 end

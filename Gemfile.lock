@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/nbudin/cassy.git
-  revision: 6b9d443aaf5a5717665ec89babe0fe833a2923c1
+  revision: 31b3a4cb7a43a4878e68f8072d767f9900aa25b9
   specs:
     cassy (2.0.3)
       crypt-isaac
@@ -99,7 +99,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
-    concurrent-ruby (1.1.5)
+    concurrent-ruby (1.1.6)
     crass (1.0.6)
     crypt-isaac (1.2.0)
     database_cleaner (1.8.2)
@@ -178,7 +178,7 @@ GEM
     public_suffix (4.0.3)
     puma (4.3.1)
       nio4r (~> 2.0)
-    rack (2.2.1)
+    rack (2.2.2)
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
     rails (5.2.4.1)
