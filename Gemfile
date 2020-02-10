@@ -4,7 +4,7 @@ ruby '2.6.2'
 gem 'rails', '5.2.4.1'
 
 # Reduces boot times through caching; required in config/boot.rb
-gem 'bootsnap', '>= 1.1.0', require: false, groups: [:development, :test]
+gem 'bootsnap', '>= 1.1.0', require: false
 
 gem 'devise', '~> 4.7.1'
 gem 'devise_invitable', '~> 1.7.5'
