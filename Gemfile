@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
 ruby '2.6.2'
-gem 'rails', '5.0.7.2'
+gem 'rails', '5.1.7'
 
 gem 'devise', '~> 4.7.1'
 gem 'devise_invitable', '~> 1.7.5'
@@ -15,7 +15,6 @@ gem 'haml'
 gem 'sprockets-rails'
 gem 'sprockets'
 gem 'sass-rails'
-gem 'coffee-rails'
 gem 'uglifier'
 gem 'bootstrap-sass', '~> 3.4.1'
 gem 'autoprefixer-rails'
@@ -46,7 +45,7 @@ end
 
 group :test do
   gem 'factory_bot_rails'
-  gem 'minitest', '5.10.3'  # TODO upgrade once we upgrade rails to 5.1+
+  gem 'minitest'
   gem 'minitest-spec-rails'
   gem 'capybara'
   gem 'launchy'
