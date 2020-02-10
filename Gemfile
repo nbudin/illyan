@@ -25,6 +25,7 @@ gem 'coffee-rails'
 
 gem 'jquery-rails'
 
+gem 'crypt-isaac'
 gem 'cassy', github: 'nbudin/cassy'
 gem 'doorkeeper', '5.0.0.rc1'
 

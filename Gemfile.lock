@@ -282,6 +282,7 @@ DEPENDENCIES
   capybara
   cassy!
   coffee-rails
+  crypt-isaac
   database_cleaner
   devise (~> 4.7.1)
   devise-encryptable
