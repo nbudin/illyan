@@ -1,4 +1,4 @@
-class DropLegacyTables < ActiveRecord::Migration
+class DropLegacyTables < ActiveRecord::Migration[4.2]
   def self.up
     drop_table :accounts
     drop_table :email_addresses

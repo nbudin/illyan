@@ -1,6 +1,6 @@
 # We don't use castronaut anymore but we need this so we can run the later castronaut -> cassy migration
 
-class CreateCasDatabase < ActiveRecord::Migration
+class CreateCasDatabase < ActiveRecord::Migration[4.2]
   def self.up
     create_table :login_tickets,   :force => true do |t|
       t.column :ticket,           :string,    :null => false

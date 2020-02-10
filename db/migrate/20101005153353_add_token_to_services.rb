@@ -1,12 +1,12 @@
-class AddTokenToServices < ActiveRecord::Migration
+class AddTokenToServices < ActiveRecord::Migration[4.2]
   def self.up
     change_table :services do |t|
       # Token authenticatable
       t.string :authentication_token
     end
-    
+
     Service.all.map(&:ensure_authentication_token!)
-    
+
     add_index :services, :authentication_token, :unique => true
   end
 

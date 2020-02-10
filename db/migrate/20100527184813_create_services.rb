@@ -1,4 +1,4 @@
-class CreateServices < ActiveRecord::Migration
+class CreateServices < ActiveRecord::Migration[4.2]
   def self.up
     create_table :services do |t|
       t.string :name

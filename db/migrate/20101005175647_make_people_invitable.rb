@@ -1,4 +1,4 @@
-class MakePeopleInvitable < ActiveRecord::Migration
+class MakePeopleInvitable < ActiveRecord::Migration[4.2]
   def self.up
     change_table :people do |t|
       ## Invitable
@@ -8,7 +8,7 @@ class MakePeopleInvitable < ActiveRecord::Migration
       t.integer  :invited_by_id
       t.string   :invited_by_type
     end
-    
+
     add_index :people, :invitation_token, :unique => true
   end
 
