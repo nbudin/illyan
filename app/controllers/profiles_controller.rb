@@ -1,7 +1,7 @@
 class ProfilesController < ApplicationController
-  before_filter :authenticate_person!
-  before_filter :get_person
-  before_filter :cleanup_login_service!
+  before_action :authenticate_person!
+  before_action :get_person
+  before_action :cleanup_login_service!
 
   def show
   end

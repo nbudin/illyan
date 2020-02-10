@@ -3,7 +3,7 @@ require 'test_helper'
 class ServiceTest < ActiveSupport::TestCase
   describe "a new service" do
     setup do
-      assert @service = FactoryGirl.build(:service)
+      assert @service = FactoryBot.build(:service)
     end
 
     describe "having been saved" do
