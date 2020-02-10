@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
-  protect_from_forgery :unless => :current_service
+  protect_from_forgery with: :exception
+  skip_forgery_protection if: :current_service
   layout 'application'
 
   before_action :configure_permitted_parameters, if: :devise_controller?
