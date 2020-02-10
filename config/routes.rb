@@ -20,5 +20,5 @@ Rails.application.routes.draw do
 
   cassy controllers: { sessions: "sessions" }
 
-  root :to => "home#index"
+  root to: "home#index"
 end

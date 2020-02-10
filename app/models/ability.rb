@@ -4,7 +4,7 @@ class Ability
   def initialize(principal)
     return if principal.nil?
 
-    alias_action [:edit_account, :change_password], :to => :update
+    alias_action :edit_account, :change_password, :to => :update
 
     case principal
     when Person
