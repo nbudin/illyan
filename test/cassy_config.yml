@@ -1,0 +1,18 @@
+username_label: "Username"
+username_field: "username"
+client_app_user_field: "username"
+# Times are in seconds.
+maximum_unused_login_ticket_lifetime: 300
+maximum_unused_service_ticket_lifetime: 300
+maximum_session_lifetime: 7200
+
+authenticator:
+  class: Cassy::Authenticators::Test
+  password: spec_password
+  extra_attributes: full_name
+
+
+enable_single_sign_out: true
+service_list:
+  test:
+    - http://my.app.test

@@ -18,7 +18,13 @@ Rails.application.routes.draw do
     end
   end
 
-  cassy controllers: { sessions: "sessions" }
+  scope(path: "cas") do
+    get 'login', :to => "sessions#new"
+    post 'login', :to => "sessions#create"
+    get 'logout', :to => "sessions#destroy"
+    get 'serviceValidate', :to => "sessions#service_validate"
+    get 'proxyValidate',   :to => "sessions#proxy_validate"
+  end
 
   root to: "home#index"
 end

@@ -2,6 +2,7 @@ ENV["RAILS_ENV"] = "test"
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 require 'capybara/rails'
+require 'webmock/minitest'
 
 Capybara.register_driver :chrome do |app|
   Capybara::Selenium::Driver.new(app, :browser => :chrome)
@@ -31,6 +32,10 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
+  before do
+    # Invalidate the Cassy config cache, forcing it to reload
+    Cassy.config_file = Rails.root.join('test', 'cassy_config.yml')
+  end
 end
 
 class ActionController::TestCase

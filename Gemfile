@@ -25,7 +25,7 @@ gem 'coffee-rails'
 
 gem 'jquery-rails'
 
-gem 'cassy', github: 'nbudin/cassy'
+gem 'crypt-isaac' # for Cassy
 gem 'doorkeeper', '5.0.0.rc1'
 
 gem 'will_paginate'
@@ -58,6 +58,7 @@ group :test do
   gem 'webdrivers', require: 'webdrivers/chromedriver'
   gem 'selenium-webdriver'
   gem 'rails-controller-testing'
+  gem 'webmock'
 end
 
 gem 'pry-rails', :groups => [:development, :test]
