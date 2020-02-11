@@ -53,7 +53,7 @@ namespace :deploy do
       revision = `git log -n 1 --pretty=format:"%H"`
       local_user = `whoami`
       rails_env = fetch(:rails_env, 'production')
-      execute "curl https://api.rollbar.com/api/1/deploy/ -F access_token=$(cat #{release_path}/config/illyan.yml |grep '^rollbar_access_token:' |cut -d ' ' -f 2) -F environment=#{rails_env} -F revision=#{revision} -F local_username=#{local_user} >/dev/null 2>&1", :once => true
+      execute "curl https://api.rollbar.com/api/1/deploy/ -F access_token=$(cat #{release_path}/config/application.yml |grep '^ROLLBAR_ACCESS_TOKEN:' |cut -d ' ' -f 2) -F environment=#{rails_env} -F revision=#{revision} -F local_username=#{local_user} >/dev/null 2>&1", :once => true
     end
   end
 
