@@ -38,7 +38,6 @@ set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets vendor/bundle public/sys
 # set :keep_releases, 5
 
 namespace :deploy do
-
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
@@ -50,7 +49,7 @@ namespace :deploy do
 
   desc 'Notify Rollbar of the deploy'
   task :notify_rollbar do
-    on roles(:app) do |h|
+    on roles(:app) do |_h|
       revision = `git log -n 1 --pretty=format:"%H"`
       local_user = `whoami`
       rails_env = fetch(:rails_env, 'production')
@@ -58,6 +57,5 @@ namespace :deploy do
     end
   end
 
-  after :deploy, 'notify_rollbar'
-
+  after :deploy, 'deploy:notify_rollbar'
 end
