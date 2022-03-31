@@ -5,7 +5,7 @@ set :rbenv_ruby, '2.6.2'
 set :rbenv_custom_path, "/opt/rbenv"
 
 set :application, 'illyan'
-set :repo_url, 'git://github.com/nbudin/illyan.git'
+set :repo_url, 'https://github.com/nbudin/illyan.git'
 
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
