@@ -46,6 +46,8 @@ group :development do
   gem 'capistrano-rbenv', '~> 2.0', require: false
   gem 'capistrano-maintenance', '~> 1.0', require: false
   gem 'listen'
+  gem 'ed25519'
+  gem 'bcrypt_pbkdf'
 end
 
 group :test do
