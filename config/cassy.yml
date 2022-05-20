@@ -14,4 +14,3 @@ authenticator:
     - firstname
     - lastname
     - gender
-    - birthdate
