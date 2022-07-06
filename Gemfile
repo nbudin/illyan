@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
 ruby '2.6.2'
-gem 'rails', '6.0.5'
+gem 'rails', '6.1.6'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
