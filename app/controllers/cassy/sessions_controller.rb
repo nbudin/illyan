@@ -20,15 +20,15 @@ module Cassy
 
       if @service
         if @ticketed_user && cas_login
-          redirect_to @service_with_ticket
+          redirect_to @service_with_ticket, allow_other_host: true
         elsif @existing_ticket_for_service
           redirect_to logout_url
         elsif !@renew && @tgt && !tgt_error
           find_or_generate_service_tickets(ticket_username, @tgt)
           st = @service_tickets[@ticketing_service]
-          redirect_to service_uri_with_ticket(@ticketing_service, st)
+          redirect_to service_uri_with_ticket(@ticketing_service, st), allow_other_host: true
         elsif @gateway
-          redirect_to @gateway
+          redirect_to(@gateway, allow_other_host: true)
         end
       elsif @gateway
         flash.now[:error] = "The server cannot fulfill this gateway request because no service parameter was given."
@@ -51,7 +51,7 @@ module Cassy
       logger.debug("Logging in with username: #{@username}, lt: #{@lt}, service: #{@service}, auth: #{settings[:auth].inspect}")
       if cas_login
         if @service_with_ticket
-          redirect_to after_sign_in_path_for(@service_with_ticket)
+          redirect_to after_sign_in_path_for(@service_with_ticket), allow_other_host: true
         else
           flash.now[:notice] = "You have successfully logged in."
           render :new
@@ -96,7 +96,7 @@ module Cassy
       @lt = generate_login_ticket
 
       if @gateway && @service
-        redirect_to @service, :status => 303
+        redirect_to @service, :status => 303, allow_other_host: true
       else
         redirect_to :action => :new, :service => @service
       end
