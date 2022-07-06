@@ -1,13 +1,13 @@
 source 'http://rubygems.org'
 
-ruby '2.6.2'
-gem 'rails', '6.1.6'
+ruby '3.1.2'
+gem 'rails', '7.0.3'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
-gem 'devise', '~> 4.7.1'
-gem 'devise_invitable', '~> 1.7.5'
+gem 'devise', '~> 4.8.1'
+gem 'devise_invitable', '~> 2.0.6'
 gem 'devise-encryptable'
 gem 'cancancan'
 gem 'dynamic_form'
@@ -26,7 +26,7 @@ gem 'coffee-rails'
 gem 'jquery-rails'
 
 gem 'crypt-isaac' # for Cassy
-gem 'doorkeeper', '5.0.0.rc1'
+gem 'doorkeeper', '5.5.4'
 
 gem 'will_paginate'
 gem 'will_paginate-bootstrap'
