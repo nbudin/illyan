@@ -21,7 +21,7 @@
             %td= truncate service.description
             %td= service.authentication_token
             %td= link_to 'Edit', edit_service_path(service), :class => "btn btn-default btn-sm"
-            %td= link_to 'Destroy', service, :method => :delete, :confirm => 'Are you sure?', :class => "btn btn-danger btn-sm"
+            %td= link_to 'Destroy', service, :method => :delete, "data-confirm" => 'Are you sure?', :class => "btn btn-danger btn-sm"
   .panel-body
     %div
       = link_to 'New Service', new_service_path, :class => "btn btn-primary"
