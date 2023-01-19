@@ -1,11 +1,11 @@
 # config valid only for Capistrano 3.1
-lock '3.17.0'
+lock "3.17.1"
 
-set :rbenv_ruby, '3.1.2'
+set :rbenv_ruby, "3.1.2"
 set :rbenv_custom_path, "/opt/rbenv"
 
-set :application, 'illyan'
-set :repo_url, 'https://github.com/nbudin/illyan.git'
+set :application, "illyan"
+set :repo_url, "https://github.com/nbudin/illyan.git"
 
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
@@ -27,10 +27,10 @@ set :log_level, :info
 # set :pty, true
 
 # Default value for :linked_files is []
-set :linked_files, %w{config/database.yml config/application.yml}
+set :linked_files, %w[config/database.yml config/application.yml]
 
 # Default value for linked_dirs is []
-set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
+set :linked_dirs, %w[log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system]
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
@@ -39,24 +39,25 @@ set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets vendor/bundle public/sys
 # set :keep_releases, 5
 
 namespace :deploy do
-  desc 'Restart application'
+  desc "Restart application"
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
-      execute :touch, release_path.join('tmp/restart.txt')
+      execute :touch, release_path.join("tmp/restart.txt")
     end
   end
 
   after :publishing, :restart
 
-  desc 'Notify Rollbar of the deploy'
+  desc "Notify Rollbar of the deploy"
   task :notify_rollbar do
     on roles(:app) do |_h|
       revision = `git log -n 1 --pretty=format:"%H"`
       local_user = `whoami`
-      rails_env = fetch(:rails_env, 'production')
-      execute "curl https://api.rollbar.com/api/1/deploy/ -F access_token=$(cat #{release_path}/config/application.yml |grep '^ROLLBAR_ACCESS_TOKEN:' |cut -d ' ' -f 2) -F environment=#{rails_env} -F revision=#{revision} -F local_username=#{local_user} >/dev/null 2>&1", :once => true
+      rails_env = fetch(:rails_env, "production")
+      execute "curl https://api.rollbar.com/api/1/deploy/ -F access_token=$(cat #{release_path}/config/application.yml |grep '^ROLLBAR_ACCESS_TOKEN:' |cut -d ' ' -f 2) -F environment=#{rails_env} -F revision=#{revision} -F local_username=#{local_user} >/dev/null 2>&1",
+              once: true
     end
   end
 
-  after :deploy, 'deploy:notify_rollbar'
+  after :deploy, "deploy:notify_rollbar"
 end
