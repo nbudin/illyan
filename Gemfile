@@ -26,7 +26,7 @@ gem 'coffee-rails'
 gem 'jquery-rails'
 
 gem 'crypt-isaac' # for Cassy
-gem 'doorkeeper', '5.5.4'
+gem 'doorkeeper', '5.6.6'
 
 gem 'will_paginate'
 gem 'will_paginate-bootstrap'
