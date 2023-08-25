@@ -54,6 +54,7 @@ group :test do
   gem "factory_bot_rails"
   gem "minitest"
   gem "minitest-spec-rails"
+  gem "minitest-reporters"
   gem "capybara"
   gem "launchy"
   gem "database_cleaner"

@@ -4,6 +4,21 @@ require 'rails/test_help'
 require 'capybara/rails'
 require 'webmock/minitest'
 
+require "minitest/reporters"
+if ENV["CI"].present?
+  Minitest::Reporters.use!(
+    [
+      Minitest::Reporters::DefaultReporter.new,
+      Minitest::Reporters::HtmlReporter.new(output_filename: "minitest-report.html"),
+      Minitest::Reporters::JUnitReporter.new
+    ],
+    ENV,
+    Minitest.backtrace_filter
+  )
+else
+  Minitest::Reporters.use!(Minitest::Reporters::ProgressReporter.new, ENV, Minitest.backtrace_filter)
+end
+
 Capybara.register_driver :chrome do |app|
   Capybara::Selenium::Driver.new(app, :browser => :chrome)
 end
