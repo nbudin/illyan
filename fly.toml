@@ -1,0 +1,31 @@
+# fly.toml app configuration file generated for illyan on 2023-09-15T09:00:49-07:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "illyan"
+primary_region = "iad"
+
+[build]
+image = "ghcr.io/nbudin/illyan:latest"
+
+[deploy]
+release_command = "bundle exec rake db:migrate"
+strategy = "rolling"
+
+[env]
+ILLYAN_ACCOUNT_NAME = "Sugar Pond account"
+ILLYAN_EXTRA_LOGIN_PAGE_HTML = "<script type=\"text/javascript\">\n    $(function() {\n        $(\"#account-explanation\").hide();\n      $(\"#show-account-explanation\").click(function(e) { e.preventDefault(); $(\"#show-account-explanation\").hide(); $(\"#account-explanation\").show() });\n    });\n    </script>\n    <div style=\"background-color: rgba(255,255,255,0.3); border: 2px white solid; border-radius: 5px; padding: 5px; margin-bottom: 1em;\">\n      <a href=\"#\" id=\"show-account-explanation\">What's a Sugar Pond account?</a>\n      <div id=\"account-explanation\">\n        <p>Sugar Pond accounts are shared between several web apps and convention web sites, including:</p>\n        <ul style=\"padding-left: 0; margin-left: 0;\">\n          <li style=\"display: inline-block; margin-right: 2em;\">&bull; Journey</li>\n          <li style=\"display: inline-block; margin-right: 2em;\">&bull; Vellum</li>\n          <li style=\"display: inline-block; margin-right: 2em;\">&bull; Festival of the LARPs</li>\n          <li style=\"display: inline-block; margin-right: 2em;\">&bull; SLAW</li>\n          <li style=\"display: inline-block; margin-right: 2em;\">&bull; Dice Bubble and Time Bubble</li>\n        </ul>\n        <p>If you've signed up for any of them, you can use the same password here.</p>\n      </div>\n    </div>"
+ILLYAN_SITE_LOGO = "account-central.png"
+ILLYAN_SITE_TITLE = "Sugar Pond Account Central"
+ILLYAN_THEME = "account-central"
+PORT = "3000"
+RAILS_LOG_TO_STDOUT = "1"
+RAILS_SERVE_STATIC_FILES = "1"
+
+[http_service]
+auto_start_machines = true
+auto_stop_machines = true
+force_https = true
+internal_port = 3000
+min_machines_running = 0
