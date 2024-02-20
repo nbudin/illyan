@@ -8,7 +8,7 @@ gem "bootsnap", ">= 1.1.0", require: false
 
 gem "aws-sdk-rails"
 gem "devise", "~> 4.8.1"
-gem "devise_invitable", "~> 2.0.6"
+gem "devise_invitable", "~> 2.0.9"
 gem "devise-encryptable"
 gem "cancancan"
 gem "dynamic_form"
