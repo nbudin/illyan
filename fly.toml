@@ -5,6 +5,7 @@
 
 app = "illyan"
 primary_region = "iad"
+swap = 512
 
 [build]
 image = "ghcr.io/nbudin/illyan:latest"
