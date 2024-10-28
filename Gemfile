@@ -1,13 +1,13 @@
 source "http://rubygems.org"
 
 ruby File.read(File.expand_path("../.ruby-version", __FILE__)).strip
-gem "rails", "7.1.4"
+gem "rails", "7.2.1.2"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", ">= 1.1.0", require: false
 
 gem "aws-sdk-rails"
-gem "devise", "~> 4.8.1"
+gem "devise", "~> 4.9"
 gem "devise_invitable", "~> 2.0.9"
 gem "devise-encryptable"
 gem "cancancan"
