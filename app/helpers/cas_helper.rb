@@ -1,2 +1,2 @@
-module CasHelper
+module CASHelper
 end
