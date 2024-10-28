@@ -26,7 +26,6 @@ gem "coffee-rails"
 
 gem "jquery-rails"
 
-gem "crypt-isaac" # for Cassy
 gem "doorkeeper", "5.6.6"
 
 gem "will_paginate"
@@ -36,16 +35,9 @@ gem "pg_search"
 
 # gem 'foreman'
 gem "puma"
-gem "ae_users_migrator"
 gem "figaro"
 
-gem "capistrano", "~> 3.0", require: false, group: :development
-
 group :development do
-  gem "capistrano-rails", "~> 1.1", require: false
-  gem "capistrano-bundler", "~> 2.1", require: false
-  gem "capistrano-rbenv", "~> 2.0", require: false
-  gem "capistrano-maintenance", "~> 1.0", require: false
   gem "listen"
   gem "ed25519"
   gem "bcrypt_pbkdf"
