@@ -26,7 +26,7 @@ gem "coffee-rails"
 
 gem "jquery-rails"
 
-gem "doorkeeper", "5.6.6"
+gem "doorkeeper"
 
 gem "will_paginate"
 gem "will_paginate-bootstrap"
