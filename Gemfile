@@ -1,13 +1,13 @@
 source "http://rubygems.org"
 
 ruby File.read(File.expand_path("../.ruby-version", __FILE__)).strip
-gem "rails", "7.0.8.1"
+gem "rails", "7.2.1.2"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", ">= 1.1.0", require: false
 
 gem "aws-sdk-rails"
-gem "devise", "~> 4.8.1"
+gem "devise", "~> 4.9"
 gem "devise_invitable", "~> 2.0.9"
 gem "devise-encryptable"
 gem "cancancan"
@@ -19,33 +19,24 @@ gem "haml"
 gem "sprockets-rails"
 gem "sprockets"
 gem "sass-rails"
-gem "uglifier"
+gem "terser"
 gem "bootstrap-sass", "~> 3.4.1"
 gem "autoprefixer-rails"
 gem "coffee-rails"
 
 gem "jquery-rails"
 
-gem "crypt-isaac" # for Cassy
-gem "doorkeeper", "5.6.6"
+gem "doorkeeper"
 
 gem "will_paginate"
 gem "will_paginate-bootstrap"
 gem "pg"
 gem "pg_search"
 
-# gem 'foreman'
 gem "puma"
-gem "ae_users_migrator"
 gem "figaro"
 
-gem "capistrano", "~> 3.0", require: false, group: :development
-
 group :development do
-  gem "capistrano-rails", "~> 1.1", require: false
-  gem "capistrano-bundler", "~> 2.1", require: false
-  gem "capistrano-rbenv", "~> 2.0", require: false
-  gem "capistrano-maintenance", "~> 1.0", require: false
   gem "listen"
   gem "ed25519"
   gem "bcrypt_pbkdf"

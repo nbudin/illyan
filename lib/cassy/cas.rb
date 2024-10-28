@@ -1,7 +1,10 @@
 require 'uri'
 require 'net/https'
 
-require 'cassy/models'
+Dir[Cassy.root + "app/models/cassy/*.rb"].each do |file|
+  require f
+end
+
 require 'cassy/utils'
 
 # Encapsulates CAS functionality. This module is meant to be included in

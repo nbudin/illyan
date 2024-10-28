@@ -1,9 +1,12 @@
+module Illyan::Strategies::LegacyMd5
+end
+
 module Devise
   module Models
-    module LegacyMd5Authenticatable 
+    module LegacyMd5Authenticatable
     end
   end
-  
+
   module Strategies
     class LegacyMD5Authenticatable < Devise::Strategies::Base
       def valid?
@@ -17,14 +20,14 @@ module Devise
           pass
         else
           if Digest::MD5.hexdigest(params[scope]["password"]) == p.legacy_password_md5
-            
+
             # save password as non-legacy version for next time
             p.password = params[scope]["password"]
             p.legacy_password_md5 = nil
             unless p.save
               Rails.logger.warn "Couldn't save non-legacy password for #{p.name}: #{p.errors.full_messages.join(", ")}"
             end
-            
+
             success!(p)
           else
             pass

@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[6.1].define(version: 2022_07_06_154107) do
-
+ActiveRecord::Schema[7.2].define(version: 2024_10_28_195502) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "unaccent"
@@ -19,8 +18,8 @@ ActiveRecord::Schema[6.1].define(version: 2022_07_06_154107) do
   create_table "casserver_lt", id: :serial, force: :cascade do |t|
     t.string "ticket", limit: 255, null: false
     t.string "client_hostname", limit: 255, null: false
-    t.datetime "consumed"
-    t.datetime "created_on", null: false
+    t.datetime "consumed", precision: nil
+    t.datetime "created_on", precision: nil, null: false
   end
 
   create_table "casserver_pgt", id: :serial, force: :cascade do |t|
@@ -28,7 +27,7 @@ ActiveRecord::Schema[6.1].define(version: 2022_07_06_154107) do
     t.string "ticket", limit: 255, null: false
     t.string "client_hostname", limit: 255, null: false
     t.string "iou", limit: 255, null: false
-    t.datetime "created_on", null: false
+    t.datetime "created_on", precision: nil, null: false
   end
 
   create_table "casserver_st", id: :serial, force: :cascade do |t|
@@ -39,15 +38,15 @@ ActiveRecord::Schema[6.1].define(version: 2022_07_06_154107) do
     t.text "service", null: false
     t.string "username", limit: 255, null: false
     t.string "type", limit: 255, null: false
-    t.datetime "consumed"
-    t.datetime "created_on", null: false
+    t.datetime "consumed", precision: nil
+    t.datetime "created_on", precision: nil, null: false
   end
 
   create_table "casserver_tgt", id: :serial, force: :cascade do |t|
     t.string "ticket", limit: 255, null: false
     t.string "client_hostname", limit: 255, null: false
     t.string "username", limit: 255, null: false
-    t.datetime "created_on", null: false
+    t.datetime "created_on", precision: nil, null: false
     t.text "extra_attributes", null: false
   end
 
@@ -71,8 +70,8 @@ ActiveRecord::Schema[6.1].define(version: 2022_07_06_154107) do
     t.string "token", null: false
     t.integer "expires_in", null: false
     t.text "redirect_uri", null: false
-    t.datetime "created_at", null: false
-    t.datetime "revoked_at"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "revoked_at", precision: nil
     t.string "scopes"
     t.index ["token"], name: "index_oauth_access_grants_on_token", unique: true
   end
@@ -83,8 +82,8 @@ ActiveRecord::Schema[6.1].define(version: 2022_07_06_154107) do
     t.string "token", null: false
     t.string "refresh_token"
     t.integer "expires_in"
-    t.datetime "revoked_at"
-    t.datetime "created_at", null: false
+    t.datetime "revoked_at", precision: nil
+    t.datetime "created_at", precision: nil, null: false
     t.string "scopes"
     t.index ["refresh_token"], name: "index_oauth_access_tokens_on_refresh_token", unique: true
     t.index ["resource_owner_id"], name: "index_oauth_access_tokens_on_resource_owner_id"
@@ -98,8 +97,8 @@ ActiveRecord::Schema[6.1].define(version: 2022_07_06_154107) do
     t.text "redirect_uri", null: false
     t.string "scopes", default: "", null: false
     t.boolean "confidential", default: true, null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true
   end
 
@@ -107,34 +106,34 @@ ActiveRecord::Schema[6.1].define(version: 2022_07_06_154107) do
     t.string "firstname", limit: 255
     t.string "lastname", limit: 255
     t.string "gender", limit: 255
-    t.datetime "birthdate"
+    t.datetime "birthdate", precision: nil
     t.string "email", limit: 255, default: "", null: false
     t.string "legacy_password_sha1", limit: 128, default: "", null: false
     t.string "legacy_password_sha1_salt", limit: 255, default: "", null: false
     t.string "remember_token", limit: 255
-    t.datetime "remember_created_at"
+    t.datetime "remember_created_at", precision: nil
     t.string "confirmation_token", limit: 255
-    t.datetime "confirmed_at"
-    t.datetime "confirmation_sent_at"
+    t.datetime "confirmed_at", precision: nil
+    t.datetime "confirmation_sent_at", precision: nil
     t.string "reset_password_token", limit: 255
     t.integer "sign_in_count", default: 0
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
+    t.datetime "current_sign_in_at", precision: nil
+    t.datetime "last_sign_in_at", precision: nil
     t.string "current_sign_in_ip", limit: 255
     t.string "last_sign_in_ip", limit: 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.boolean "admin"
     t.string "legacy_password_md5", limit: 255
     t.string "invitation_token", limit: 255
-    t.datetime "invitation_sent_at"
+    t.datetime "invitation_sent_at", precision: nil
     t.integer "invitation_limit"
     t.integer "invited_by_id"
     t.string "invited_by_type", limit: 255
-    t.datetime "invitation_accepted_at"
+    t.datetime "invitation_accepted_at", precision: nil
     t.string "encrypted_password", limit: 255, default: "", null: false
-    t.datetime "reset_password_sent_at"
-    t.datetime "invitation_created_at"
+    t.datetime "reset_password_sent_at", precision: nil
+    t.datetime "invitation_created_at", precision: nil
     t.index ["email"], name: "index_people_on_email"
     t.index ["invitation_token"], name: "index_people_on_invitation_token", unique: true
   end
@@ -143,8 +142,8 @@ ActiveRecord::Schema[6.1].define(version: 2022_07_06_154107) do
     t.string "name", limit: 255
     t.string "logo_url", limit: 255
     t.text "description"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.boolean "public"
     t.string "authentication_token", limit: 255
     t.string "urls", limit: 255, array: true
@@ -162,10 +161,10 @@ ActiveRecord::Schema[6.1].define(version: 2022_07_06_154107) do
   create_table "ticket_granting_cookies", id: :serial, force: :cascade do |t|
     t.string "value", limit: 255, null: false
     t.string "username", limit: 255, null: false
-    t.datetime "consumed_at"
+    t.datetime "consumed_at", precision: nil
     t.text "extra_attributes"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
   end
 
   add_foreign_key "services", "oauth_applications"
