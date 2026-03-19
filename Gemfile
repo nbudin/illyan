@@ -7,7 +7,7 @@ gem "rails", "7.2.1.2"
 gem "bootsnap", ">= 1.1.0", require: false
 
 gem "aws-sdk-rails"
-gem "devise", "~> 4.9"
+gem "devise", "~> 5.0"
 gem "devise_invitable", "~> 2.0.9"
 gem "devise-encryptable"
 gem "cancancan"
