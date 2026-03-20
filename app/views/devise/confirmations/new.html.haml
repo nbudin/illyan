@@ -3,7 +3,7 @@
     %h2.panel-title Resend confirmation instructions
   .panel-body
     = form_for(resource, :as => resource_name, :url => confirmation_path(resource_name), :html => { :method => :post, :class => "form-horizontal" }) do |f|
-      = devise_error_messages!
+      = render "devise/shared/error_messages", resource: resource
       .form-group
         = f.label :email, :class => "col-md-2"
         .col-md-10
