@@ -69,6 +69,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
+          pull: true
           push: ${{ github.event_name == 'push' && github.event.ref == 'refs/heads/main' }}
           platforms: linux/amd64
           tags: |
