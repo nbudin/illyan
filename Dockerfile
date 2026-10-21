@@ -34,7 +34,7 @@ FROM base
 
 # Install packages needed for deployment
 RUN apt-get update -qq && \
-  apt-get install --no-install-recommends -y libpq5 nodejs && \
+  apt-get install --no-install-recommends -y libpq5 nodejs ca-certificates && \
   rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Run and own only the runtime files as a non-root user for security
