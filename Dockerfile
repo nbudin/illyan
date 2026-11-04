@@ -16,7 +16,7 @@ FROM base as build
 
 # Install packages needed to build gems
 RUN apt-get update -qq && \
-  apt-get install --no-install-recommends -y libpq-dev git build-essential nodejs
+  apt-get install --no-install-recommends -y libpq-dev libyaml-dev git build-essential nodejs
 
 # Install application gems
 COPY Gemfile Gemfile.lock .ruby-version ./
