@@ -34,7 +34,7 @@ class ServicesController < ApplicationController
         format.xml  { render :xml => @service, :status => :created, :location => @service }
       else
         format.html { render :action => "new" }
-        format.xml  { render :xml => @service.errors, :status => :unprocessable_entity }
+        format.xml  { render :xml => @service.errors, :status => :unprocessable_content }
       end
     end
   end
@@ -48,7 +48,7 @@ class ServicesController < ApplicationController
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
-        format.xml  { render :xml => @service.errors, :status => :unprocessable_entity }
+        format.xml  { render :xml => @service.errors, :status => :unprocessable_content }
       end
     end
   end
