@@ -28,9 +28,9 @@ class SignupTest < ActionDispatch::IntegrationTest
     msg = Devise.mailer.deliveries.last
     assert msg
 
-    msg.to.must_equal ["myemail@example.com"]
-    msg.body.to_s.must_match(/myemail@example.com/)
-    msg.body.to_s.must_include person_confirmation_path
+    _(msg.to).must_equal ["myemail@example.com"]
+    _(msg.body.to_s).must_match(/myemail@example.com/)
+    _(msg.body.to_s).must_include person_confirmation_path
   end
 
   it "should not sign me in" do
