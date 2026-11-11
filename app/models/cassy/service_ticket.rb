@@ -53,7 +53,7 @@ module Cassy
 
     def matches_service?(service)
       if Cassy.config[:loosely_match_services] == true
-        Cassy::CAS.base_service_url(self.service) == Cassy::CAS.base_service_url(service)
+        Cassy::CAS.same_service_origin?(self.service, service)
       else
         Cassy::CAS.clean_service_url(self.service) == Cassy::CAS.clean_service_url(service)
       end

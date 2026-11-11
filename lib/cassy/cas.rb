@@ -145,18 +145,36 @@ module Cassy
     end
     module_function :clean_service_url
 
+    # Reduces a service URL to its origin ("scheme://host[:port]") so that a ticket
+    # issued for one page of a service can be used for any other page on it.
+    # For example "http://www.something.com/something_else" becomes
+    # "http://www.something.com".
+    #
+    # Returns nil unless the URL is a plain http(s) URL with a host and no embedded
+    # credentials. Embedded credentials ("https://registered.example.com@evil.example.org/")
+    # are rejected because browsers treat everything before the "@" as a username, so
+    # the URL would otherwise compare equal to a registered service while actually
+    # pointing somewhere else.
     def base_service_url(full_service_url)
-      # strips a url back to the domain part only
-      # so that a service ticket can work for all urls on a given domain
-      # eg http://www.something.com/something_else
-      # is stripped back to
-      # http://www.something.com
-      # expects it to be in 'http://x' form
-      return unless full_service_url
-      match = full_service_url.match(/(http(s?):\/\/[a-z0-9\.:]*)/)
-      match && match[0]
+      return unless full_service_url.is_a?(String)
+
+      uri = URI.parse(full_service_url.strip)
+      return unless uri.is_a?(URI::HTTP) && uri.host.present? && uri.userinfo.nil?
+
+      port = uri.port == uri.default_port ? "" : ":#{uri.port}"
+      "#{uri.scheme.downcase}://#{uri.host.downcase}#{port}"
+    rescue URI::InvalidURIError
+      nil
     end
     module_function :base_service_url
+
+    # True if both URLs are valid and share an origin. Unlike comparing
+    # base_service_url results directly, two invalid URLs (both nil) do not match.
+    def same_service_origin?(url, other_url)
+      origin = base_service_url(url)
+      !origin.nil? && origin == base_service_url(other_url)
+    end
+    module_function :same_service_origin?
 
     def detect_ticketing_service(service)
       # try to find the service in the valid_services list
@@ -164,7 +182,7 @@ module Cassy
       # if still no luck, check if there is a default_redirect_url that we can use
       @service||= service
       @ticketing_service||= valid_services.detect{|s| s == @service } ||
-        (settings[:loosely_match_services] == true && valid_services.detect{|s| base_service_url(s) == base_service_url(@service)})
+        (settings[:loosely_match_services] == true && valid_services.detect{|s| same_service_origin?(s, @service)})
       if !@ticketing_service && settings[:default_redirect_url]
         @default_redirect_url||= settings[:default_redirect_url][Rails.env]
         @ticketing_service = @default_redirect_url
@@ -174,6 +192,17 @@ module Cassy
       @lt||= params['lt']
     end
     module_function :detect_ticketing_service
+
+    # Whether +service+ is safe to send the browser to: it is one of the registered
+    # services, or (when loosely_match_services is on) shares an origin with one.
+    def registered_service?(service)
+      return false if service.blank?
+
+      valid_services.any? do |registered|
+        registered == service ||
+          (settings[:loosely_match_services] == true && same_service_origin?(registered, service))
+      end
+    end
 
     def cas_login
       if valid_credentials?
