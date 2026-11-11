@@ -1,3 +1,12 @@
+require "simplecov"
+SimpleCov.start "rails" do
+  enable_coverage :branch
+  skip "/db/"
+  skip "/test/"
+  group "Cassy", %w[lib/cassy app/controllers/cassy app/models/cassy]
+  group "Illyan lib", "lib/illyan"
+end
+
 ENV["RAILS_ENV"] = "test"
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'

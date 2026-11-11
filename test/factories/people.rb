@@ -34,8 +34,10 @@ FactoryBot.define do
     end
 
     factory :administrator do
-      after(:build) do |person|
-        person.has_role!("admin")
+      admin { true }
+
+      after(:create) do |person|
+        person.confirm
       end
     end
 
