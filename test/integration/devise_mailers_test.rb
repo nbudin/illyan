@@ -63,9 +63,6 @@ class DeviseMailersTest < ActionDispatch::IntegrationTest
 
   describe "invitations" do
     it "emails an invitation that lets the invitee set a password" do
-      skip "Person.invite! currently raises ActiveRecord::ValueTooLong: Devise's invitation token " \
-        "digest is 64 chars but people.invitation_token is varchar(60). Unskip once the column is widened."
-
       invitee = Person.invite!(email: "newbie@example.com", firstname: "New", lastname: "Bie")
       assert invitee.persisted?
 
@@ -79,7 +76,8 @@ class DeviseMailersTest < ActionDispatch::IntegrationTest
       within "form" do
         fill_in "person[password]", with: "InvitedPassword"
         fill_in "person[password_confirmation]", with: "InvitedPassword"
-        click_on "Set my password"
+        # The button label depends on ILLYAN_ACCOUNT_NAME, so find it by type
+        find("input[type=submit]").click
       end
 
       invitee.reload

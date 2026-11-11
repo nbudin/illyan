@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_28_195502) do
+ActiveRecord::Schema[7.2].define(version: 2026_11_11_180000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "unaccent"
@@ -123,7 +123,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_28_195502) do
     t.datetime "confirmation_sent_at", precision: nil
     t.boolean "admin"
     t.string "legacy_password_md5"
-    t.string "invitation_token", limit: 60
+    t.string "invitation_token"
     t.datetime "invitation_sent_at", precision: nil
     t.integer "invitation_limit"
     t.integer "invited_by_id"
