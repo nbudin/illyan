@@ -15,6 +15,11 @@ module Illyan
     # memory overhead and we haven't sized the Fly machine for it. Revisit separately.
     config.yjit = false
 
+    # Opt in to the Rails 8.1 to_time behavior (preserve the full timezone, not just the
+    # offset). Rails 8.0 warns about any other value. The app doesn't call to_time and
+    # uses UTC, so this changes nothing in practice.
+    config.active_support.to_time_preserves_timezone = :zone
+
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
     # Common ones are `templates`, `generators`, or `middleware`, for example.

@@ -3,7 +3,7 @@ require 'test_helper'
 class Cassy::LoginTicketTest < ActiveSupport::TestCase
   setup do
     Cassy::LoginTicket.delete_all
-    @login_ticket = Cassy::LoginTicket.create(:ticket => "ST-12345678901234567890", :consumed => false, :client_hostname => "http://sso.something.com")
+    @login_ticket = Cassy::LoginTicket.create(:ticket => "ST-12345678901234567890", :consumed => nil, :client_hostname => "http://sso.something.com")
   end
 
   it "should validate" do
