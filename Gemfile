@@ -1,7 +1,7 @@
 source "http://rubygems.org"
 
 ruby File.read(File.expand_path("../.ruby-version", __FILE__)).strip
-gem "rails", "~> 7.2.4"
+gem "rails", "~> 8.0.0"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", ">= 1.1.0", require: false
@@ -41,7 +41,8 @@ end
 
 group :test do
   gem "factory_bot_rails"
-  gem "minitest"
+  # Minitest 6 is a separate migration; hold at 5.x for now
+  gem "minitest", "~> 5.27"
   gem "minitest-spec-rails"
   gem "minitest-reporters"
   gem "capybara"

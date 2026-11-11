@@ -4,7 +4,7 @@ class Cassy::ServiceTicketTest < ActiveSupport::TestCase
   setup do
     Cassy::ServiceTicket.delete_all
     @ticket_granting_ticket = Cassy::TicketGrantingTicket.create(:ticket => "TGT-12345678900987654321", :created_on => Time.now, :username => "1", :client_hostname => "http://sss.something.com", :extra_attributes => {})
-    @service_ticket = Cassy::ServiceTicket.create!(:ticket => "ST-12345678901234567890", :consumed => false, :client_hostname => "http://sso.something.com", :granted_by_tgt => @ticket_granting_ticket, :service => "http://members.something.com", :username => "1")
+    @service_ticket = Cassy::ServiceTicket.create!(:ticket => "ST-12345678901234567890", :consumed => nil, :client_hostname => "http://sso.something.com", :granted_by_tgt => @ticket_granting_ticket, :service => "http://members.something.com", :username => "1")
   end
 
   it "should validate" do
@@ -54,7 +54,7 @@ class Cassy::ServiceTicketTest < ActiveSupport::TestCase
       st = Cassy::ServiceTicket.new(
         ticket: 'ST-0123456789ABCDEFGHIJKLMNOPQRS',
         service: 'http://example.com',
-        consumed: false,
+        consumed: nil,
         client_hostname: "http://sso.something.com"
       )
 
