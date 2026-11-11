@@ -1,7 +1,7 @@
 source "http://rubygems.org"
 
 ruby File.read(File.expand_path("../.ruby-version", __FILE__)).strip
-gem "rails", "~> 8.0.0"
+gem "rails", "~> 8.1.0"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", ">= 1.1.0", require: false
