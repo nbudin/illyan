@@ -47,11 +47,16 @@ class Admin::PeopleControllerTest < ActionController::TestCase
     end
 
     it "shows a person as HTML" do
-      skip "admin/people/show.html.haml calls created_at/updated_at, but the people table has neither " \
-        "column, so this page raises NoMethodError. Unskip once the view is fixed."
-
       get :show, params: { id: @person.id }
       assert_response :success
+      assert_select "h1", text: @person.name
+      assert_select "dd", text: "Unprivileged"
+    end
+
+    it "shows an administrator's access level" do
+      get :show, params: { id: @admin.id }
+      assert_response :success
+      assert_select "dd", text: "Administrator"
     end
 
     it "shows a person as JSON" do
