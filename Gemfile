@@ -1,7 +1,7 @@
 source "http://rubygems.org"
 
 ruby File.read(File.expand_path("../.ruby-version", __FILE__)).strip
-gem "rails", "7.2.4"
+gem "rails", "~> 7.2.4"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", ">= 1.1.0", require: false
@@ -47,7 +47,6 @@ group :test do
   gem "capybara"
   gem "launchy"
   gem "database_cleaner"
-  gem "webdrivers", require: "webdrivers/chromedriver"
   gem "selenium-webdriver"
   gem "rails-controller-testing"
   gem "webmock"

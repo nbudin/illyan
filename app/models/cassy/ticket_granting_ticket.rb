@@ -3,7 +3,7 @@ module Cassy
   	include Cassy::Ticket
     self.table_name = 'casserver_tgt'
 
-    serialize :extra_attributes
+    serialize :extra_attributes, coder: YAML
 
     has_many :granted_service_tickets,
       :class_name => 'Cassy::ServiceTicket',
