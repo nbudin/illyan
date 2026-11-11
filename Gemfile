@@ -41,8 +41,7 @@ end
 
 group :test do
   gem "factory_bot_rails"
-  # Minitest 6 is a separate migration; hold at 5.x for now
-  gem "minitest", "~> 5.27"
+  gem "minitest"
   gem "minitest-spec-rails"
   gem "minitest-reporters"
   gem "capybara"
