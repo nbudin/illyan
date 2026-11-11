@@ -89,6 +89,39 @@ class CasFlowTest < ActionDispatch::IntegrationTest
       end
     end
 
+    describe "in gateway mode" do
+      it "sends anonymous users back to the service without a ticket" do
+        get "/cas/login", params: { service: SERVICE_URL, gateway: "true" }
+        assert_response :redirect
+        assert_equal SERVICE_URL, response.location
+        assert_equal 0, Cassy::ServiceTicket.count
+      end
+
+      it "accepts gateway=1" do
+        get "/cas/login", params: { service: SERVICE_URL, gateway: "1" }
+        assert_equal SERVICE_URL, response.location
+      end
+
+      it "sends anonymous users back to another path on a registered origin" do
+        get "/cas/login", params: { service: "https://client.example.com/elsewhere", gateway: "true" }
+        assert_equal "https://client.example.com/elsewhere", response.location
+      end
+
+      it "still refuses unregistered and look-alike services" do
+        ["https://evil.example.org/", "https://client.example.com@evil.example.org/x"].each do |service|
+          get "/cas/login", params: { service: service, gateway: "true" }
+          assert_response :forbidden, "service=#{service}"
+          assert_nil response.location, "service=#{service}"
+        end
+      end
+
+      it "still issues a ticket to a signed-in user" do
+        login_as @person, scope: :person
+        get "/cas/login", params: { service: SERVICE_URL, gateway: "true" }
+        assert response.location.start_with?("#{SERVICE_URL}?ticket=ST-"), "unexpected redirect: #{response.location}"
+      end
+    end
+
     it "completes the full anonymous flow: Devise login, then back to the service with a ticket" do
       get "/cas/login", params: { service: SERVICE_URL }
       assert_redirected_to new_person_session_path
