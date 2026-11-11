@@ -95,7 +95,7 @@ module Cassy
       flash[:notice] = "You have successfully logged out."
       @lt = generate_login_ticket
 
-      if @gateway && @service
+      if @gateway && registered_service?(@service)
         redirect_to @service, :status => 303, allow_other_host: true
       else
         redirect_to :action => :new, :service => @service

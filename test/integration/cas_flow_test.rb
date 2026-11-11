@@ -48,6 +48,47 @@ class CasFlowTest < ActionDispatch::IntegrationTest
       assert cookies["tgt"].present?
     end
 
+    it "allows other paths on a registered service's origin" do
+      login_as @person, scope: :person
+      get "/cas/login", params: { service: "https://client.example.com/other/page" }
+      assert_response :redirect
+      assert response.location.start_with?("https://client.example.com/other/page?ticket=ST-")
+    end
+
+    it "treats the service host case-insensitively" do
+      login_as @person, scope: :person
+      get "/cas/login", params: { service: "https://CLIENT.EXAMPLE.COM/x" }
+      assert_response :redirect
+      assert response.location.start_with?("https://CLIENT.EXAMPLE.COM/x?ticket=ST-")
+    end
+
+    describe "with look-alike service URLs" do
+      setup do
+        # Registered hosts with a hyphen exercise prefix matching
+        @service.update!(urls: [SERVICE_URL, "https://my-app.example.com/"])
+        login_as @person, scope: :person
+      end
+
+      [
+        ["userinfo naming a registered host", "https://client.example.com@evil.example.org/x"],
+        ["userinfo with a password", "https://client.example.com:pw@evil.example.org/x"],
+        ["a different host sharing a hyphenated prefix", "https://my-evil.example.org/x"],
+        ["a registered host as a subdomain of another", "https://client.example.com.evil.example.org/x"],
+        ["a different scheme", "http://client.example.com/x"],
+        ["a different port", "https://client.example.com:8443/x"],
+        ["a protocol-relative URL", "//evil.example.org/x"],
+        ["a non-http scheme", "javascript://client.example.com/%0aalert(1)"]
+      ].each do |label, service|
+        it "refuses #{label} and issues no ticket" do
+          assert_no_difference -> { Cassy::ServiceTicket.count } do
+            get "/cas/login", params: { service: service }
+          end
+          assert_response :forbidden
+          assert_nil response.location
+        end
+      end
+    end
+
     it "completes the full anonymous flow: Devise login, then back to the service with a ticket" do
       get "/cas/login", params: { service: SERVICE_URL }
       assert_redirected_to new_person_session_path
@@ -91,6 +132,23 @@ class CasFlowTest < ActionDispatch::IntegrationTest
       assert_match(/authenticationFailure/, response.body)
     end
 
+    it "rejects a ticket presented for a look-alike of the service it was issued for" do
+      ticket = login_and_get_ticket
+      [
+        "https://client.example.com@evil.example.org/x",
+        "http://client.example.com/app"
+      ].each do |lookalike|
+        get "/cas/serviceValidate", params: { service: lookalike, ticket: ticket }
+        assert_response 422, "service=#{lookalike}"
+      end
+    end
+
+    it "accepts the ticket for another path on the same origin" do
+      ticket = login_and_get_ticket
+      get "/cas/serviceValidate", params: { service: "https://client.example.com/elsewhere", ticket: ticket }
+      assert_response :success
+    end
+
     it "rejects a ticket presented for a different service" do
       ticket = login_and_get_ticket
       get "/cas/serviceValidate", params: { service: "https://other.example.com", ticket: ticket }
@@ -127,14 +185,28 @@ class CasFlowTest < ActionDispatch::IntegrationTest
       assert_equal SERVICE_URL, response.location
     end
 
-    # action_on_path_relative_redirect = :raise (load_defaults 8.1). Without it these
-    # redirected to http://localhost@evil.example.com (which browsers read as
-    # evil.example.com) and to a garbled hostname.
-    it "refuses to redirect gateway logouts to malformed service URLs" do
-      ["@evil.example.com", "client.example.com/app"].each do |service|
+    it "sends gateway logouts to other paths on a registered service's origin" do
+      get "/cas/logout", params: { service: "https://client.example.com/signed-out", gateway: "true" }
+      assert_response 303
+      assert_equal "https://client.example.com/signed-out", response.location
+    end
+
+    # Gateway logouts redirect to the service param, so it must be a registered
+    # service. Anything else falls back to the CAS login page, which then refuses
+    # unknown services itself.
+    [
+      ["an unregistered host", "https://evil.example.org/"],
+      ["a protocol-relative URL", "//evil.example.org/"],
+      ["userinfo naming a registered host", "https://client.example.com@evil.example.org/x"],
+      ["a scheme-less value", "client.example.com/app"],
+      ["a bare userinfo-style value", "@evil.example.org"],
+      ["a different scheme", "http://client.example.com/app"]
+    ].each do |label, service|
+      it "does not redirect gateway logouts to #{label}" do
         get "/cas/logout", params: { service: service, gateway: "true" }
-        assert_response 500, "service=#{service}"
-        assert_nil response.location, "service=#{service}"
+        assert_response :redirect
+        refute_match(/evil\.example\.org/, URI.parse(response.location).host.to_s, "service=#{service}")
+        assert_equal "/cas/login", URI.parse(response.location).path, "service=#{service}"
       end
     end
   end
