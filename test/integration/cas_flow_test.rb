@@ -120,5 +120,22 @@ class CasFlowTest < ActionDispatch::IntegrationTest
       end
       assert_response :redirect
     end
+
+    it "sends gateway logouts back to an absolute service URL" do
+      get "/cas/logout", params: { service: SERVICE_URL, gateway: "true" }
+      assert_response 303
+      assert_equal SERVICE_URL, response.location
+    end
+
+    # action_on_path_relative_redirect = :raise (load_defaults 8.1). Without it these
+    # redirected to http://localhost@evil.example.com (which browsers read as
+    # evil.example.com) and to a garbled hostname.
+    it "refuses to redirect gateway logouts to malformed service URLs" do
+      ["@evil.example.com", "client.example.com/app"].each do |service|
+        get "/cas/logout", params: { service: service, gateway: "true" }
+        assert_response 500, "service=#{service}"
+        assert_nil response.location, "service=#{service}"
+      end
+    end
   end
 end
