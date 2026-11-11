@@ -16,42 +16,42 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_28_195502) do
   enable_extension "unaccent"
 
   create_table "casserver_lt", id: :serial, force: :cascade do |t|
-    t.string "ticket", limit: 255, null: false
-    t.string "client_hostname", limit: 255, null: false
+    t.string "ticket", null: false
+    t.string "client_hostname", null: false
     t.datetime "consumed", precision: nil
     t.datetime "created_on", precision: nil, null: false
   end
 
   create_table "casserver_pgt", id: :serial, force: :cascade do |t|
     t.integer "service_ticket_id", null: false
-    t.string "ticket", limit: 255, null: false
-    t.string "client_hostname", limit: 255, null: false
-    t.string "iou", limit: 255, null: false
+    t.string "ticket", null: false
+    t.string "client_hostname", null: false
+    t.string "iou", null: false
     t.datetime "created_on", precision: nil, null: false
   end
 
   create_table "casserver_st", id: :serial, force: :cascade do |t|
     t.integer "granted_by_pgt_id"
     t.integer "granted_by_tgt_id"
-    t.string "ticket", limit: 255, null: false
-    t.string "client_hostname", limit: 255, null: false
+    t.string "ticket", null: false
+    t.string "client_hostname", null: false
     t.text "service", null: false
-    t.string "username", limit: 255, null: false
-    t.string "type", limit: 255, null: false
+    t.string "username", null: false
+    t.string "type", null: false
     t.datetime "consumed", precision: nil
     t.datetime "created_on", precision: nil, null: false
   end
 
   create_table "casserver_tgt", id: :serial, force: :cascade do |t|
-    t.string "ticket", limit: 255, null: false
-    t.string "client_hostname", limit: 255, null: false
-    t.string "username", limit: 255, null: false
+    t.string "ticket", null: false
+    t.string "client_hostname", null: false
+    t.string "username", null: false
     t.datetime "created_on", precision: nil, null: false
     t.text "extra_attributes", null: false
   end
 
   create_table "groups", id: :serial, force: :cascade do |t|
-    t.string "name", limit: 255
+    t.string "name"
   end
 
   create_table "groups_owners", id: false, force: :cascade do |t|
@@ -103,52 +103,50 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_28_195502) do
   end
 
   create_table "people", id: :serial, force: :cascade do |t|
-    t.string "firstname", limit: 255
-    t.string "lastname", limit: 255
-    t.string "gender", limit: 255
+    t.string "firstname"
+    t.string "lastname"
+    t.string "gender"
     t.datetime "birthdate", precision: nil
-    t.string "email", limit: 255, default: "", null: false
-    t.string "legacy_password_sha1", limit: 128, default: "", null: false
-    t.string "legacy_password_sha1_salt", limit: 255, default: "", null: false
-    t.string "remember_token", limit: 255
+    t.string "email", default: "", null: false
+    t.string "legacy_password_sha1", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at", precision: nil
     t.datetime "remember_created_at", precision: nil
-    t.string "confirmation_token", limit: 255
-    t.datetime "confirmed_at", precision: nil
-    t.datetime "confirmation_sent_at", precision: nil
-    t.string "reset_password_token", limit: 255
     t.integer "sign_in_count", default: 0
     t.datetime "current_sign_in_at", precision: nil
     t.datetime "last_sign_in_at", precision: nil
-    t.string "current_sign_in_ip", limit: 255
-    t.string "last_sign_in_ip", limit: 255
-    t.datetime "created_at", precision: nil
-    t.datetime "updated_at", precision: nil
+    t.string "current_sign_in_ip"
+    t.string "last_sign_in_ip"
+    t.string "legacy_password_sha1_salt"
+    t.string "confirmation_token"
+    t.datetime "confirmed_at", precision: nil
+    t.datetime "confirmation_sent_at", precision: nil
     t.boolean "admin"
-    t.string "legacy_password_md5", limit: 255
-    t.string "invitation_token", limit: 255
+    t.string "legacy_password_md5"
+    t.string "invitation_token", limit: 60
     t.datetime "invitation_sent_at", precision: nil
     t.integer "invitation_limit"
     t.integer "invited_by_id"
-    t.string "invited_by_type", limit: 255
+    t.string "invited_by_type"
     t.datetime "invitation_accepted_at", precision: nil
-    t.string "encrypted_password", limit: 255, default: "", null: false
-    t.datetime "reset_password_sent_at", precision: nil
+    t.string "encrypted_password", default: "", null: false
     t.datetime "invitation_created_at", precision: nil
     t.index ["email"], name: "index_people_on_email"
     t.index ["invitation_token"], name: "index_people_on_invitation_token", unique: true
   end
 
   create_table "services", id: :serial, force: :cascade do |t|
-    t.string "name", limit: 255
-    t.string "logo_url", limit: 255
+    t.string "name"
+    t.string "logo_url"
     t.text "description"
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
     t.boolean "public"
-    t.string "authentication_token", limit: 255
-    t.string "urls", limit: 255, array: true
+    t.string "authentication_token"
+    t.string "urls", array: true
     t.integer "oauth_application_id"
     t.boolean "auto_authorize", default: false, null: false
+    t.index ["authentication_token"], name: "index_services_on_authentication_token", unique: true
     t.index ["public"], name: "index_services_on_public"
   end
 
@@ -156,15 +154,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_28_195502) do
     t.integer "service_id", null: false
     t.integer "user_id", null: false
     t.index ["user_id"], name: "index_services_users_on_user_id"
-  end
-
-  create_table "ticket_granting_cookies", id: :serial, force: :cascade do |t|
-    t.string "value", limit: 255, null: false
-    t.string "username", limit: 255, null: false
-    t.datetime "consumed_at", precision: nil
-    t.text "extra_attributes"
-    t.datetime "created_at", precision: nil
-    t.datetime "updated_at", precision: nil
   end
 
   add_foreign_key "services", "oauth_applications"
