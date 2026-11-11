@@ -25,8 +25,6 @@ class SignupTest < ActionDispatch::IntegrationTest
   end
 
   it "should send a confirmation email" do
-    skip 'This has been broken since the Devise 4 upgrade; not sure why'
-
     msg = Devise.mailer.deliveries.last
     assert msg
 

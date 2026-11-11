@@ -52,6 +52,7 @@ group :test do
   gem "selenium-webdriver"
   gem "rails-controller-testing"
   gem "webmock"
+  gem "simplecov", require: false
 end
 
 gem "pry-rails", groups: %i[development test]
