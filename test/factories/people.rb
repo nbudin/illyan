@@ -24,15 +24,6 @@ FactoryBot.define do
       end
     end
 
-    factory :group_administered_person do
-      firstname { "Group-administered" }
-      lastname { "Person" }
-      after(:create) do |person|
-        group = FactoryBot.create(:group, :name => "Red Team")
-        group.has_role!("admin", person)
-      end
-    end
-
     factory :administrator do
       admin { true }
 
