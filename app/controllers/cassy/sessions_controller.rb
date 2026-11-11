@@ -27,8 +27,10 @@ module Cassy
           find_or_generate_service_tickets(ticket_username, @tgt)
           st = @service_tickets[@ticketing_service]
           redirect_to service_uri_with_ticket(@ticketing_service, st), allow_other_host: true
-        elsif @gateway
-          redirect_to(@gateway, allow_other_host: true)
+        elsif @gateway && registered_service?(@service)
+          # Gateway mode: with no SSO session, send the user back to the service
+          # without a ticket instead of prompting them to log in (CAS 2.0, 2.1.1).
+          redirect_to @service, allow_other_host: true
         end
       elsif @gateway
         flash.now[:error] = "The server cannot fulfill this gateway request because no service parameter was given."
