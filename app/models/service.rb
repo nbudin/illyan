@@ -1,8 +1,6 @@
 class Service < ApplicationRecord
   has_and_belongs_to_many :users, :class_name => "Person", :join_table => "services_users", :association_foreign_key => "user_id"
-  belongs_to :oauth_application, class_name: "Doorkeeper::Application", dependent: :destroy, optional: true
   before_create :ensure_authentication_token
-  after_save :sync_oauth_application
 
   def ensure_authentication_token
     if authentication_token.blank?
@@ -24,21 +22,6 @@ class Service < ApplicationRecord
     loop do
       token = Devise.friendly_token
       break token unless Service.where(authentication_token: token).first
-    end
-  end
-
-  def sync_oauth_application
-    oauth_application_attributes = {
-      name: name,
-      redirect_uri: urls.select { |url| url.start_with?('https:') || url.start_with?('http://localhost') }
-    }
-    return unless oauth_application_attributes[:redirect_uri].any?
-
-    if oauth_application
-      oauth_application.update! oauth_application_attributes
-    else
-      create_oauth_application! oauth_application_attributes
-      save!
     end
   end
 end

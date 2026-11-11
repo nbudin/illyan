@@ -66,6 +66,6 @@ class ServicesController < ApplicationController
 
   private
   def service_params
-    params.require(:service).permit(:name, :urls, :urls_delimited, :logo_url, :description, :public, :auto_authorize)
+    params.require(:service).permit(:name, :urls, :urls_delimited, :logo_url, :description, :public)
   end
 end
