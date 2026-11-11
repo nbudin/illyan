@@ -10,7 +10,6 @@ class Ability
     when Person
       if principal.admin?
         can :admin, :site
-        can :manage, Doorkeeper::Application
         can [:list, :read, :create, :update, :destroy], Person
         can [:list, :read, :create, :update, :destroy], Service
       else

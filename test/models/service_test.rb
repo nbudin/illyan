@@ -14,11 +14,6 @@ class ServiceTest < ActiveSupport::TestCase
       it "should have an authentication token" do
         assert !@service.authentication_token.blank?
       end
-
-      it "should have an oauth_application with only the https URIs" do
-        assert @service.oauth_application
-        assert_equal 'https://google.com', @service.oauth_application.redirect_uri
-      end
     end
   end
 

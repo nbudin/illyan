@@ -26,8 +26,6 @@ gem "coffee-rails"
 
 gem "jquery-rails"
 
-gem "doorkeeper"
-
 gem "will_paginate"
 gem "will_paginate-bootstrap"
 gem "pg"
